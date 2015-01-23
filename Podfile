@@ -8,6 +8,8 @@ target 'MinnieDisk' do
 end
 
 target 'MinnieDiskTests' do
+    
+    pod 'OCMockito', '~> 1.0'
 
 end
 

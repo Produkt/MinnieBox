@@ -19,6 +19,9 @@
 		C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80811A73067200DC0CE7 /* TempRepresentation.m */; };
 		C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */; };
 		C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */; };
+		88CD2EFE1A72FA400020B1E1 /* ListContentInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EFD1A72FA400020B1E1 /* ListContentInteractor.m */; };
+		88CD2F001A73029B0020B1E1 /* ListContentInteractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EFF1A73029B0020B1E1 /* ListContentInteractorTests.m */; };
+		8E57F3E2572EEAA99EE754E8 /* libPods-MinnieDiskTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCE7DA4CBAB3FA94C8F15F2 /* libPods-MinnieDiskTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03010011929F7D83061B20D6 /* Pods-MinnieDiskTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinnieDiskTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MinnieDiskTests/Pods-MinnieDiskTests.release.xcconfig"; sourceTree = "<group>"; };
+		72C3F3D5375024CB97D32B2F /* Pods-MinnieDiskTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinnieDiskTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MinnieDiskTests/Pods-MinnieDiskTests.debug.xcconfig"; sourceTree = "<group>"; };
+		883076AF1A73040D00D28ED2 /* MinnieDiskTests-prefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MinnieDiskTests-prefix.h"; sourceTree = "<group>"; };
 		88CD2EBF1A72EBD00020B1E1 /* MinnieDisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinnieDisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CD2EC31A72EBD00020B1E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88CD2EC41A72EBD00020B1E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,6 +59,10 @@
 		C7EF80831A73097800DC0CE7 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
 		C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
 		C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
+		88CD2EFC1A72FA400020B1E1 /* ListContentInteractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListContentInteractor.h; sourceTree = "<group>"; };
+		88CD2EFD1A72FA400020B1E1 /* ListContentInteractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListContentInteractor.m; sourceTree = "<group>"; };
+		88CD2EFF1A73029B0020B1E1 /* ListContentInteractorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListContentInteractorTests.m; sourceTree = "<group>"; };
+		BBCE7DA4CBAB3FA94C8F15F2 /* libPods-MinnieDiskTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MinnieDiskTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,18 +78,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E57F3E2572EEAA99EE754E8 /* libPods-MinnieDiskTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7EF38D345C27484BC2C5D2EB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				72C3F3D5375024CB97D32B2F /* Pods-MinnieDiskTests.debug.xcconfig */,
+				03010011929F7D83061B20D6 /* Pods-MinnieDiskTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		88CD2EB61A72EBD00020B1E1 = {
 			isa = PBXGroup;
 			children = (
 				88CD2EC11A72EBD00020B1E1 /* MinnieDisk */,
 				88CD2EDE1A72EBD00020B1E1 /* MinnieDiskTests */,
 				88CD2EC01A72EBD00020B1E1 /* Products */,
+				7EF38D345C27484BC2C5D2EB /* Pods */,
+				9E73600FD9309D56F4FCC354 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +129,7 @@
 				88CD2ED21A72EBD00020B1E1 /* Images.xcassets */,
 				88CD2ED41A72EBD00020B1E1 /* LaunchScreen.xib */,
 				88CD2EC91A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld */,
+				88CD2EF91A72F9EC0020B1E1 /* Core */,
 				88CD2EEB1A72EC140020B1E1 /* Frameworks */,
 				88CD2EC21A72EBD00020B1E1 /* Supporting Files */,
 			);
@@ -126,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				88CD2EE11A72EBD00020B1E1 /* MinnieDiskTests.m */,
+				88CD2EFF1A73029B0020B1E1 /* ListContentInteractorTests.m */,
 				88CD2EDF1A72EBD00020B1E1 /* Supporting Files */,
 			);
 			path = MinnieDiskTests;
@@ -135,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				88CD2EE01A72EBD00020B1E1 /* Info.plist */,
+				883076AF1A73040D00D28ED2 /* MinnieDiskTests-prefix.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -155,6 +180,39 @@
 				C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		88CD2EF91A72F9EC0020B1E1 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				88CD2EFB1A72FA280020B1E1 /* Use Cases */,
+				88CD2EFA1A72FA0B0020B1E1 /* Entities */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		88CD2EFA1A72FA0B0020B1E1 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		88CD2EFB1A72FA280020B1E1 /* Use Cases */ = {
+			isa = PBXGroup;
+			children = (
+				88CD2EFC1A72FA400020B1E1 /* ListContentInteractor.h */,
+				88CD2EFD1A72FA400020B1E1 /* ListContentInteractor.m */,
+			);
+			path = "Use Cases";
+			sourceTree = "<group>";
+		};
+		9E73600FD9309D56F4FCC354 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BBCE7DA4CBAB3FA94C8F15F2 /* libPods-MinnieDiskTests.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,9 +239,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88CD2EE81A72EBD00020B1E1 /* Build configuration list for PBXNativeTarget "MinnieDiskTests" */;
 			buildPhases = (
+				58AF23873CB13F77EA905F98 /* Check Pods Manifest.lock */,
 				88CD2ED71A72EBD00020B1E1 /* Sources */,
 				88CD2ED81A72EBD00020B1E1 /* Frameworks */,
 				88CD2ED91A72EBD00020B1E1 /* Resources */,
+				54E7C353D8FEC49D9A7BE173 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -253,6 +313,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		54E7C353D8FEC49D9A7BE173 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MinnieDiskTests/Pods-MinnieDiskTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		58AF23873CB13F77EA905F98 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		88CD2EBB1A72EBD00020B1E1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -264,6 +357,7 @@
 				88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */,
 				88CD2EF31A72F1B10020B1E1 /* ViewController.m in Sources */,
 				88CD2EC51A72EBD00020B1E1 /* main.m in Sources */,
+				88CD2EFE1A72FA400020B1E1 /* ListContentInteractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88CD2F001A73029B0020B1E1 /* ListContentInteractorTests.m in Sources */,
 				88CD2EE21A72EBD00020B1E1 /* MinnieDiskTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,12 +502,16 @@
 		};
 		88CD2EE91A72EBD00020B1E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72C3F3D5375024CB97D32B2F /* Pods-MinnieDiskTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/MinnieDisk/Frameworks",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MinnieDiskTests/MinnieDiskTests-prefix.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -426,12 +525,16 @@
 		};
 		88CD2EEA1A72EBD00020B1E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03010011929F7D83061B20D6 /* Pods-MinnieDiskTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/MinnieDisk/Frameworks",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MinnieDiskTests/MinnieDiskTests-prefix.h";
 				INFOPLIST_FILE = MinnieDiskTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
