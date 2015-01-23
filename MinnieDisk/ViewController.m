@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TempRepresentation.h"
+#import "MainTableViewCell.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
@@ -28,7 +29,7 @@
 - (instancetype)initWithInodeRepresentation:(id<InodeRepresentationProtocol>)inode {
     self = [super init];
     if (self) {
-        
+        _inodeRepresentation = inode;
     }
     return self;
 }
@@ -36,15 +37,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    if (!self.inodeRepresentation) {
+        self.inodeRepresentation = [self createMockRepresentation];
+    }
+    [self setupTableView];
+}
+- (void)setupTableView {
+    self.mainTableView.delegate = self;
+    self.mainTableView.dataSource = self;
+    [self.mainTableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainTableViewCell class]) bundle:nil]
+             forCellReuseIdentifier:NSStringFromClass([MainTableViewCell class])];
 }
 
+#pragma mark -  TableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSInteger cells = [((id<InodeRepresentationProtocol>)self.inodeRepresentation).childRepresentation count];
+    return cells;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MainTableViewCell class])
+                                                              forIndexPath:indexPath];
+    id<InodeRepresentationProtocol> inode = self.inodeRepresentation.childRepresentation[indexPath.row];
+    
+    cell.nameLabel.text = inode.name;
+    cell.sizeLabel.text = inode.humanReadableSize;
+    return cell;
+}
+
+
+#pragma mark -  TableViewDelegate
 
 
 
 
 #pragma mark -  mockup
-- (NSArray *)createMockArray {
+- (TempRepresentation *)createMockRepresentation {
     TempRepresentation *rep1 = [[TempRepresentation alloc]init];
     rep1.name = @"Pictures";
     rep1.size = 15000;
@@ -75,7 +103,14 @@
     rep5.type = InodeTypeFile;
     rep5.childRepresentation = nil;
     
-    return @[rep1,rep2,rep3,rep4,rep5];
+    
+    TempRepresentation *temp = [[TempRepresentation alloc]init];
+    temp.name = @"Dropbox";
+    temp.size = 25000;
+    temp.type = InodeTypeFolder;
+    temp.childRepresentation = @[rep1,rep2,rep3,rep4,rep5];
+    
+    return temp;
 }
 
 

@@ -15,4 +15,6 @@
 @property (nonatomic, assign) NSUInteger size;
 @property (nonatomic, assign) InodeType type;
 @property (nonatomic, strong) NSArray *childRepresentation;
+@property (nonatomic, copy) NSString *humanReadableSize;
+
 @end

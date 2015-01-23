@@ -17,6 +17,8 @@
 		88CD2EF41A72F1B10020B1E1 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CD2EF21A72F1B10020B1E1 /* ViewController.xib */; };
 		88CD2EF81A72F9810020B1E1 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CD2EF71A72F9810020B1E1 /* DropboxSDK.framework */; };
 		C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80811A73067200DC0CE7 /* TempRepresentation.m */; };
+		C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */; };
+		C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,9 @@
 		C7EF807C1A72FC0F00DC0CE7 /* InodeRepresentationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InodeRepresentationProtocol.h; sourceTree = "<group>"; };
 		C7EF80801A73067200DC0CE7 /* TempRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempRepresentation.h; sourceTree = "<group>"; };
 		C7EF80811A73067200DC0CE7 /* TempRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempRepresentation.m; sourceTree = "<group>"; };
+		C7EF80831A73097800DC0CE7 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
+		C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
+		C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +100,10 @@
 				C7EF807C1A72FC0F00DC0CE7 /* InodeRepresentationProtocol.h */,
 				88CD2EF01A72F1B10020B1E1 /* ViewController.h */,
 				88CD2EF11A72F1B10020B1E1 /* ViewController.m */,
+				88CD2EF21A72F1B10020B1E1 /* ViewController.xib */,
+				C7EF80881A73097C00DC0CE7 /* Cell */,
 				C7EF80801A73067200DC0CE7 /* TempRepresentation.h */,
 				C7EF80811A73067200DC0CE7 /* TempRepresentation.m */,
-				88CD2EF21A72F1B10020B1E1 /* ViewController.xib */,
 				88CD2ED21A72EBD00020B1E1 /* Images.xcassets */,
 				88CD2ED41A72EBD00020B1E1 /* LaunchScreen.xib */,
 				88CD2EC91A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld */,
@@ -139,6 +145,16 @@
 				88CD2EF71A72F9810020B1E1 /* DropboxSDK.framework */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		C7EF80881A73097C00DC0CE7 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C7EF80831A73097800DC0CE7 /* MainTableViewCell.h */,
+				C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */,
+				C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,6 +239,7 @@
 			files = (
 				88CD2ED61A72EBD00020B1E1 /* LaunchScreen.xib in Resources */,
 				88CD2EF41A72F1B10020B1E1 /* ViewController.xib in Resources */,
+				C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */,
 				88CD2ED31A72EBD00020B1E1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */,
 				88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */,
 				C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */,
 				88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */,
