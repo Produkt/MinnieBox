@@ -9,10 +9,12 @@
 #import "ViewController.h"
 #import "TempRepresentation.h"
 #import "MainTableViewCell.h"
+#import "ListContentInteractor.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (nonatomic, strong) id<InodeRepresentationProtocol> inodeRepresentation;
+@property (nonatomic, strong) ListContentInteractor *listContentInteractor;
 @end
 
 @implementation ViewController
@@ -41,6 +43,9 @@
         self.inodeRepresentation = [self createMockRepresentation];
     }
     [self setupTableView];
+	[self.listContentInteractor listRootContentWithCompletion:^(NSArray *inodes) {
+        
+    }];
 }
 - (void)setupTableView {
     self.mainTableView.delegate = self;
@@ -113,5 +118,12 @@
     return temp;
 }
 
+
+- (ListContentInteractor *)listContentInteractor{
+    if (!_listContentInteractor) {
+        _listContentInteractor = [[ListContentInteractor alloc] init];
+    }
+    return _listContentInteractor;
+}
 
 @end
