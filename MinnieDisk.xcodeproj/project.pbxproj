@@ -16,6 +16,7 @@
 		88CD2EF31A72F1B10020B1E1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EF11A72F1B10020B1E1 /* ViewController.m */; };
 		88CD2EF41A72F1B10020B1E1 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CD2EF21A72F1B10020B1E1 /* ViewController.xib */; };
 		88CD2EF81A72F9810020B1E1 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CD2EF71A72F9810020B1E1 /* DropboxSDK.framework */; };
+		C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80811A73067200DC0CE7 /* TempRepresentation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +45,9 @@
 		88CD2EF11A72F1B10020B1E1 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		88CD2EF21A72F1B10020B1E1 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		88CD2EF71A72F9810020B1E1 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
-		C7EF807C1A72FC0F00DC0CE7 /* inodeRepresentationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inodeRepresentationProtocol.h; sourceTree = "<group>"; };
+		C7EF807C1A72FC0F00DC0CE7 /* InodeRepresentationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InodeRepresentationProtocol.h; sourceTree = "<group>"; };
+		C7EF80801A73067200DC0CE7 /* TempRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempRepresentation.h; sourceTree = "<group>"; };
+		C7EF80811A73067200DC0CE7 /* TempRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempRepresentation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,9 +92,11 @@
 			children = (
 				88CD2EC61A72EBD00020B1E1 /* AppDelegate.h */,
 				88CD2EC71A72EBD00020B1E1 /* AppDelegate.m */,
-				C7EF807C1A72FC0F00DC0CE7 /* inodeRepresentationProtocol.h */,
+				C7EF807C1A72FC0F00DC0CE7 /* InodeRepresentationProtocol.h */,
 				88CD2EF01A72F1B10020B1E1 /* ViewController.h */,
 				88CD2EF11A72F1B10020B1E1 /* ViewController.m */,
+				C7EF80801A73067200DC0CE7 /* TempRepresentation.h */,
+				C7EF80811A73067200DC0CE7 /* TempRepresentation.m */,
 				88CD2EF21A72F1B10020B1E1 /* ViewController.xib */,
 				88CD2ED21A72EBD00020B1E1 /* Images.xcassets */,
 				88CD2ED41A72EBD00020B1E1 /* LaunchScreen.xib */,
@@ -237,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */,
+				C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */,
 				88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */,
 				88CD2EF31A72F1B10020B1E1 /* ViewController.m in Sources */,
 				88CD2EC51A72EBD00020B1E1 /* main.m in Sources */,

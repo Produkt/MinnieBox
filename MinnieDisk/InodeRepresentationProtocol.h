@@ -11,7 +11,7 @@ typedef NS_ENUM(NSUInteger, InodeType) {
     InodeTypeFolder
 };
 
-@protocol inodeRepresentationProtocol <NSObject>
+@protocol InodeRepresentationProtocol <NSObject>
 @required
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSDate *creationDate;
