@@ -13,14 +13,16 @@
 
 @interface ListContentInteractorTests : XCTestCase
 @property (strong,nonatomic) ListContentInteractor *listContentInteractor;
+@property (strong,nonatomic) DBRestClient *dbRestClientMock;
 @end
 
 @implementation ListContentInteractorTests
 
 - (void)setUp {
     [super setUp];
+    self.dbRestClientMock = mock([DBRestClient class]);
     self.listContentInteractor = [[ListContentInteractor alloc] init];
-    self.listContentInteractor.dbRestClient = mock([DBRestClient class]);
+    self.listContentInteractor.dbRestClient = self.dbRestClientMock;
 }
 
 - (void)tearDown {
@@ -28,8 +30,23 @@
     [super tearDown];
 }
 
-- (void)test {
+- (void)testDBRestClientList {
+    [self.listContentInteractor listRootContentWithCompletion:^(NSArray *inodes) {
+        
+    }];
+    [MKTVerify(self.dbRestClientMock) loadMetadata:@"/"];
+    
+    
+    id<InodeRepresentationProtocol> inode = mockProtocol(@protocol(InodeRepresentationProtocol));
+    [given([inode inodePath]) willReturn:@"/folder"];
+    
+    [self.listContentInteractor listRootContentWithInode:inode WithCompletion:^(NSArray *inodes) {
+        
+    }];
+    [MKTVerify(self.dbRestClientMock) loadMetadata:[inode inodePath]];
     
 }
+
+
 
 @end
