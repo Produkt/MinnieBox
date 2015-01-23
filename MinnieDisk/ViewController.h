@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "inodeRepresentationProtocol.h"
+
 
 @interface ViewController : UIViewController
+
+- (instancetype)initWithInodeRepresentation:(id<inodeRepresentationProtocol>)inode;
 
 @end

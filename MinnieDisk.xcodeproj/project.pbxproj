@@ -44,6 +44,7 @@
 		88CD2EF11A72F1B10020B1E1 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		88CD2EF21A72F1B10020B1E1 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		88CD2EF71A72F9810020B1E1 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		C7EF807C1A72FC0F00DC0CE7 /* inodeRepresentationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inodeRepresentationProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +89,7 @@
 			children = (
 				88CD2EC61A72EBD00020B1E1 /* AppDelegate.h */,
 				88CD2EC71A72EBD00020B1E1 /* AppDelegate.m */,
+				C7EF807C1A72FC0F00DC0CE7 /* inodeRepresentationProtocol.h */,
 				88CD2EF01A72F1B10020B1E1 /* ViewController.h */,
 				88CD2EF11A72F1B10020B1E1 /* ViewController.m */,
 				88CD2EF21A72F1B10020B1E1 /* ViewController.xib */,

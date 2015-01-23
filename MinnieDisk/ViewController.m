@@ -8,21 +8,38 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
-
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
+@property (nonatomic, strong) NSArray *inodeRepresentations;
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (instancetype)initWithInodeRepresentation:(id<inodeRepresentationProtocol>)inode {
+    self = [super init];
+    if (self) {
+
+    }
+    return self;
 }
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+}
+
+
+
 
 /*
 #pragma mark - Navigation
