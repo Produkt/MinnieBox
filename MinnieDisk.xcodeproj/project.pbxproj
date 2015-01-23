@@ -15,6 +15,7 @@
 		88CD2ED31A72EBD00020B1E1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CD2ED21A72EBD00020B1E1 /* Images.xcassets */; };
 		88CD2ED61A72EBD00020B1E1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CD2ED41A72EBD00020B1E1 /* LaunchScreen.xib */; };
 		88CD2EE21A72EBD00020B1E1 /* MinnieDiskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EE11A72EBD00020B1E1 /* MinnieDiskTests.m */; };
+		88CD2EEF1A72ECF90020B1E1 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CD2EEE1A72ECF90020B1E1 /* Dropbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		88CD2EDB1A72EBD00020B1E1 /* MinnieDiskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinnieDiskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CD2EE01A72EBD00020B1E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88CD2EE11A72EBD00020B1E1 /* MinnieDiskTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MinnieDiskTests.m; sourceTree = "<group>"; };
+		88CD2EEE1A72ECF90020B1E1 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88CD2EEF1A72ECF90020B1E1 /* Dropbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +94,7 @@
 				88CD2ED21A72EBD00020B1E1 /* Images.xcassets */,
 				88CD2ED41A72EBD00020B1E1 /* LaunchScreen.xib */,
 				88CD2EC91A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld */,
+				88CD2EEB1A72EC140020B1E1 /* Frameworks */,
 				88CD2EC21A72EBD00020B1E1 /* Supporting Files */,
 			);
 			path = MinnieDisk;
@@ -120,6 +124,14 @@
 				88CD2EE01A72EBD00020B1E1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88CD2EEB1A72EC140020B1E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				88CD2EEE1A72ECF90020B1E1 /* Dropbox.framework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,6 +359,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/fillito/Downloads/dropbox-ios-sync-sdk-3.1.2",
+					"$(PROJECT_DIR)/MinnieDisk/Frameworks",
+				);
 				INFOPLIST_FILE = MinnieDisk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -357,6 +374,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/fillito/Downloads/dropbox-ios-sync-sdk-3.1.2",
+					"$(PROJECT_DIR)/MinnieDisk/Frameworks",
+				);
 				INFOPLIST_FILE = MinnieDisk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -416,6 +438,7 @@
 				88CD2EE71A72EBD00020B1E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88CD2EE81A72EBD00020B1E1 /* Build configuration list for PBXNativeTarget "MinnieDiskTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +447,7 @@
 				88CD2EEA1A72EBD00020B1E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
