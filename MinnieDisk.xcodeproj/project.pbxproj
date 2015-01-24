@@ -10,6 +10,8 @@
 		883076B21A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076B11A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m */; };
 		883076B61A739F1C00D28ED2 /* MDInode.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076B51A739F1C00D28ED2 /* MDInode.m */; };
 		883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076B81A73ACC600D28ED2 /* DraftContentInteractor.m */; };
+		883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076BB1A73AFC900D28ED2 /* DeleteContentInteractor.m */; };
+		883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076BE1A73B29E00D28ED2 /* THOperation.m */; };
 		88CD2EC51A72EBD00020B1E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC41A72EBD00020B1E1 /* main.m */; };
 		88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC71A72EBD00020B1E1 /* AppDelegate.m */; };
 		88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC91A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld */; };
@@ -50,6 +52,10 @@
 		883076B51A739F1C00D28ED2 /* MDInode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDInode.m; sourceTree = "<group>"; };
 		883076B71A73ACC600D28ED2 /* DraftContentInteractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraftContentInteractor.h; sourceTree = "<group>"; };
 		883076B81A73ACC600D28ED2 /* DraftContentInteractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraftContentInteractor.m; sourceTree = "<group>"; };
+		883076BA1A73AFC900D28ED2 /* DeleteContentInteractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteContentInteractor.h; sourceTree = "<group>"; };
+		883076BB1A73AFC900D28ED2 /* DeleteContentInteractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteContentInteractor.m; sourceTree = "<group>"; };
+		883076BD1A73B29E00D28ED2 /* THOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOperation.h; sourceTree = "<group>"; };
+		883076BE1A73B29E00D28ED2 /* THOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THOperation.m; sourceTree = "<group>"; };
 		88CD2EBF1A72EBD00020B1E1 /* MinnieDisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinnieDisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CD2EC31A72EBD00020B1E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88CD2EC41A72EBD00020B1E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -220,6 +226,10 @@
 				88CD2EFD1A72FA400020B1E1 /* ListContentInteractor.m */,
 				883076B71A73ACC600D28ED2 /* DraftContentInteractor.h */,
 				883076B81A73ACC600D28ED2 /* DraftContentInteractor.m */,
+				883076BA1A73AFC900D28ED2 /* DeleteContentInteractor.h */,
+				883076BB1A73AFC900D28ED2 /* DeleteContentInteractor.m */,
+				883076BD1A73B29E00D28ED2 /* THOperation.h */,
+				883076BE1A73B29E00D28ED2 /* THOperation.m */,
 			);
 			path = "Use Cases";
 			sourceTree = "<group>";
@@ -385,6 +395,8 @@
 				C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */,
 				88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */,
 				883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */,
+				883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */,
+				883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */,
 				88CD2EF31A72F1B10020B1E1 /* ViewController.m in Sources */,
 				883076B61A739F1C00D28ED2 /* MDInode.m in Sources */,
 				88CD2EC51A72EBD00020B1E1 /* main.m in Sources */,
