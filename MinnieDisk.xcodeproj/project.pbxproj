@@ -16,6 +16,12 @@
 		883076C41A73B7BC00D28ED2 /* MDInodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076C31A73B7BC00D28ED2 /* MDInodeTests.m */; };
 		883076C81A73C77B00D28ED2 /* MinnieBoxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076C61A73C77B00D28ED2 /* MinnieBoxTableViewCell.m */; };
 		883076C91A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883076C71A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib */; };
+		883076CE1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076CC1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.m */; };
+		883076CF1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883076CD1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.xib */; };
+		883076D31A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076D11A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.m */; };
+		883076D41A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883076D21A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.xib */; };
+		883076DB1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076D91A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.m */; };
+		883076DC1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883076DA1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.xib */; };
 		88CD2EC51A72EBD00020B1E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC41A72EBD00020B1E1 /* main.m */; };
 		88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC71A72EBD00020B1E1 /* AppDelegate.m */; };
 		88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC91A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld */; };
@@ -65,6 +71,15 @@
 		883076C51A73C77B00D28ED2 /* MinnieBoxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinnieBoxTableViewCell.h; sourceTree = "<group>"; };
 		883076C61A73C77B00D28ED2 /* MinnieBoxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinnieBoxTableViewCell.m; sourceTree = "<group>"; };
 		883076C71A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinnieBoxTableViewCell.xib; sourceTree = "<group>"; };
+		883076CB1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinieBoxDeleteTableViewCell.h; sourceTree = "<group>"; };
+		883076CC1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinieBoxDeleteTableViewCell.m; sourceTree = "<group>"; };
+		883076CD1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinieBoxDeleteTableViewCell.xib; sourceTree = "<group>"; };
+		883076D01A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinnieBoxDisclaimerTableViewCell.h; sourceTree = "<group>"; };
+		883076D11A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinnieBoxDisclaimerTableViewCell.m; sourceTree = "<group>"; };
+		883076D21A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinnieBoxDisclaimerTableViewCell.xib; sourceTree = "<group>"; };
+		883076D81A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinnieBoxCountdownTableViewCell.h; sourceTree = "<group>"; };
+		883076D91A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinnieBoxCountdownTableViewCell.m; sourceTree = "<group>"; };
+		883076DA1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinnieBoxCountdownTableViewCell.xib; sourceTree = "<group>"; };
 		88CD2EBF1A72EBD00020B1E1 /* MinnieDisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinnieDisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CD2EC31A72EBD00020B1E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88CD2EC41A72EBD00020B1E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -133,14 +148,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		883076CA1A73C78300D28ED2 /* Cell */ = {
+		883076CA1A73C78300D28ED2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				883076CB1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.h */,
+				883076CC1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.m */,
+				883076CD1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.xib */,
 				883076C51A73C77B00D28ED2 /* MinnieBoxTableViewCell.h */,
 				883076C61A73C77B00D28ED2 /* MinnieBoxTableViewCell.m */,
 				883076C71A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib */,
+				883076D01A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.h */,
+				883076D11A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.m */,
+				883076D21A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.xib */,
+				883076D81A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.h */,
+				883076D91A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.m */,
+				883076DA1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.xib */,
 			);
-			name = Cell;
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		88CD2EB61A72EBD00020B1E1 = {
@@ -301,7 +325,7 @@
 				C731B52D1A73B23400733D1E /* MinnieBoxViewController.h */,
 				C731B52E1A73B23400733D1E /* MinnieBoxViewController.m */,
 				C731B52F1A73B23400733D1E /* MinnieBoxViewController.xib */,
-				883076CA1A73C78300D28ED2 /* Cell */,
+				883076CA1A73C78300D28ED2 /* Cells */,
 			);
 			name = MinnieBoxVC;
 			sourceTree = "<group>";
@@ -404,7 +428,10 @@
 				88CD2EF41A72F1B10020B1E1 /* ViewController.xib in Resources */,
 				883076C91A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib in Resources */,
 				C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */,
+				883076CF1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.xib in Resources */,
+				883076D41A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.xib in Resources */,
 				88CD2ED31A72EBD00020B1E1 /* Images.xcassets in Resources */,
+				883076DC1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +518,7 @@
 				88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */,
 				C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */,
 				88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */,
+				883076CE1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.m in Sources */,
 				883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */,
 				883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */,
 				883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */,
@@ -498,6 +526,8 @@
 				883076B61A739F1C00D28ED2 /* MDInode.m in Sources */,
 				C731B5301A73B23400733D1E /* MinnieBoxViewController.m in Sources */,
 				88CD2EC51A72EBD00020B1E1 /* main.m in Sources */,
+				883076DB1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.m in Sources */,
+				883076D31A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.m in Sources */,
 				88CD2EFE1A72FA400020B1E1 /* ListContentInteractor.m in Sources */,
 				883076B21A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m in Sources */,
 				883076C81A73C77B00D28ED2 /* MinnieBoxTableViewCell.m in Sources */,

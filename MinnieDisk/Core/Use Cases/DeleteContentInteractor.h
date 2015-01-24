@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "InodeRepresentationProtocol.h"
 
-@class DBRestClient;
+@class DBRestClient,DraftContentInteractor;
 @interface DeleteContentInteractor : NSObject
+@property (strong,nonatomic) DraftContentInteractor *draftContentInteractor;
 @property (strong,nonatomic) DBRestClient *dbRestClient;
 - (void)deleteInode:(id<InodeRepresentationProtocol>)inode withCompletion:(void(^)(void))completion;
 - (void)deleteInodes:(NSArray *)inodes withCompletion:(void(^)(void))completion;

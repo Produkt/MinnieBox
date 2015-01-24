@@ -9,6 +9,7 @@
 #import "DeleteContentInteractor.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "THOperation.h"
+#import "DraftContentInteractor.h"
 
 @interface DeletionOperation : THOperation<DBRestClientDelegate>
 @property (strong,nonatomic) DBRestClient *dbRestClient;
@@ -28,9 +29,13 @@
 }
 - (void)start{
     [super start];
-    [self.dbRestClient deletePath:[self.inode inodePath]];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.dbRestClient deletePath:[self.inode inodePath]];
+//    });
+    [self restClient:self.dbRestClient deletedPath:[self.inode inodePath]];
 }
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path{
+    [[self.inode parentInode] removeChildInode:self.inode];
     [self finish];
 }
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error{
@@ -53,6 +58,7 @@
     for (id<InodeRepresentationProtocol> inode in inodes) {
         dispatch_group_enter(deletionGroup);
         [self deleteInode:inode withCompletion:^{
+            [self.draftContentInteractor removeInode:inode];
             dispatch_group_leave(deletionGroup);
         }];
     }

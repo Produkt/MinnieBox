@@ -12,6 +12,8 @@
 @interface MDInode : NSObject<InodeRepresentationProtocol>
 @property (strong,nonatomic,readonly) id<InodeRepresentationProtocol> inodeItem;
 @property (strong,nonatomic,readonly) NSSet *draftedInodes;
+@property (weak,nonatomic) id<InodeRepresentationProtocol> parentInode;
 - (instancetype)initWithInodeItem:(id<InodeRepresentationProtocol>)inodeItem andDraftedInodes:(NSSet *)draftedInodes;
 - (void)setInodeRepresentationChilds:(NSArray *)inodeRepresentationChilds;
+- (void)removeChildInode:(id<InodeRepresentationProtocol>)childInode;
 @end

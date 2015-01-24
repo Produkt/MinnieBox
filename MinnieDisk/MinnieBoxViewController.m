@@ -10,10 +10,24 @@
 #import "MinnieBoxTableViewCell.h"
 #import "InodeRepresentationProtocol.h"
 #import "DraftContentInteractor.h"
+#import "DeleteContentInteractor.h"
+#import "MinieBoxDeleteTableViewCell.h"
+#import "MinnieBoxCountdownTableViewCell.h"
+#import "MinnieBoxDisclaimerTableViewCell.h"
+
+static NSUInteger const maxConfirmationIteratinos = 5;
 
 @interface MinnieBoxViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong,nonatomic,readwrite) NSSet *draftedInodes;
+@property (strong,nonatomic,readwrite) NSMutableArray *draftedInodesCache;
+@property (strong,nonatomic) DeleteContentInteractor *deleteContentInteractor;
+@property (strong,nonatomic) DraftContentInteractor *draftContentInteractor;
+@property (assign,nonatomic) BOOL isWaitingConfirmation;
+@property (strong,nonatomic) NSTimer *confirmationTimer;
+@property (assign,nonatomic) NSUInteger confirmationIterations;
+@property (weak,nonatomic) MinnieBoxCountdownTableViewCell *countdownCell;
+@property (weak, nonatomic) IBOutlet UILabel *noContentLabel;
 @end
 
 @implementation MinnieBoxViewController
@@ -26,7 +40,8 @@
         _draftedInodes = draftedInodes;
         [self setupTabbarItem];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inodeWasDrafted:) name:DraftInodesAddInodeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inodeWasUndrafted:) name:DraftInodesAddInodeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inodeWasUndrafted:) name:DraftInodesRemoveInodeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inodeWillBeUndrafted:) name:DraftInodesWillRemoveInodeNotification object:nil];
     }
     return self;
 }
@@ -35,10 +50,24 @@
     return [self initWithDraftedInodes:nil];
 }
 - (void)inodeWasDrafted:(NSNotification *)notification{
-    [self.tableView reloadData];
+    [self updateCache];
 }
 - (void)inodeWasUndrafted:(NSNotification *)notification{
+    [self updateCache];
+}
+- (void)updateCache{
+    self.draftedInodesCache = [[self.draftedInodes allObjects] mutableCopy];
     [self.tableView reloadData];
+}
+- (void)inodeWillBeUndrafted:(NSNotification *)notification{
+//    NSUInteger index = [self.draftedInodesCache indexOfObject:notification.object];
+//    [self.draftedInodesCache removeObject:notification.object];
+//    NSMutableArray *indexPathsToDelete = [NSMutableArray array];
+//    [indexPathsToDelete addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+//    if (!self.draftedInodesCache.count) {
+//        [indexPathsToDelete addObject:[NSIndexPath indexPathForItem:0 inSection:1]];
+//    }
+//    [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)viewDidLoad {
@@ -47,10 +76,17 @@
     [self setupNavigationTitle];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
 - (void)configureTableView{
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MinnieBoxTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([MinnieBoxTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MinieBoxDeleteTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([MinieBoxDeleteTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MinnieBoxCountdownTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([MinnieBoxCountdownTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MinnieBoxDisclaimerTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([MinnieBoxDisclaimerTableViewCell class])];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -101,21 +137,126 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return [self.draftedInodesCache count]?3:0;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.draftedInodes count];
+    self.noContentLabel.hidden = ([self.draftedInodesCache count] || self.isWaitingConfirmation)?YES:NO;
+    if (section == 0) {
+        return [self.draftedInodesCache count];
+    }else if (section == 1){
+        return ([self.draftedInodesCache count] && !self.isWaitingConfirmation)?2:0;
+    }else if (section == 2){
+        return ([self.draftedInodesCache count] && self.isWaitingConfirmation)?2:0;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    MinnieBoxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinnieBoxTableViewCell class]) forIndexPath:indexPath];
-    id<InodeRepresentationProtocol> inode = [[self.draftedInodes allObjects] objectAtIndex:indexPath.item];
-    cell.inodeNameLabel.text = [inode inodeName];
-    cell.inodeSizeLabel.text = [inode inodeHumanReadableSize];
-    return cell;
+    if (indexPath.section == 0 ) {
+        MinnieBoxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinnieBoxTableViewCell class]) forIndexPath:indexPath];
+        id<InodeRepresentationProtocol> inode = [self.draftedInodesCache objectAtIndex:indexPath.item];
+        cell.inodeNameLabel.text = [inode inodeName];
+        cell.inodeSizeLabel.text = [inode inodeHumanReadableSize];
+        return cell;
+    }else if (indexPath.section == 1){
+        if (indexPath.item == 0) {
+            MinieBoxDeleteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinieBoxDeleteTableViewCell class]) forIndexPath:indexPath];
+            cell.deleteButtonLabel.text = @"Delete All";
+            return cell;
+        }else{
+            MinnieBoxDisclaimerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinnieBoxDisclaimerTableViewCell class]) forIndexPath:indexPath];
+            return cell;
+        }
+        
+    }else if (indexPath.section == 2){
+        if (indexPath.item == 0) {
+            MinnieBoxCountdownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinnieBoxCountdownTableViewCell class]) forIndexPath:indexPath];
+            self.countdownCell = cell;
+            return cell;
+        }else{
+            MinieBoxDeleteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinieBoxDeleteTableViewCell class]) forIndexPath:indexPath];
+            cell.deleteButtonLabel.text = @"Stop!";
+            return cell;
+        }
+    }
+    
+    return nil;
 }
 
 #pragma mark - UITableViewDelegate
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1 && indexPath.item == 0) {
+        self.isWaitingConfirmation = YES;
+        self.confirmationIterations = 0;
+        [self updateCellCountdown];
+        self.confirmationTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(confirmationCountDown) userInfo:nil repeats:YES];
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:2] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        self.tableView.scrollEnabled = NO;
+    }else if (indexPath.section == 2 && indexPath.item == 1){
+        self.isWaitingConfirmation = NO;
+        [self.confirmationTimer invalidate];
+        self.confirmationTimer = nil;
+        self.tableView.scrollEnabled = YES;
+        [self.tableView reloadData];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 44;
+    }else if (indexPath.section == 1){
+        if (indexPath.item == 0) {
+            return 44;
+        }else if (indexPath.item == 1){
+            return 70;
+        }
+    }else if (indexPath.section == 2){
+        if (indexPath.item == 0) {
+            return 150;
+        }else if (indexPath.item == 1){
+            return 44;
+        }
+    }
+    return 0;
+}
+
+- (void)confirmationCountDown{
+    self.confirmationIterations ++;
+    NSLog(@"%lu",(unsigned long)self.confirmationIterations);
+    [self updateCellCountdown];
+    if (self.confirmationIterations >= maxConfirmationIteratinos) {
+        [self.confirmationTimer invalidate];
+        self.confirmationTimer = nil;
+        self.isWaitingConfirmation = NO;
+        [self deleteAllItems];
+    }
+}
+
+- (void)updateCellCountdown{
+    self.countdownCell.countdownLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxConfirmationIteratinos - self.confirmationIterations)];
+}
+
+- (void)deleteAllItems{
+    [self.deleteContentInteractor deleteInodes:self.draftedInodesCache withCompletion:^{
+        self.tableView.scrollEnabled = YES;
+        self.noContentLabel.hidden = ([self.draftedInodesCache count] || self.isWaitingConfirmation)?YES:NO;
+    }];
+}
+
+- (DeleteContentInteractor *)deleteContentInteractor{
+    if (!_deleteContentInteractor) {
+        _deleteContentInteractor = [[DeleteContentInteractor alloc] init];
+        _deleteContentInteractor.draftContentInteractor = self.draftContentInteractor;
+    }
+    return _deleteContentInteractor;
+}
+- (DraftContentInteractor *)draftContentInteractor{
+    if (!_draftContentInteractor) {
+        _draftContentInteractor = [[DraftContentInteractor alloc] initWithDraftedInodes:(NSMutableSet *)self.draftedInodes];
+    }
+    return _draftContentInteractor;
+}
 
 @end

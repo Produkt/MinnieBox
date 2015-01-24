@@ -10,6 +10,7 @@
 
 NSString * const DraftInodesAddInodeNotification = @"DraftInodesAddInodeNotification";
 NSString * const DraftInodesRemoveInodeNotification = @"DraftInodesRemoveInodeNotification";
+NSString * const DraftInodesWillRemoveInodeNotification = @"DraftInodesWillRemoveInodeNotification";
 
 @interface DraftContentInteractor ()
 @property (strong,nonatomic,readwrite) NSMutableSet *draftedInodes;
@@ -29,11 +30,16 @@ NSString * const DraftInodesRemoveInodeNotification = @"DraftInodesRemoveInodeNo
     return [self initWithDraftedInodes:nil];
 }
 - (void)addInode:(id<InodeRepresentationProtocol>)inode{
-    [self.draftedInodes addObject:inode];
-    [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesAddInodeNotification object:inode];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.draftedInodes addObject:inode];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesAddInodeNotification object:inode];
+    });
 }
 - (void)removeInode:(id<InodeRepresentationProtocol>)inode{
-    [self.draftedInodes removeObject:inode];
-    [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesRemoveInodeNotification object:inode];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesWillRemoveInodeNotification object:inode];
+        [self.draftedInodes removeObject:inode];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesRemoveInodeNotification object:inode];
+    });
 }
 @end
