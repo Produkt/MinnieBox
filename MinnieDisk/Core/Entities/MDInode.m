@@ -46,15 +46,27 @@
     return [self.inodeItem inodeCreationDate];
 }
 - (NSUInteger)inodeSize{
-    return [self.inodeItem inodeSize];
+    if ([self.inodeItem inodeType] == InodeTypeFile) {
+        return [self.inodeItem inodeSize];
+    }
+    return [self folderContentSize];
+}
+- (NSUInteger)folderContentSize{
+    NSUInteger size = 0;
+    for (MDInode *inode in self.inodeItemChilds) {
+        if (![self.draftedInodes containsObject:inode]) {
+            size += [inode inodeSize];
+        }
+    }
+    return size;
 }
 - (InodeType)inodeType{
     return [self.inodeItem inodeType];
 }
 - (NSString *)inodeHumanReadableSize{
-    return [self.inodeItem inodeHumanReadableSize];
+    return [NSByteCountFormatter stringFromByteCount:[self inodeSize] countStyle:NSByteCountFormatterCountStyleFile];
 }
 - (NSArray *)inodeChilds{
-    return [self.inodeItem inodeChilds];
+    return self.inodeItemChilds;
 }
 @end
