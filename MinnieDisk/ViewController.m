@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "TempRepresentation.h"
 #import "MainTableViewCell.h"
 #import "ListContentInteractor.h"
 #import "DraftContentInteractor.h"
@@ -39,6 +38,7 @@ static NSInteger const gradientLength = 100;
     self = [super init];
     if (self) {
         _inodeRepresentation = inode;
+        self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
     }
     return self;
 }
@@ -46,13 +46,15 @@ static NSInteger const gradientLength = 100;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (!self.inodeRepresentation) {
-        self.inodeRepresentation = [self createMockRepresentation];
+    if (!_inodeRepresentation) {
+        [self.listContentInteractor listRootContentWithCompletion:^(id<InodeRepresentationProtocol> inode) {
+            _inodeRepresentation = inode;
+            self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+            [self.mainTableView reloadData];
+        }];
     }
     [self setupTableView];
-	[self.listContentInteractor listRootContentWithCompletion:^(id<InodeRepresentationProtocol> inode) {
-        
-    }];
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -96,51 +98,7 @@ static NSInteger const gradientLength = 100;
 
 
 
-#pragma mark -  mockup
-- (TempRepresentation *)createMockRepresentation {
-    TempRepresentation *rep1 = [[TempRepresentation alloc]init];
-    rep1.inodeName = @"Pictures";
-    rep1.inodeSize = 15000;
-    rep1.inodeType = InodeTypeFolder;
-    rep1.inodeChilds = nil;
-    
-    TempRepresentation *rep2 = [[TempRepresentation alloc]init];
-    rep2.inodeName = @"Music";
-    rep2.inodeSize = 10000;
-    rep2.inodeType = InodeTypeFolder;
-    rep2.inodeChilds = nil;
-    
-    TempRepresentation *rep3 = [[TempRepresentation alloc]init];
-    rep3.inodeName = @"Apps";
-    rep3.inodeSize = 1500;
-    rep3.inodeType = InodeTypeFolder;
-    rep3.inodeChilds = nil;
-    
-    TempRepresentation *rep4 = [[TempRepresentation alloc]init];
-    rep4.inodeName = @"Apps2";
-    rep4.inodeSize = 400;
-    rep4.inodeType = InodeTypeFolder;
-    rep4.inodeChilds = nil;
-    
-    TempRepresentation *rep5 = [[TempRepresentation alloc]init];
-    rep5.inodeName = @"silly.pdf";
-    rep5.inodeSize = 400;
-    rep5.inodeType = InodeTypeFile;
-    rep5.inodeChilds = nil;
-    
-    
-    TempRepresentation *temp = [[TempRepresentation alloc]init];
-    temp.inodeName = @"Dropbox";
-    temp.inodeSize = 25000;
-    temp.inodeType = InodeTypeFolder;
-    temp.inodeChilds = @[rep1,rep2,rep3,rep4,rep5];
-    
-    self.colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor colorWithRed:0.00 green:0.47 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.55 green:0.76 blue:1.00 alpha:1.0]]
-                                                                 length:gradientLength];
-
-    self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:temp];
-    return temp;
-}
+#pragma mark -  helpers
 
 - (NSUInteger)maximumNodeSizeForNodeRepresentation:(id<InodeRepresentationProtocol>)inode {
     NSArray *array = [[NSArray alloc]initWithArray:[inode inodeChilds]];
@@ -151,6 +109,15 @@ static NSInteger const gradientLength = 100;
         }
     }
     return maximum;
+}
+
+#pragma mark -  getters
+- (GradientColorGenerator *)colorGenerator {
+    if (!_colorGenerator) {
+        _colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor colorWithRed:0.00 green:0.47 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.55 green:0.76 blue:1.00 alpha:1.0]]
+                                                                     length:gradientLength];
+    }
+    return _colorGenerator;
 }
 
 - (ListContentInteractor *)listContentInteractor{
