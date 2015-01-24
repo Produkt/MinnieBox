@@ -60,7 +60,8 @@
 }
 
 - (void)updatePercetageLayer{
-    self.percentageLayer.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bottomBarView.frame) * self.sizePercentage, CGRectGetHeight(self.bottomBarView.frame));
+    CGRect bounds = CGRectMake(0, 0, CGRectGetWidth(self.bottomBarView.frame) * self.sizePercentage, CGRectGetHeight(self.bottomBarView.frame));
+    self.percentageLayer.bounds = bounds;
 }
 -(void)animateTitleToDeleteState {
     self.leadingEdgeConstraint.constant = 100;

@@ -102,8 +102,13 @@ static NSInteger const gradientLength = 100;
     cell.sizeLabel.text = [inode inodeHumanReadableSize];
     NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
     cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
-    CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
-    cell.sizePercentage = size;
+    if (self.maximumNodeSize > 0) {
+        CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
+        cell.sizePercentage = size;
+    } else {
+        cell.sizePercentage = 0;
+    }
+
     cell.folderCell = [inode inodeType];
 
 
