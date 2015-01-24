@@ -62,6 +62,13 @@ static NSUInteger const numberOfChilds = 10;
     XCTAssertEqual([self.inode inodeSize], 410);
 }
 
+- (void)testUndraftedChilds{
+    [self.draftedInodes addObject:[self.inode inodeChilds][0]];
+    [self.draftedInodes addObject:[self.inode inodeChilds][1]];
+    XCTAssert(![[self.inode inodeUndraftedChilds]containsObject:[self.inode inodeChilds][0]]);
+    XCTAssert(![[self.inode inodeUndraftedChilds]containsObject:[self.inode inodeChilds][1]]);
+}
+
 - (void)testInodeHumanReadableSize {
     XCTAssertEqualObjects([self.inode inodeHumanReadableSize], @"550 bytes");
 }
