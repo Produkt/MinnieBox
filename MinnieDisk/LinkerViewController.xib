@@ -33,10 +33,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minniebox needs access to your dropbox... Captain Obvious innit?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuZ-Ue-C0Z">
-                    <rect key="frame" x="51" y="192" width="498" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="lLj-ai-fIu"/>
-                    </constraints>
+                    <rect key="frame" x="51" y="211" width="498" height="41"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="1" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
