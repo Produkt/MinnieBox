@@ -29,6 +29,7 @@ static NSInteger const gradientLength = 100;
 {
     self = [super init];
     if (self) {
+        [self setupTabbarItem];
 
     }
     return self;
@@ -39,6 +40,8 @@ static NSInteger const gradientLength = 100;
     if (self) {
         _inodeRepresentation = inode;
         self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+        [self setupTabbarItem];
+
     }
     return self;
 }
@@ -55,9 +58,14 @@ static NSInteger const gradientLength = 100;
     }
     [self setupTableView];
 
+
 }
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)setupTabbarItem {
+    self.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Dropbox"
+                                                   image:[[UIImage imageNamed:@"dropbox_tabbar_deselected"]
+                                                          imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                           selectedImage:[[UIImage imageNamed:@"dropbox_tabbar_selected"]
+                                                          imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 }
 - (void)setupTableView {
     self.mainTableView.delegate = self;
