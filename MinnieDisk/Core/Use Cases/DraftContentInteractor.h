@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "InodeRepresentationProtocol.h"
 
+UIKIT_EXTERN NSString * const DraftInodesAddInodeNotification;
+UIKIT_EXTERN NSString * const DraftInodesRemoveInodeNotification;
+
 @interface DraftContentInteractor : NSObject
 @property (strong,nonatomic,readonly) NSMutableSet *draftedInodes;
 - (instancetype)initWithDraftedInodes:(NSMutableSet *)draftedInodes;

@@ -23,7 +23,7 @@
     ViewController *viewController = [[ViewController alloc] init];
     viewController.draftedInodes = self.draftedInodes;
     UINavigationController *firstNavController = [[UINavigationController alloc]initWithRootViewController:viewController];
-    MinnieBoxViewController *minnieBoxVC = [[MinnieBoxViewController alloc]init];
+    MinnieBoxViewController *minnieBoxVC = [[MinnieBoxViewController alloc]initWithDraftedInodes:self.draftedInodes];
     UINavigationController *secondNavController = [[UINavigationController alloc]initWithRootViewController:minnieBoxVC];
     UITabBarController *tabbarController = [[UITabBarController alloc]init];
     tabbarController.viewControllers = @[firstNavController, secondNavController];
