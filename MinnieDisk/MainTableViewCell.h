@@ -11,5 +11,6 @@
 @interface MainTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
-
+@property (nonatomic, assign) CGFloat sizePercentage;
+@property (nonatomic, strong) UIColor *percentageColor;
 @end

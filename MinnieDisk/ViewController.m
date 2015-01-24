@@ -12,6 +12,8 @@
 #import "ListContentInteractor.h"
 #import "GradientColorGenerator.h"
 
+static NSInteger const gradientLength = 100;
+
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (nonatomic, strong) id<InodeRepresentationProtocol> inodeRepresentation;
@@ -25,7 +27,9 @@
 {
     self = [super init];
     if (self) {
+        [self.listContentInteractor listRootContentWithCompletion:^(NSArray *inodes) {
 
+        }];
     }
     return self;
 }
@@ -45,9 +49,7 @@
         self.inodeRepresentation = [self createMockRepresentation];
     }
     [self setupTableView];
-	[self.listContentInteractor listRootContentWithCompletion:^(NSArray *inodes) {
-        
-    }];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,6 +58,7 @@
 - (void)setupTableView {
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
+    self.mainTableView.separatorColor = [UIColor clearColor];
     [self.mainTableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainTableViewCell class]) bundle:nil]
              forCellReuseIdentifier:NSStringFromClass([MainTableViewCell class])];
 }
@@ -78,7 +81,7 @@
     cell.nameLabel.text = inode.name;
     cell.sizeLabel.text = inode.humanReadableSize;
     NSInteger nCells = [((id<InodeRepresentationProtocol>)self.inodeRepresentation).childRepresentation count];
-    cell.backgroundColor = [self.colorGenerator colorAtPosition:indexPath.row * 200/nCells];
+    cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
     return cell;
 }
 
@@ -134,7 +137,7 @@
     temp.childRepresentation = @[rep1,rep2,rep3,rep4,rep5, rep5, rep5, rep5];
     
     self.colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor colorWithRed:0.00 green:0.47 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.55 green:0.76 blue:1.00 alpha:1.0]]
-                                                                 length:100];
+                                                                 length:gradientLength];
     return temp;
 }
 

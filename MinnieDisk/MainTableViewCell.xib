@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,21 +14,40 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Folder Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4m-7t-NBd">
-                        <rect key="frame" x="8" y="8" width="99" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Folder Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4m-7t-NBd">
+                        <rect key="frame" x="8" y="8" width="304" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Folder Size" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR8-Ot-MSK">
-                        <rect key="frame" x="8" y="37" width="86" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Folder Size" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR8-Ot-MSK">
+                        <rect key="frame" x="8" y="37" width="304" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.58660686016082764" green="0.58671069145202637" blue="0.58660036325454712" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Inr-PB-lb8">
+                        <rect key="frame" x="0.0" y="65.5" width="320" height="4"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="4" id="nbC-Pv-eGc"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="jR8-Ot-MSK" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="96D-9p-lVB"/>
+                    <constraint firstAttribute="trailing" secondItem="G4m-7t-NBd" secondAttribute="trailing" constant="8" id="CVJ-Nb-Z03"/>
+                    <constraint firstAttribute="bottom" secondItem="Inr-PB-lb8" secondAttribute="bottom" id="EEn-GD-pkf"/>
+                    <constraint firstItem="Inr-PB-lb8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="M14-xQ-fxk"/>
+                    <constraint firstAttribute="trailing" secondItem="Inr-PB-lb8" secondAttribute="trailing" id="jv7-Gb-GsX"/>
+                    <constraint firstItem="jR8-Ot-MSK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="k5b-fk-bGG"/>
+                    <constraint firstItem="jR8-Ot-MSK" firstAttribute="top" secondItem="G4m-7t-NBd" secondAttribute="bottom" constant="8" id="uOr-L3-AZI"/>
+                    <constraint firstItem="G4m-7t-NBd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="vY5-lu-DnD"/>
+                    <constraint firstItem="G4m-7t-NBd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="zsf-hM-74D"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="bottomBarView" destination="Inr-PB-lb8" id="Fqs-QB-iah"/>
                 <outlet property="nameLabel" destination="G4m-7t-NBd" id="HaP-sG-4Nq"/>
                 <outlet property="sizeLabel" destination="jR8-Ot-MSK" id="f5n-cc-hmM"/>
             </connections>
