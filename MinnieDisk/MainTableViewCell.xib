@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Folder Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4m-7t-NBd">
-                        <rect key="frame" x="16" y="16.5" width="296" height="20.5"/>
+                        <rect key="frame" x="16" y="17" width="296" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -27,14 +27,22 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view alpha="0.5499999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Inr-PB-lb8">
-                        <rect key="frame" x="0.0" y="65.5" width="320" height="4"/>
+                        <rect key="frame" x="0.0" y="66" width="320" height="4"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="4" id="nbC-Pv-eGc"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="U3j-Fe-dMh">
+                        <rect key="frame" x="289" y="29" width="8" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="8" id="2S9-8J-Eqb"/>
+                            <constraint firstAttribute="height" constant="12" id="Xc7-za-Jv4"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="centerY" secondItem="U3j-Fe-dMh" secondAttribute="centerY" id="23V-eC-gck"/>
                     <constraint firstItem="jR8-Ot-MSK" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="96D-9p-lVB"/>
                     <constraint firstAttribute="trailing" secondItem="G4m-7t-NBd" secondAttribute="trailing" constant="8" id="CVJ-Nb-Z03"/>
                     <constraint firstAttribute="bottom" secondItem="Inr-PB-lb8" secondAttribute="bottom" id="EEn-GD-pkf"/>
@@ -44,14 +52,19 @@
                     <constraint firstItem="jR8-Ot-MSK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="oUb-4M-9To"/>
                     <constraint firstItem="jR8-Ot-MSK" firstAttribute="top" secondItem="G4m-7t-NBd" secondAttribute="bottom" id="uOr-L3-AZI"/>
                     <constraint firstItem="G4m-7t-NBd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="vY5-lu-DnD"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="U3j-Fe-dMh" secondAttribute="trailing" constant="15" id="we1-CZ-hY9"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bottomBarView" destination="Inr-PB-lb8" id="Fqs-QB-iah"/>
+                <outlet property="disclosureImageView" destination="U3j-Fe-dMh" id="fYn-ad-UcF"/>
                 <outlet property="nameLabel" destination="G4m-7t-NBd" id="HaP-sG-4Nq"/>
                 <outlet property="sizeLabel" destination="jR8-Ot-MSK" id="f5n-cc-hmM"/>
             </connections>
             <point key="canvasLocation" x="280" y="381"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="disclosure" width="8" height="12"/>
+    </resources>
 </document>

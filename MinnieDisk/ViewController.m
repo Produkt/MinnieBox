@@ -88,7 +88,6 @@ static NSInteger const gradientLength = 100;
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MainTableViewCell class])
                                                               forIndexPath:indexPath];
     id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeUndraftedChilds][indexPath.row];
-    
     cell.nameLabel.text = [inode inodeName];
     cell.sizeLabel.text = [inode inodeHumanReadableSize];
     NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
@@ -96,6 +95,8 @@ static NSInteger const gradientLength = 100;
     
     CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
     cell.sizePercentage = size;
+    cell.folderCell = [inode inodeType];
+
     return cell;
 }
 

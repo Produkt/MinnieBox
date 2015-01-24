@@ -10,6 +10,7 @@
 
 
 @interface MainTableViewCell ()
+@property (weak, nonatomic) IBOutlet UIImageView *disclosureImageView;
 @property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 @property (nonatomic, strong) CALayer *percentageLayer;
 @end
@@ -40,7 +41,10 @@
     _percentageColor = percentageColor;
     self.percentageLayer.backgroundColor = percentageColor.CGColor;
 }
-
+- (void)setFolderCell:(BOOL)folderCell {
+    _folderCell = folderCell;
+    self.disclosureImageView.hidden = !folderCell;
+}
 - (void)configurePrecentageLayer{
     self.percentageLayer = [CALayer layer];
     self.percentageLayer.backgroundColor = self.percentageColor.CGColor;
