@@ -69,6 +69,8 @@ static NSInteger const gradientLength = 100;
 - (void)setupTableView {
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
+
+    
     self.mainTableView.separatorColor = [UIColor clearColor];
     [self.mainTableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainTableViewCell class]) bundle:nil]
              forCellReuseIdentifier:NSStringFromClass([MainTableViewCell class])];
@@ -102,6 +104,13 @@ static NSInteger const gradientLength = 100;
 
 
 #pragma mark -  TableViewDelegate
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
+        [self.draftContentInteractor addInode:selectedNode];
+        [tableView reloadData];
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeChilds][indexPath.row];
@@ -109,7 +118,6 @@ static NSInteger const gradientLength = 100;
     [self.draftContentInteractor addInode:inode];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 
 
 #pragma mark -  helpers
