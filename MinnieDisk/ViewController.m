@@ -77,7 +77,7 @@ static NSInteger const gradientLength = 100;
 
 #pragma mark -  TableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger cells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeChilds] count];
+    NSInteger cells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
     return cells;
 }
 
@@ -88,11 +88,11 @@ static NSInteger const gradientLength = 100;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MainTableViewCell class])
                                                               forIndexPath:indexPath];
-    id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeChilds][indexPath.row];
+    id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeUndraftedChilds][indexPath.row];
     
     cell.nameLabel.text = [inode inodeName];
     cell.sizeLabel.text = [inode inodeHumanReadableSize];
-    NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeChilds] count];
+    NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
     cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
     
     CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
@@ -109,7 +109,7 @@ static NSInteger const gradientLength = 100;
 #pragma mark -  helpers
 
 - (NSUInteger)maximumNodeSizeForNodeRepresentation:(id<InodeRepresentationProtocol>)inode {
-    NSArray *array = [[NSArray alloc]initWithArray:[inode inodeChilds]];
+    NSArray *array = [[NSArray alloc]initWithArray:[inode inodeUndraftedChilds]];
     NSUInteger maximum = 0;
     for (id<InodeRepresentationProtocol>childNode in array) {
         if ([childNode inodeSize] > maximum) {
