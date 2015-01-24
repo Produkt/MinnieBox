@@ -13,4 +13,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (nonatomic, assign) CGFloat sizePercentage;
 @property (nonatomic, strong) UIColor *percentageColor;
+@property (nonatomic, assign, getter=isFolderCell) BOOL folderCell;
+
+-(void)animateTitleToDeleteState;
+-(void)resetTitleToNormalStateAnimated:(BOOL)animated;
+
 @end

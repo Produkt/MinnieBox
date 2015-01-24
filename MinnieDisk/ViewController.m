@@ -11,6 +11,7 @@
 #import "ListContentInteractor.h"
 #import "DraftContentInteractor.h"
 #import "GradientColorGenerator.h"
+#import <BCGenieEffect/UIView+Genie.h>
 
 static NSInteger const gradientLength = 100;
 
@@ -30,6 +31,7 @@ static NSInteger const gradientLength = 100;
     self = [super init];
     if (self) {
         [self setupTabbarItem];
+
     }
     return self;
 }
@@ -37,13 +39,13 @@ static NSInteger const gradientLength = 100;
 - (instancetype)initWithInodeRepresentation:(id<InodeRepresentationProtocol>)inode {
     self = [super init];
     if (self) {
-        _inodeRepresentation = inode;
-        self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
         [self setupTabbarItem];
+        _inodeRepresentation = inode;
 
     }
     return self;
 }
+
 
 
 - (void)viewDidLoad {
@@ -54,9 +56,15 @@ static NSInteger const gradientLength = 100;
             self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
             [self.mainTableView reloadData];
         }];
+    } else {
+        [self.listContentInteractor listRootContentWithInode:_inodeRepresentation withCompletion:^(id<InodeRepresentationProtocol> inode) {
+            self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+            [self.mainTableView reloadData];
+        }];
     }
+    
     [self setupTableView];
-
+    
 
 }
 - (void)setupTabbarItem {
@@ -69,6 +77,8 @@ static NSInteger const gradientLength = 100;
 - (void)setupTableView {
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
+
+    
     self.mainTableView.separatorColor = [UIColor clearColor];
     [self.mainTableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainTableViewCell class]) bundle:nil]
              forCellReuseIdentifier:NSStringFromClass([MainTableViewCell class])];
@@ -88,27 +98,63 @@ static NSInteger const gradientLength = 100;
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MainTableViewCell class])
                                                               forIndexPath:indexPath];
     id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeUndraftedChilds][indexPath.row];
-    
     cell.nameLabel.text = [inode inodeName];
     cell.sizeLabel.text = [inode inodeHumanReadableSize];
     NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
     cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
-    
     CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
     cell.sizePercentage = size;
+    cell.folderCell = [inode inodeType];
+
+
     return cell;
 }
 
 
 #pragma mark -  TableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeChilds][indexPath.row];
-    [inode inodeSize];
-    [self.draftContentInteractor addInode:inode];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
+    
+    if ([selectedNode inodeType] == InodeTypeFolder) {
+        ViewController *nextVC = [[ViewController alloc]initWithInodeRepresentation:selectedNode];
+        [self.navigationController pushViewController:nextVC animated:YES];
+        
+        MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.selected = NO;
+    }
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.percentageColor = [UIColor redColor];
+    [cell animateTitleToDeleteState];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
+        [self.draftContentInteractor addInode:selectedNode];
+        
+        MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [cell resetTitleToNormalStateAnimated:NO];
+        [cell genieInTransitionWithDuration:1.0
+                            destinationRect:[self destinationGennieRect]
+                            destinationEdge:BCRectEdgeTop
+                                 completion:^{
+                                     [tableView reloadData];
+                                     //[tableView deleteRowsAtIndexPaths:@[indexPath]
+                                                      //withRowAnimation:UITableViewRowAnimationAutomatic];
+                                 }];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
+    cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
+    [cell resetTitleToNormalStateAnimated:YES];
+}
 
 
 #pragma mark -  helpers
@@ -122,6 +168,13 @@ static NSInteger const gradientLength = 100;
         }
     }
     return maximum;
+}
+
+- (CGRect)destinationGennieRect {
+    return CGRectMake(CGRectGetWidth(self.view.frame) * 0.6,
+                      self.tabBarController.tabBar.frame.origin.y,
+                      CGRectGetWidth(self.view.frame) * 0.3,
+                      CGRectGetHeight(self.tabBarController.tabBar.frame));
 }
 
 #pragma mark -  getters
