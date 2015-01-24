@@ -9,10 +9,12 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "MinnieBoxViewController.h"
+#import "LinkerViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 
 @interface AppDelegate ()
 @property (strong,nonatomic) NSMutableSet *draftedInodes;
+@property (nonatomic, strong) LinkerViewController *linkerVC;
 @end
 
 @implementation AppDelegate
@@ -37,12 +39,12 @@
     [DBSession setSharedSession:dbSession];
     
     if (![[DBSession sharedSession] isLinked]) {
-        [[DBSession sharedSession] linkFromController:self.window.rootViewController];
-    }
+        self.linkerVC = [[LinkerViewController alloc]init];
+        [tabbarController presentViewController:self.linkerVC animated:YES completion:nil];
+    } 
+
     return YES;
 }
-
-
 
 - (NSMutableSet *)draftedInodes{
     if (!_draftedInodes) {
@@ -55,6 +57,7 @@
     if ([[DBSession sharedSession] handleOpenURL:url]) {
         if ([[DBSession sharedSession] isLinked]) {
             NSLog(@"Dropbox Account Linked");
+            [self.linkerVC dismissViewControllerAnimated:YES completion:nil];
         }
         return YES;
     }

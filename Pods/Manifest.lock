@@ -1,15 +1,18 @@
 PODS:
   - BCGenieEffect (1.1)
+  - MBProgressHUD (0.9)
   - OCHamcrest (4.1.1)
   - OCMockito (1.4.0):
     - OCHamcrest (~> 4.0)
 
 DEPENDENCIES:
   - BCGenieEffect (~> 1.1)
+  - MBProgressHUD
   - OCMockito (~> 1.0)
 
 SPEC CHECKSUMS:
   BCGenieEffect: 4981aaefcb859010f3793ed8a3e3b0a66b68c00e
+  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
   OCHamcrest: af1c7c5ea345de69ea6c9c2958f65f3044e5c420
   OCMockito: 991936bb775cc4c27f063d38f5e17b9161fbd21c
 
