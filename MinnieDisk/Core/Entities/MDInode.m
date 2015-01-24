@@ -7,6 +7,7 @@
 //
 
 #import "MDInode.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 @interface MDInode ()
 @property (strong,nonatomic,readwrite) id<InodeRepresentationProtocol> inodeItem;
@@ -64,7 +65,7 @@
     return [self.inodeItem inodeType];
 }
 - (NSString *)inodeHumanReadableSize{
-    return [NSByteCountFormatter stringFromByteCount:[self inodeSize] countStyle:NSByteCountFormatterCountStyleFile];
+    return [NSByteCountFormatter stringFromByteCount:[self inodeSize] countStyle:NSByteCountFormatterCountStyleBinary];
 }
 - (NSArray *)inodeChilds{
     return self.inodeItemChilds;
