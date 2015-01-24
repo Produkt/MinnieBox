@@ -145,6 +145,7 @@ static NSInteger const gradientLength = 100;
                                      [tableView reloadData];
                                      //[tableView deleteRowsAtIndexPaths:@[indexPath]
                                                       //withRowAnimation:UITableViewRowAnimationAutomatic];
+                                     [self updateBadge];
                                  }];
     }
 }
@@ -157,7 +158,24 @@ static NSInteger const gradientLength = 100;
 }
 
 
+
+
 #pragma mark -  helpers
+
+- (void)updateBadge {
+    __block NSUInteger totalBytes = 0;
+    [self.draftContentInteractor.draftedInodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        totalBytes += [(id<InodeRepresentationProtocol>)obj inodeSize];
+        
+    }];
+    
+    NSString *badgeString = [NSByteCountFormatter stringFromByteCount:totalBytes
+                                                           countStyle:NSByteCountFormatterCountStyleMemory];
+    
+    UITabBarItem *item = [self.tabBarController.tabBar.items lastObject];
+    
+    item.badgeValue = badgeString;
+}
 
 - (NSUInteger)maximumNodeSizeForNodeRepresentation:(id<InodeRepresentationProtocol>)inode {
     NSArray *array = [[NSArray alloc]initWithArray:[inode inodeUndraftedChilds]];
