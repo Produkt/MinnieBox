@@ -11,7 +11,6 @@
 
 
 @interface ViewController : UIViewController
-
+@property (strong,nonatomic) NSMutableSet *draftedInodes;
 - (instancetype)initWithInodeRepresentation:(id<InodeRepresentationProtocol>)inode;
-
 @end

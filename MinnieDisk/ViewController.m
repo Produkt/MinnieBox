@@ -10,6 +10,7 @@
 #import "TempRepresentation.h"
 #import "MainTableViewCell.h"
 #import "ListContentInteractor.h"
+#import "DraftContentInteractor.h"
 #import "GradientColorGenerator.h"
 
 static NSInteger const gradientLength = 100;
@@ -18,6 +19,7 @@ static NSInteger const gradientLength = 100;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (nonatomic, strong) id<InodeRepresentationProtocol> inodeRepresentation;
 @property (nonatomic, strong) ListContentInteractor *listContentInteractor;
+@property (nonatomic, strong) DraftContentInteractor *draftContentInteractor;
 @property (nonatomic, strong) GradientColorGenerator *colorGenerator;
 @property (nonatomic, assign) NSUInteger maximumNodeSize;
 @end
@@ -154,8 +156,15 @@ static NSInteger const gradientLength = 100;
 - (ListContentInteractor *)listContentInteractor{
     if (!_listContentInteractor) {
         _listContentInteractor = [[ListContentInteractor alloc] init];
+        _listContentInteractor.draftedInodes = self.draftedInodes;
     }
     return _listContentInteractor;
+}
+- (DraftContentInteractor *)draftContentInteractor{
+    if (!_draftContentInteractor) {
+        _draftContentInteractor = [[DraftContentInteractor alloc] initWithDraftedInodes:self.draftedInodes];
+    }
+    return _draftContentInteractor;
 }
 
 @end

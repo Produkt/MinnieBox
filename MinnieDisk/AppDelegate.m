@@ -11,7 +11,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 
 @interface AppDelegate ()
-
+@property (strong,nonatomic) NSMutableSet *draftedInodes;
 @end
 
 @implementation AppDelegate
@@ -19,7 +19,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc] init]];
+    ViewController *viewController = [[ViewController alloc] init];
+    viewController.draftedInodes = self.draftedInodes;
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:viewController];
     self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
     
@@ -33,6 +35,13 @@
         [[DBSession sharedSession] linkFromController:self.window.rootViewController];
     }
     return YES;
+}
+
+- (NSMutableSet *)draftedInodes{
+    if (!_draftedInodes) {
+        _draftedInodes = [NSMutableSet set];
+    }
+    return _draftedInodes;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
