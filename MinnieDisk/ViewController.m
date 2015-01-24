@@ -19,6 +19,7 @@ static NSInteger const gradientLength = 100;
 @property (nonatomic, strong) id<InodeRepresentationProtocol> inodeRepresentation;
 @property (nonatomic, strong) ListContentInteractor *listContentInteractor;
 @property (nonatomic, strong) GradientColorGenerator *colorGenerator;
+@property (nonatomic, assign) NSUInteger maximumNodeSize;
 @end
 
 @implementation ViewController
@@ -51,7 +52,6 @@ static NSInteger const gradientLength = 100;
     [self setupTableView];
 
 }
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
@@ -82,6 +82,9 @@ static NSInteger const gradientLength = 100;
     cell.sizeLabel.text = inode.humanReadableSize;
     NSInteger nCells = [((id<InodeRepresentationProtocol>)self.inodeRepresentation).childRepresentation count];
     cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
+    
+    CGFloat size = (CGFloat)inode.size/self.maximumNodeSize;
+    cell.sizePercentage = size;
     return cell;
 }
 
@@ -138,9 +141,21 @@ static NSInteger const gradientLength = 100;
     
     self.colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor colorWithRed:0.00 green:0.47 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.55 green:0.76 blue:1.00 alpha:1.0]]
                                                                  length:gradientLength];
+
+    self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:temp];
     return temp;
 }
 
+- (NSUInteger)maximumNodeSizeForNodeRepresentation:(id<InodeRepresentationProtocol>)inode {
+    NSArray *array = [[NSArray alloc]initWithArray:inode.childRepresentation];
+    NSUInteger maximum = 0;
+    for (id<InodeRepresentationProtocol>childNode in array) {
+        if (childNode.size > maximum) {
+            maximum = childNode.size;
+        }
+    }
+    return maximum;
+}
 
 - (ListContentInteractor *)listContentInteractor{
     if (!_listContentInteractor) {

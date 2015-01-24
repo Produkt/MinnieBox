@@ -21,7 +21,7 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.percentageLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.bottomBarView.frame),
+    self.percentageLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.bottomBarView.frame)* self.sizePercentage,
                                              CGRectGetHeight(self.bottomBarView.frame));
 }
 
