@@ -5,6 +5,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'MinnieDisk' do
 pod 'BCGenieEffect', '~> 1.1'
+pod 'MBProgressHUD'
 end
 
 target 'MinnieDiskTests' do

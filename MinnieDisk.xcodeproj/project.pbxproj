@@ -35,6 +35,8 @@
 		8E57F3E2572EEAA99EE754E8 /* libPods-MinnieDiskTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCE7DA4CBAB3FA94C8F15F2 /* libPods-MinnieDiskTests.a */; };
 		C731B5301A73B23400733D1E /* MinnieBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C731B52E1A73B23400733D1E /* MinnieBoxViewController.m */; };
 		C731B5311A73B23400733D1E /* MinnieBoxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C731B52F1A73B23400733D1E /* MinnieBoxViewController.xib */; };
+		C731B5361A73FA8800733D1E /* LinkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C731B5341A73FA8800733D1E /* LinkerViewController.m */; };
+		C731B5371A73FA8800733D1E /* LinkerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C731B5351A73FA8800733D1E /* LinkerViewController.xib */; };
 		C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80811A73067200DC0CE7 /* TempRepresentation.m */; };
 		C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */; };
 		C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */; };
@@ -104,6 +106,9 @@
 		C731B52D1A73B23400733D1E /* MinnieBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinnieBoxViewController.h; sourceTree = "<group>"; };
 		C731B52E1A73B23400733D1E /* MinnieBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinnieBoxViewController.m; sourceTree = "<group>"; };
 		C731B52F1A73B23400733D1E /* MinnieBoxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinnieBoxViewController.xib; sourceTree = "<group>"; };
+		C731B5331A73FA8800733D1E /* LinkerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkerViewController.h; sourceTree = "<group>"; };
+		C731B5341A73FA8800733D1E /* LinkerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkerViewController.m; sourceTree = "<group>"; };
+		C731B5351A73FA8800733D1E /* LinkerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinkerViewController.xib; sourceTree = "<group>"; };
 		C7EF807C1A72FC0F00DC0CE7 /* InodeRepresentationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InodeRepresentationProtocol.h; sourceTree = "<group>"; };
 		C7EF80801A73067200DC0CE7 /* TempRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempRepresentation.h; sourceTree = "<group>"; };
 		C7EF80811A73067200DC0CE7 /* TempRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempRepresentation.m; sourceTree = "<group>"; };
@@ -302,6 +307,7 @@
 		C731B52A1A73B1AB00733D1E /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				C731B5321A73FA6A00733D1E /* StartScreen */,
 				C731B52B1A73B1BC00733D1E /* DropboxVC */,
 				C731B52C1A73B1CC00733D1E /* MinnieBoxVC */,
 			);
@@ -328,6 +334,16 @@
 				883076CA1A73C78300D28ED2 /* Cells */,
 			);
 			name = MinnieBoxVC;
+			sourceTree = "<group>";
+		};
+		C731B5321A73FA6A00733D1E /* StartScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C731B5331A73FA8800733D1E /* LinkerViewController.h */,
+				C731B5341A73FA8800733D1E /* LinkerViewController.m */,
+				C731B5351A73FA8800733D1E /* LinkerViewController.xib */,
+			);
+			name = StartScreen;
 			sourceTree = "<group>";
 		};
 		C7EF80881A73097C00DC0CE7 /* Cell */ = {
@@ -425,6 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C731B5311A73B23400733D1E /* MinnieBoxViewController.xib in Resources */,
+				C731B5371A73FA8800733D1E /* LinkerViewController.xib in Resources */,
 				88CD2EF41A72F1B10020B1E1 /* ViewController.xib in Resources */,
 				883076C91A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib in Resources */,
 				C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */,
@@ -519,6 +536,7 @@
 				C7EF80821A73067200DC0CE7 /* TempRepresentation.m in Sources */,
 				88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */,
 				883076CE1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.m in Sources */,
+				C731B5361A73FA8800733D1E /* LinkerViewController.m in Sources */,
 				883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */,
 				883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */,
 				883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */,
