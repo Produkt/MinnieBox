@@ -9,19 +9,25 @@
 #import "DBMetadata+InodeRepresentation.h"
 
 @implementation DBMetadata (InodeRepresentation)
-- (NSString *)name{
+- (NSString *)inodeName{
     return self.filename;
 }
-- (NSDate *)creationDate{
+- (NSDate *)inodeCreationDate{
     return self.clientMtime;
 }
-- (NSUInteger)size{
+- (NSString *)inodePath{
+    return self.path;
+}
+- (NSUInteger)inodeSize{
     return self.totalBytes;
 }
-- (InodeType)type{
+- (NSString *)inodeHumanReadableSize{
+    return self.humanReadableSize;
+}
+- (InodeType)inodeType{
     return self.isDirectory ? InodeTypeFolder : InodeTypeFile;
 }
-- (NSArray *)childRepresentation{
+- (NSArray *)inodeChilds{
     return self.contents;
 }
 - (NSString *)path{

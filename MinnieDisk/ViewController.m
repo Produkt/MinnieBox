@@ -28,9 +28,7 @@ static NSInteger const gradientLength = 100;
 {
     self = [super init];
     if (self) {
-        [self.listContentInteractor listRootContentWithCompletion:^(NSArray *inodes) {
 
-        }];
     }
     return self;
 }
@@ -50,7 +48,9 @@ static NSInteger const gradientLength = 100;
         self.inodeRepresentation = [self createMockRepresentation];
     }
     [self setupTableView];
-
+	[self.listContentInteractor listRootContentWithCompletion:^(id<InodeRepresentationProtocol> inode) {
+        
+    }];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -65,7 +65,7 @@ static NSInteger const gradientLength = 100;
 
 #pragma mark -  TableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger cells = [((id<InodeRepresentationProtocol>)self.inodeRepresentation).childRepresentation count];
+    NSInteger cells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeChilds] count];
     return cells;
 }
 
@@ -76,7 +76,7 @@ static NSInteger const gradientLength = 100;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MainTableViewCell class])
                                                               forIndexPath:indexPath];
-    id<InodeRepresentationProtocol> inode = self.inodeRepresentation.childRepresentation[indexPath.row];
+    id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeChilds][indexPath.row];
     
     cell.nameLabel.text = inode.name;
     cell.sizeLabel.text = inode.humanReadableSize;
@@ -97,47 +97,41 @@ static NSInteger const gradientLength = 100;
 #pragma mark -  mockup
 - (TempRepresentation *)createMockRepresentation {
     TempRepresentation *rep1 = [[TempRepresentation alloc]init];
-    rep1.name = @"Pictures";
-    rep1.size = 15000;
-    rep1.humanReadableSize = @"15 GB";
-    rep1.type = InodeTypeFolder;
-    rep1.childRepresentation = nil;
+    rep1.inodeName = @"Pictures";
+    rep1.inodeSize = 15000;
+    rep1.inodeType = InodeTypeFolder;
+    rep1.inodeChilds = nil;
     
     TempRepresentation *rep2 = [[TempRepresentation alloc]init];
-    rep2.name = @"Music";
-    rep2.size = 10000;
-    rep2.humanReadableSize = @"10 GB";
-    rep2.type = InodeTypeFolder;
-    rep2.childRepresentation = nil;
+    rep2.inodeName = @"Music";
+    rep2.inodeSize = 10000;
+    rep2.inodeType = InodeTypeFolder;
+    rep2.inodeChilds = nil;
     
     TempRepresentation *rep3 = [[TempRepresentation alloc]init];
-    rep3.name = @"Apps";
-    rep3.size = 1500;
-    rep3.humanReadableSize = @"1500 MB";
-    rep3.type = InodeTypeFolder;
-    rep3.childRepresentation = nil;
+    rep3.inodeName = @"Apps";
+    rep3.inodeSize = 1500;
+    rep3.inodeType = InodeTypeFolder;
+    rep3.inodeChilds = nil;
     
     TempRepresentation *rep4 = [[TempRepresentation alloc]init];
-    rep4.name = @"Apps2";
-    rep4.size = 400;
-    rep4.humanReadableSize = @"400 MB";
-    rep4.type = InodeTypeFolder;
-    rep4.childRepresentation = nil;
+    rep4.inodeName = @"Apps2";
+    rep4.inodeSize = 400;
+    rep4.inodeType = InodeTypeFolder;
+    rep4.inodeChilds = nil;
     
     TempRepresentation *rep5 = [[TempRepresentation alloc]init];
-    rep5.name = @"silly.pdf";
-    rep5.size = 400;
-    rep5.humanReadableSize = @"400 MB";
-    rep5.type = InodeTypeFile;
-    rep5.childRepresentation = nil;
+    rep5.inodeName = @"silly.pdf";
+    rep5.inodeSize = 400;
+    rep5.inodeType = InodeTypeFile;
+    rep5.inodeChilds = nil;
     
     
     TempRepresentation *temp = [[TempRepresentation alloc]init];
-    temp.name = @"Dropbox";
-    temp.size = 25000;
-    temp.humanReadableSize = @"25 GB";
-    temp.type = InodeTypeFolder;
-    temp.childRepresentation = @[rep1,rep2,rep3,rep4,rep5, rep5, rep5, rep5];
+    temp.inodeName = @"Dropbox";
+    temp.inodeSize = 25000;
+    temp.inodeType = InodeTypeFolder;
+    temp.inodeChilds = @[rep1,rep2,rep3,rep4,rep5];
     
     self.colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor colorWithRed:0.00 green:0.47 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.55 green:0.76 blue:1.00 alpha:1.0]]
                                                                  length:gradientLength];

@@ -13,12 +13,12 @@ typedef NS_ENUM(NSUInteger, InodeType) {
 
 @protocol InodeRepresentationProtocol <NSObject>
 @required
-@property (nonatomic) NSString *name;
-@property (nonatomic) NSString *inodePath;
-@property (nonatomic) NSDate *creationDate;
-@property (nonatomic) NSUInteger size;
-@property (nonatomic) InodeType type;
-@property (nonatomic) NSString *humanReadableSize;
+- (NSString *)inodeName;
+- (NSString *)inodePath;
+- (NSDate *)inodeCreationDate;
+- (NSUInteger)inodeSize;
+- (InodeType)inodeType;
+- (NSString *)inodeHumanReadableSize;
 @optional
-@property (nonatomic) NSArray *childRepresentation;
+- (NSArray *)inodeChilds;
 @end

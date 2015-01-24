@@ -10,11 +10,11 @@
 #import "InodeRepresentationProtocol.h"
 
 @interface TempRepresentation : NSObject <InodeRepresentationProtocol>
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) NSDate *creationDate;
-@property (nonatomic, assign) NSUInteger size;
-@property (nonatomic, assign) InodeType type;
-@property (nonatomic, strong) NSArray *childRepresentation;
-@property (nonatomic, copy) NSString *humanReadableSize;
+@property (nonatomic, copy) NSString *inodeName;
+@property (nonatomic, strong) NSDate *inodeCreationDate;
+@property (nonatomic, assign) NSUInteger inodeSize;
+@property (nonatomic, assign) InodeType inodeType;
+@property (nonatomic, strong) NSArray *inodeChilds;
+@property (nonatomic, copy) NSString *inodeHumanReadableSize;
 
 @end
