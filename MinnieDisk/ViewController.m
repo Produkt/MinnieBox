@@ -78,12 +78,12 @@ static NSInteger const gradientLength = 100;
                                                               forIndexPath:indexPath];
     id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeChilds][indexPath.row];
     
-    cell.nameLabel.text = inode.name;
-    cell.sizeLabel.text = inode.humanReadableSize;
-    NSInteger nCells = [((id<InodeRepresentationProtocol>)self.inodeRepresentation).childRepresentation count];
+    cell.nameLabel.text = [inode inodeName];
+    cell.sizeLabel.text = [inode inodeHumanReadableSize];
+    NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeChilds] count];
     cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
     
-    CGFloat size = (CGFloat)inode.size/self.maximumNodeSize;
+    CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
     cell.sizePercentage = size;
     return cell;
 }
