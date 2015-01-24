@@ -31,7 +31,7 @@
 }
 
 - (void)testDBRestClientList {
-    [self.listContentInteractor listRootContentWithCompletion:^(NSArray *inodes) {
+    [self.listContentInteractor listRootContentWithCompletion:^(id<InodeRepresentationProtocol> inode) {
         
     }];
     [MKTVerify(self.dbRestClientMock) loadMetadata:@"/"];
@@ -40,7 +40,7 @@
     id<InodeRepresentationProtocol> inode = mockProtocol(@protocol(InodeRepresentationProtocol));
     [given([inode inodePath]) willReturn:@"/folder"];
     
-    [self.listContentInteractor listRootContentWithInode:inode WithCompletion:^(NSArray *inodes) {
+    [self.listContentInteractor listRootContentWithInode:inode withCompletion:^(id<InodeRepresentationProtocol> inode) {
         
     }];
     [MKTVerify(self.dbRestClientMock) loadMetadata:[inode inodePath]];
