@@ -60,6 +60,10 @@
     return cells;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MainTableViewCell class])
                                                               forIndexPath:indexPath];
@@ -81,30 +85,35 @@
     TempRepresentation *rep1 = [[TempRepresentation alloc]init];
     rep1.name = @"Pictures";
     rep1.size = 15000;
+    rep1.humanReadableSize = @"15 GB";
     rep1.type = InodeTypeFolder;
     rep1.childRepresentation = nil;
     
     TempRepresentation *rep2 = [[TempRepresentation alloc]init];
     rep2.name = @"Music";
     rep2.size = 10000;
+    rep2.humanReadableSize = @"10 GB";
     rep2.type = InodeTypeFolder;
     rep2.childRepresentation = nil;
     
     TempRepresentation *rep3 = [[TempRepresentation alloc]init];
     rep3.name = @"Apps";
     rep3.size = 1500;
+    rep3.humanReadableSize = @"1500 MB";
     rep3.type = InodeTypeFolder;
     rep3.childRepresentation = nil;
     
     TempRepresentation *rep4 = [[TempRepresentation alloc]init];
     rep4.name = @"Apps2";
     rep4.size = 400;
+    rep4.humanReadableSize = @"400 MB";
     rep4.type = InodeTypeFolder;
     rep4.childRepresentation = nil;
     
     TempRepresentation *rep5 = [[TempRepresentation alloc]init];
     rep5.name = @"silly.pdf";
     rep5.size = 400;
+    rep5.humanReadableSize = @"400 MB";
     rep5.type = InodeTypeFile;
     rep5.childRepresentation = nil;
     
@@ -112,6 +121,7 @@
     TempRepresentation *temp = [[TempRepresentation alloc]init];
     temp.name = @"Dropbox";
     temp.size = 25000;
+    temp.humanReadableSize = @"25 GB";
     temp.type = InodeTypeFolder;
     temp.childRepresentation = @[rep1,rep2,rep3,rep4,rep5];
     
