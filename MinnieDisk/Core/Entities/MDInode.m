@@ -69,4 +69,9 @@
 - (NSArray *)inodeChilds{
     return self.inodeItemChilds;
 }
+- (NSArray *)inodeUndraftedChilds{
+    NSMutableArray *undraftedChilds = [self.inodeItemChilds mutableCopy];
+    [undraftedChilds removeObjectsInArray:[self.draftedInodes allObjects]];
+    return undraftedChilds;
+}
 @end

@@ -21,4 +21,5 @@ typedef NS_ENUM(NSUInteger, InodeType) {
 - (NSString *)inodeHumanReadableSize;
 @optional
 - (NSArray *)inodeChilds;
+- (NSArray *)inodeUndraftedChilds;
 @end
