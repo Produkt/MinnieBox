@@ -8,6 +8,9 @@
 
 #import "DraftContentInteractor.h"
 
+NSString * const DraftInodesAddInodeNotification = @"DraftInodesAddInodeNotification";
+NSString * const DraftInodesRemoveInodeNotification = @"DraftInodesRemoveInodeNotification";
+
 @interface DraftContentInteractor ()
 @property (strong,nonatomic,readwrite) NSMutableSet *draftedInodes;
 @end
@@ -27,8 +30,10 @@
 }
 - (void)addInode:(id<InodeRepresentationProtocol>)inode{
     [self.draftedInodes addObject:inode];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesAddInodeNotification object:inode];
 }
 - (void)removeInode:(id<InodeRepresentationProtocol>)inode{
     [self.draftedInodes removeObject:inode];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesRemoveInodeNotification object:inode];
 }
 @end

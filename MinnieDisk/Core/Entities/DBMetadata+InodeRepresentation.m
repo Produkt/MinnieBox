@@ -30,7 +30,4 @@
 - (NSArray *)inodeChilds{
     return self.contents;
 }
-- (NSString *)path{
-    return self.path;
-}
 @end

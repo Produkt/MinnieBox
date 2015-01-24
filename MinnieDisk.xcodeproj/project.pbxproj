@@ -13,6 +13,8 @@
 		883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076BB1A73AFC900D28ED2 /* DeleteContentInteractor.m */; };
 		883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076BE1A73B29E00D28ED2 /* THOperation.m */; };
 		883076C41A73B7BC00D28ED2 /* MDInodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076C31A73B7BC00D28ED2 /* MDInodeTests.m */; };
+		883076C81A73C77B00D28ED2 /* MinnieBoxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076C61A73C77B00D28ED2 /* MinnieBoxTableViewCell.m */; };
+		883076C91A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883076C71A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib */; };
 		88CD2EC51A72EBD00020B1E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC41A72EBD00020B1E1 /* main.m */; };
 		88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC71A72EBD00020B1E1 /* AppDelegate.m */; };
 		88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC91A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld */; };
@@ -60,6 +62,9 @@
 		883076BD1A73B29E00D28ED2 /* THOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOperation.h; sourceTree = "<group>"; };
 		883076BE1A73B29E00D28ED2 /* THOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THOperation.m; sourceTree = "<group>"; };
 		883076C31A73B7BC00D28ED2 /* MDInodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDInodeTests.m; sourceTree = "<group>"; };
+		883076C51A73C77B00D28ED2 /* MinnieBoxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinnieBoxTableViewCell.h; sourceTree = "<group>"; };
+		883076C61A73C77B00D28ED2 /* MinnieBoxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinnieBoxTableViewCell.m; sourceTree = "<group>"; };
+		883076C71A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinnieBoxTableViewCell.xib; sourceTree = "<group>"; };
 		88CD2EBF1A72EBD00020B1E1 /* MinnieDisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinnieDisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CD2EC31A72EBD00020B1E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88CD2EC41A72EBD00020B1E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -121,6 +126,16 @@
 				03010011929F7D83061B20D6 /* Pods-MinnieDiskTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		883076CA1A73C78300D28ED2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				883076C51A73C77B00D28ED2 /* MinnieBoxTableViewCell.h */,
+				883076C61A73C77B00D28ED2 /* MinnieBoxTableViewCell.m */,
+				883076C71A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		88CD2EB61A72EBD00020B1E1 = {
@@ -281,6 +296,7 @@
 				C731B52D1A73B23400733D1E /* MinnieBoxViewController.h */,
 				C731B52E1A73B23400733D1E /* MinnieBoxViewController.m */,
 				C731B52F1A73B23400733D1E /* MinnieBoxViewController.xib */,
+				883076CA1A73C78300D28ED2 /* Cell */,
 			);
 			name = MinnieBoxVC;
 			sourceTree = "<group>";
@@ -380,6 +396,7 @@
 				88CD2ED61A72EBD00020B1E1 /* LaunchScreen.xib in Resources */,
 				C731B5311A73B23400733D1E /* MinnieBoxViewController.xib in Resources */,
 				88CD2EF41A72F1B10020B1E1 /* ViewController.xib in Resources */,
+				883076C91A73C77B00D28ED2 /* MinnieBoxTableViewCell.xib in Resources */,
 				C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */,
 				88CD2ED31A72EBD00020B1E1 /* Images.xcassets in Resources */,
 			);
@@ -447,6 +464,7 @@
 				88CD2EC51A72EBD00020B1E1 /* main.m in Sources */,
 				88CD2EFE1A72FA400020B1E1 /* ListContentInteractor.m in Sources */,
 				883076B21A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m in Sources */,
+				883076C81A73C77B00D28ED2 /* MinnieBoxTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MinnieBoxViewController : UIViewController
-
+@property (strong,nonatomic,readonly) NSSet *draftedInodes;
+- (instancetype)initWithDraftedInodes:(NSSet *)draftedInodes;
 @end

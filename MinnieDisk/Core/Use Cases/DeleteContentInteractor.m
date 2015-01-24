@@ -31,10 +31,10 @@
     [self.dbRestClient deletePath:[self.inode inodePath]];
 }
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path{
-    
+    [self finish];
 }
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error{
-    
+    [self finish];
 }
 @end
 

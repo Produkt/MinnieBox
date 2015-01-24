@@ -7,25 +7,50 @@
 //
 
 #import "MinnieBoxViewController.h"
+#import "MinnieBoxTableViewCell.h"
+#import "InodeRepresentationProtocol.h"
+#import "DraftContentInteractor.h"
 
-@interface MinnieBoxViewController ()
-
+@interface MinnieBoxViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong,nonatomic,readwrite) NSSet *draftedInodes;
 @end
 
 @implementation MinnieBoxViewController
 
-- (instancetype)init
+- (instancetype)initWithDraftedInodes:(NSSet *)draftedInodes
 {
+    NSParameterAssert(draftedInodes);
     self = [super init];
     if (self) {
+        _draftedInodes = draftedInodes;
         [self setupTabbarItem];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inodeWasDrafted:) name:DraftInodesAddInodeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inodeWasUndrafted:) name:DraftInodesAddInodeNotification object:nil];
     }
     return self;
+}
+- (instancetype)init
+{
+    return [self initWithDraftedInodes:nil];
+}
+- (void)inodeWasDrafted:(NSNotification *)notification{
+    [self.tableView reloadData];
+}
+- (void)inodeWasUndrafted:(NSNotification *)notification{
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureTableView];
     [self setupNavigationTitle];
+}
+
+- (void)configureTableView{
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MinnieBoxTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([MinnieBoxTableViewCell class])];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,14 +97,25 @@
     
     self.navigationItem.titleView = twoLineTitleView;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
 }
-*/
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.draftedInodes count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    MinnieBoxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinnieBoxTableViewCell class]) forIndexPath:indexPath];
+    id<InodeRepresentationProtocol> inode = [[self.draftedInodes allObjects] objectAtIndex:indexPath.item];
+    cell.inodeNameLabel.text = [inode inodeName];
+    cell.inodeSizeLabel.text = [inode inodeHumanReadableSize];
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
 
 @end

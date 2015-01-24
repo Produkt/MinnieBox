@@ -30,7 +30,6 @@ static NSInteger const gradientLength = 100;
     self = [super init];
     if (self) {
         [self setupTabbarItem];
-
     }
     return self;
 }
@@ -103,6 +102,12 @@ static NSInteger const gradientLength = 100;
 
 #pragma mark -  TableViewDelegate
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeChilds][indexPath.row];
+    [inode inodeSize];
+    [self.draftContentInteractor addInode:inode];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 
 
