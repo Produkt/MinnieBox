@@ -10,7 +10,6 @@
 #import "UIImage+PixelColor.h"
 
 @interface GradientColorGenerator ()
-@property (nonatomic, assign) CGFloat lenght;
 @property (nonatomic, strong) UIImage *gradientImage;
 @end
 
@@ -30,6 +29,16 @@
     return [self.gradientImage getPixelColorAtLocation:CGPointMake(0, position)];
 }
 
+- (void)setLenght:(CGFloat)lenght {
+    _lenght = lenght;
+    [self generateImage];
+}
+
+- (void)setColors:(NSArray *)colors{
+    _colors = colors;
+    [self generateImage];
+}
+
 - (void)generateImage{
     CGRect frame = CGRectMake(0, 0, 1, self.lenght);
     UIColor *startColor = self.colors[0];
@@ -39,7 +48,7 @@
     // This way we'll be able to draw stuff in the context and get an UIImage back from it.
     //
     CGSize size = frame.size;
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(size, NO, 2);
     
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     

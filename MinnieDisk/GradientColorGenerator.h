@@ -10,6 +10,8 @@
 
 @interface GradientColorGenerator : NSObject
 @property (nonatomic, strong) NSArray *colors;
+@property (nonatomic, assign) CGFloat lenght;
+
 - (instancetype)initWithColors:(NSArray *)colors length:(CGFloat)length;
 - (UIColor *) colorAtPosition:(CGFloat)position;
 @end

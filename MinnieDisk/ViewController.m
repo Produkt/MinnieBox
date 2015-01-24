@@ -49,6 +49,10 @@
         
     }];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 - (void)setupTableView {
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
@@ -73,8 +77,8 @@
     
     cell.nameLabel.text = inode.name;
     cell.sizeLabel.text = inode.humanReadableSize;
-    
-    cell.backgroundColor = [self.colorGenerator colorAtPosition:indexPath.row];
+    NSInteger nCells = [((id<InodeRepresentationProtocol>)self.inodeRepresentation).childRepresentation count];
+    cell.backgroundColor = [self.colorGenerator colorAtPosition:indexPath.row * 200/nCells];
     return cell;
 }
 
@@ -129,8 +133,8 @@
     temp.type = InodeTypeFolder;
     temp.childRepresentation = @[rep1,rep2,rep3,rep4,rep5, rep5, rep5, rep5];
     
-    self.colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor redColor], [UIColor yellowColor]]
-                                                                 length:4];
+    self.colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor colorWithRed:0.00 green:0.47 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.55 green:0.76 blue:1.00 alpha:1.0]]
+                                                                 length:100];
     return temp;
 }
 
