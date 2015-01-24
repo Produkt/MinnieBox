@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "MinnieBoxViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 
 @interface AppDelegate ()
@@ -21,8 +22,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     ViewController *viewController = [[ViewController alloc] init];
     viewController.draftedInodes = self.draftedInodes;
-    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:viewController];
-    self.window.rootViewController = navController;
+    UINavigationController *firstNavController = [[UINavigationController alloc]initWithRootViewController:viewController];
+    MinnieBoxViewController *minnieBoxVC = [[MinnieBoxViewController alloc]init];
+    UINavigationController *secondNavController = [[UINavigationController alloc]initWithRootViewController:minnieBoxVC];
+    UITabBarController *tabbarController = [[UITabBarController alloc]init];
+    tabbarController.viewControllers = @[firstNavController, secondNavController];
+    self.window.rootViewController = tabbarController;
     [self.window makeKeyAndVisible];
     
     DBSession *dbSession = [[DBSession alloc]
@@ -36,6 +41,8 @@
     }
     return YES;
 }
+
+
 
 - (NSMutableSet *)draftedInodes{
     if (!_draftedInodes) {
