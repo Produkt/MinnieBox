@@ -141,11 +141,11 @@ static NSInteger const gradientLength = 100;
 }
 
 - (NSUInteger)maximumNodeSizeForNodeRepresentation:(id<InodeRepresentationProtocol>)inode {
-    NSArray *array = [[NSArray alloc]initWithArray:inode.childRepresentation];
+    NSArray *array = [[NSArray alloc]initWithArray:[inode inodeChilds]];
     NSUInteger maximum = 0;
     for (id<InodeRepresentationProtocol>childNode in array) {
-        if (childNode.size > maximum) {
-            maximum = childNode.size;
+        if ([childNode inodeSize] > maximum) {
+            maximum = [childNode inodeSize];
         }
     }
     return maximum;
