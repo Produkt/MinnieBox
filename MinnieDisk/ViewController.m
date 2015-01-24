@@ -10,11 +10,13 @@
 #import "TempRepresentation.h"
 #import "MainTableViewCell.h"
 #import "ListContentInteractor.h"
+#import "GradientColorGenerator.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (nonatomic, strong) id<InodeRepresentationProtocol> inodeRepresentation;
 @property (nonatomic, strong) ListContentInteractor *listContentInteractor;
+@property (nonatomic, strong) GradientColorGenerator *colorGenerator;
 @end
 
 @implementation ViewController
@@ -71,6 +73,8 @@
     
     cell.nameLabel.text = inode.name;
     cell.sizeLabel.text = inode.humanReadableSize;
+    
+    cell.backgroundColor = [self.colorGenerator colorAtPosition:indexPath.row];
     return cell;
 }
 
@@ -123,8 +127,10 @@
     temp.size = 25000;
     temp.humanReadableSize = @"25 GB";
     temp.type = InodeTypeFolder;
-    temp.childRepresentation = @[rep1,rep2,rep3,rep4,rep5];
+    temp.childRepresentation = @[rep1,rep2,rep3,rep4,rep5, rep5, rep5, rep5];
     
+    self.colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor redColor], [UIColor yellowColor]]
+                                                                 length:4];
     return temp;
 }
 
