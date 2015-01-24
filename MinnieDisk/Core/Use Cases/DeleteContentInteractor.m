@@ -29,10 +29,9 @@
 }
 - (void)start{
     [super start];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.dbRestClient deletePath:[self.inode inodePath]];
-//    });
-    [self restClient:self.dbRestClient deletedPath:[self.inode inodePath]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.dbRestClient deletePath:[self.inode inodePath]];
+    });
 }
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path{
     [[self.inode parentInode] removeChildInode:self.inode];

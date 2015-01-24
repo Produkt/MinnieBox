@@ -13,6 +13,7 @@
 #import "GradientColorGenerator.h"
 #import <BCGenieEffect/UIView+Genie.h>
 #import <MBProgressHUD/MBProgressHUD.h>
+#import <DropboxSDK/DropboxSDK.h>
 
 static NSInteger const gradientLength = 100;
 
@@ -46,7 +47,9 @@ static NSInteger const gradientLength = 100;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self getInodeRepresentation];
+    if ([[DBSession sharedSession] isLinked]) {
+        [self getInodeRepresentation];
+    }
     [self setupTableView];
     [self setupNavigationBar];
 }

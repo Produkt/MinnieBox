@@ -15,6 +15,7 @@
 @interface AppDelegate ()
 @property (strong,nonatomic) NSMutableSet *draftedInodes;
 @property (nonatomic, strong) LinkerViewController *linkerVC;
+@property (strong,nonatomic) ViewController *dropboxVC;
 @end
 
 @implementation AppDelegate
@@ -26,6 +27,7 @@
     viewController.draftedInodes = self.draftedInodes;
     UINavigationController *firstNavController = [[UINavigationController alloc]initWithRootViewController:viewController];
     MinnieBoxViewController *minnieBoxVC = [[MinnieBoxViewController alloc]initWithDraftedInodes:self.draftedInodes];
+    self.dropboxVC = viewController;
     UINavigationController *secondNavController = [[UINavigationController alloc]initWithRootViewController:minnieBoxVC];
     UITabBarController *tabbarController = [[UITabBarController alloc]init];
     tabbarController.viewControllers = @[firstNavController, secondNavController];
@@ -57,7 +59,10 @@
     if ([[DBSession sharedSession] handleOpenURL:url]) {
         if ([[DBSession sharedSession] isLinked]) {
             NSLog(@"Dropbox Account Linked");
-            [self.linkerVC dismissViewControllerAnimated:YES completion:nil];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.linkerVC dismissViewControllerAnimated:YES completion:nil];
+            });
+            [self.dropboxVC getInodeRepresentation];
         }
         return YES;
     }
