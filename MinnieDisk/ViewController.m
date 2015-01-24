@@ -135,14 +135,16 @@ static NSInteger const gradientLength = 100;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
         [self.draftContentInteractor addInode:selectedNode];
+        
         MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         [cell resetTitleToNormalStateAnimated:NO];
         [cell genieInTransitionWithDuration:1.0
                             destinationRect:[self destinationGennieRect]
                             destinationEdge:BCRectEdgeTop
                                  completion:^{
-                                     [tableView deleteRowsAtIndexPaths:@[indexPath]
-                                                      withRowAnimation:UITableViewRowAnimationAutomatic];
+                                     [tableView reloadData];
+                                     //[tableView deleteRowsAtIndexPaths:@[indexPath]
+                                                      //withRowAnimation:UITableViewRowAnimationAutomatic];
                                  }];
     }
 }

@@ -22,7 +22,7 @@
     [super setUp];
     self.dbRestClientMock = mock([DBRestClient class]);
     self.listContentInteractor = [[ListContentInteractor alloc] init];
-    self.listContentInteractor.dbRestClient = self.dbRestClientMock;
+    //self.listContentInteractor.dbRestClient = self.dbRestClientMock;
 }
 
 - (void)tearDown {
