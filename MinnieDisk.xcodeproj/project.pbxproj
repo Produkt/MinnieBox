@@ -12,6 +12,7 @@
 		883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076B81A73ACC600D28ED2 /* DraftContentInteractor.m */; };
 		883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076BB1A73AFC900D28ED2 /* DeleteContentInteractor.m */; };
 		883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076BE1A73B29E00D28ED2 /* THOperation.m */; };
+		883076C41A73B7BC00D28ED2 /* MDInodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076C31A73B7BC00D28ED2 /* MDInodeTests.m */; };
 		88CD2EC51A72EBD00020B1E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC41A72EBD00020B1E1 /* main.m */; };
 		88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC71A72EBD00020B1E1 /* AppDelegate.m */; };
 		88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2EC91A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld */; };
@@ -56,6 +57,7 @@
 		883076BB1A73AFC900D28ED2 /* DeleteContentInteractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteContentInteractor.m; sourceTree = "<group>"; };
 		883076BD1A73B29E00D28ED2 /* THOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOperation.h; sourceTree = "<group>"; };
 		883076BE1A73B29E00D28ED2 /* THOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THOperation.m; sourceTree = "<group>"; };
+		883076C31A73B7BC00D28ED2 /* MDInodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDInodeTests.m; sourceTree = "<group>"; };
 		88CD2EBF1A72EBD00020B1E1 /* MinnieDisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinnieDisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CD2EC31A72EBD00020B1E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88CD2EC41A72EBD00020B1E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			children = (
 				88CD2EE11A72EBD00020B1E1 /* MinnieDiskTests.m */,
 				88CD2EFF1A73029B0020B1E1 /* ListContentInteractorTests.m */,
+				883076C31A73B7BC00D28ED2 /* MDInodeTests.m */,
 				88CD2EDF1A72EBD00020B1E1 /* Supporting Files */,
 			);
 			path = MinnieDiskTests;
@@ -410,6 +413,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88CD2F001A73029B0020B1E1 /* ListContentInteractorTests.m in Sources */,
+				883076C41A73B7BC00D28ED2 /* MDInodeTests.m in Sources */,
 				88CD2EE21A72EBD00020B1E1 /* MinnieDiskTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
