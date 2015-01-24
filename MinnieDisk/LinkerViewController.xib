@@ -35,7 +35,6 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minniebox needs access to your dropbox... Captain Obvious innit?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuZ-Ue-C0Z">
                     <rect key="frame" x="51" y="192" width="498" height="60"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="498" id="cC6-ZS-fMp"/>
                         <constraint firstAttribute="height" constant="60" id="lLj-ai-fIu"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -52,8 +51,10 @@
                 <constraint firstAttribute="trailing" secondItem="GDN-eB-JaX" secondAttribute="trailing" id="GvG-a2-g2z"/>
                 <constraint firstItem="y34-Sz-Rgc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pmg-2e-JqG"/>
                 <constraint firstItem="GDN-eB-JaX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="VMa-O5-QOw"/>
+                <constraint firstItem="wuZ-Ue-C0Z" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="51" id="X9r-qx-5Wn"/>
                 <constraint firstItem="GDN-eB-JaX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="esM-aF-lgT"/>
                 <constraint firstAttribute="centerY" secondItem="y34-Sz-Rgc" secondAttribute="centerY" id="sEH-dx-cKI"/>
+                <constraint firstAttribute="trailing" secondItem="wuZ-Ue-C0Z" secondAttribute="trailing" constant="51" id="tKw-nV-9xP"/>
             </constraints>
         </view>
     </objects>
