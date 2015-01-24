@@ -63,6 +63,7 @@ static NSUInteger const numberOfChilds = 10;
 }
 
 - (void)testUndraftedChilds{
+    XCTAssertEqualObjects([self.inode inodeUndraftedChilds], [self.inode inodeChilds]);
     [self.draftedInodes addObject:[self.inode inodeChilds][0]];
     [self.draftedInodes addObject:[self.inode inodeChilds][1]];
     XCTAssert(![[self.inode inodeUndraftedChilds]containsObject:[self.inode inodeChilds][0]]);
