@@ -11,6 +11,7 @@
 #import "ListContentInteractor.h"
 #import "DraftContentInteractor.h"
 #import "GradientColorGenerator.h"
+#import <BCGenieEffect/UIView+Genie.h>
 
 static NSInteger const gradientLength = 100;
 
@@ -30,6 +31,7 @@ static NSInteger const gradientLength = 100;
     self = [super init];
     if (self) {
         [self setupTabbarItem];
+
     }
     return self;
 }
@@ -122,19 +124,34 @@ static NSInteger const gradientLength = 100;
     }
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.percentageColor = [UIColor redColor];
+    [cell animateTitleToDeleteState];
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
         [self.draftContentInteractor addInode:selectedNode];
-        [tableView reloadData];
+        MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [cell resetTitleToNormalStateAnimated:NO];
+        [cell genieInTransitionWithDuration:1.0
+                            destinationRect:[self destinationGennieRect]
+                            destinationEdge:BCRectEdgeTop
+                                 completion:^{
+                                     [tableView deleteRowsAtIndexPaths:@[indexPath]
+                                                      withRowAnimation:UITableViewRowAnimationAutomatic];
+                                 }];
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeChilds][indexPath.row];
-    [inode inodeSize];
-    [self.draftContentInteractor addInode:inode];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
+    cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
+    [cell resetTitleToNormalStateAnimated:YES];
 }
 
 
@@ -149,6 +166,13 @@ static NSInteger const gradientLength = 100;
         }
     }
     return maximum;
+}
+
+- (CGRect)destinationGennieRect {
+    return CGRectMake(CGRectGetWidth(self.view.frame) * 0.6,
+                      self.tabBarController.tabBar.frame.origin.y,
+                      CGRectGetWidth(self.view.frame) * 0.3,
+                      CGRectGetHeight(self.tabBarController.tabBar.frame));
 }
 
 #pragma mark -  getters

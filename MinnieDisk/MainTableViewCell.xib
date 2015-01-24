@@ -43,13 +43,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="centerY" secondItem="U3j-Fe-dMh" secondAttribute="centerY" id="23V-eC-gck"/>
+                    <constraint firstItem="jR8-Ot-MSK" firstAttribute="leading" secondItem="G4m-7t-NBd" secondAttribute="leading" id="4bO-bg-duq"/>
                     <constraint firstItem="jR8-Ot-MSK" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="96D-9p-lVB"/>
                     <constraint firstAttribute="trailing" secondItem="G4m-7t-NBd" secondAttribute="trailing" constant="8" id="CVJ-Nb-Z03"/>
                     <constraint firstAttribute="bottom" secondItem="Inr-PB-lb8" secondAttribute="bottom" id="EEn-GD-pkf"/>
                     <constraint firstItem="Inr-PB-lb8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="M14-xQ-fxk"/>
                     <constraint firstItem="Inr-PB-lb8" firstAttribute="top" secondItem="jR8-Ot-MSK" secondAttribute="bottom" constant="8" id="ZCm-jR-o70"/>
                     <constraint firstAttribute="trailing" secondItem="Inr-PB-lb8" secondAttribute="trailing" id="jv7-Gb-GsX"/>
-                    <constraint firstItem="jR8-Ot-MSK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="oUb-4M-9To"/>
                     <constraint firstItem="jR8-Ot-MSK" firstAttribute="top" secondItem="G4m-7t-NBd" secondAttribute="bottom" id="uOr-L3-AZI"/>
                     <constraint firstItem="G4m-7t-NBd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="vY5-lu-DnD"/>
                     <constraint firstAttribute="trailingMargin" secondItem="U3j-Fe-dMh" secondAttribute="trailing" constant="15" id="we1-CZ-hY9"/>
@@ -58,6 +58,7 @@
             <connections>
                 <outlet property="bottomBarView" destination="Inr-PB-lb8" id="Fqs-QB-iah"/>
                 <outlet property="disclosureImageView" destination="U3j-Fe-dMh" id="fYn-ad-UcF"/>
+                <outlet property="leadingEdgeConstraint" destination="vY5-lu-DnD" id="m6i-Vy-kdM"/>
                 <outlet property="nameLabel" destination="G4m-7t-NBd" id="HaP-sG-4Nq"/>
                 <outlet property="sizeLabel" destination="jR8-Ot-MSK" id="f5n-cc-hmM"/>
             </connections>

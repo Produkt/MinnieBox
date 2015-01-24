@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *disclosureImageView;
 @property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 @property (nonatomic, strong) CALayer *percentageLayer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingEdgeConstraint;
 @end
 @implementation MainTableViewCell
 
@@ -60,5 +61,23 @@
 
 - (void)updatePercetageLayer{
     self.percentageLayer.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bottomBarView.frame) * self.sizePercentage, CGRectGetHeight(self.bottomBarView.frame));
+}
+-(void)animateTitleToDeleteState {
+    self.leadingEdgeConstraint.constant = 100;
+    [UIView animateWithDuration:0.5 animations:^{
+        [self layoutIfNeeded];
+    }];
+}
+
+-(void)resetTitleToNormalStateAnimated:(BOOL)animated {
+    self.leadingEdgeConstraint.constant = 16;
+    if (animated) {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self layoutIfNeeded];
+        }];
+    } else {
+        [self layoutIfNeeded];
+    }
+
 }
 @end
