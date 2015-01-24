@@ -4,7 +4,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'MinnieDisk' do
-
+pod 'BCGenieEffect', '~> 1.1'
 end
 
 target 'MinnieDiskTests' do

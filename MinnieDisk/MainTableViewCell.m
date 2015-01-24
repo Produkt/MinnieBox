@@ -27,9 +27,14 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    if (self.folderCell) {
+        [super setSelected:selected animated:animated];
+    }
+}
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    if (self.folderCell) {
+        [super setHighlighted:highlighted animated:animated];
+    }
 }
 
 -(void)setSizePercentage:(CGFloat)sizePercentage {
@@ -44,6 +49,7 @@
 - (void)setFolderCell:(BOOL)folderCell {
     _folderCell = folderCell;
     self.disclosureImageView.hidden = !folderCell;
+    
 }
 - (void)configurePrecentageLayer{
     self.percentageLayer = [CALayer layer];

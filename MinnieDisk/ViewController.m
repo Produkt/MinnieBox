@@ -37,13 +37,13 @@ static NSInteger const gradientLength = 100;
 - (instancetype)initWithInodeRepresentation:(id<InodeRepresentationProtocol>)inode {
     self = [super init];
     if (self) {
-        _inodeRepresentation = inode;
-        self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
         [self setupTabbarItem];
+        _inodeRepresentation = inode;
 
     }
     return self;
 }
+
 
 
 - (void)viewDidLoad {
@@ -54,9 +54,15 @@ static NSInteger const gradientLength = 100;
             self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
             [self.mainTableView reloadData];
         }];
+    } else {
+        [self.listContentInteractor listRootContentWithInode:_inodeRepresentation withCompletion:^(id<InodeRepresentationProtocol> inode) {
+            self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+            [self.mainTableView reloadData];
+        }];
     }
+    
     [self setupTableView];
-
+    
 
 }
 - (void)setupTabbarItem {
@@ -94,16 +100,28 @@ static NSInteger const gradientLength = 100;
     cell.sizeLabel.text = [inode inodeHumanReadableSize];
     NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
     cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
-    
     CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
     cell.sizePercentage = size;
     cell.folderCell = [inode inodeType];
+
 
     return cell;
 }
 
 
 #pragma mark -  TableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
+    
+    if ([selectedNode inodeType] == InodeTypeFolder) {
+        ViewController *nextVC = [[ViewController alloc]initWithInodeRepresentation:selectedNode];
+        [self.navigationController pushViewController:nextVC animated:YES];
+        
+        MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.selected = NO;
+    }
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
