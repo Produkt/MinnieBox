@@ -31,7 +31,6 @@ static NSInteger const gradientLength = 100;
     self = [super init];
     if (self) {
         [self setupTabbarItem];
-
     }
     return self;
 }
@@ -41,31 +40,49 @@ static NSInteger const gradientLength = 100;
     if (self) {
         [self setupTabbarItem];
         _inodeRepresentation = inode;
-
     }
     return self;
 }
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getInodeRepresentation];
+    [self setupTableView];
+    [self setupNavigationBar];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.mainTableView reloadData];
+}
+- (void)getInodeRepresentation {
     if (!_inodeRepresentation) {
         [self.listContentInteractor listRootContentWithCompletion:^(id<InodeRepresentationProtocol> inode) {
             _inodeRepresentation = inode;
             self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+            [self setupNavigationBar];
             [self.mainTableView reloadData];
         }];
     } else {
-        [self.listContentInteractor listRootContentWithInode:_inodeRepresentation withCompletion:^(id<InodeRepresentationProtocol> inode) {
-            self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+        if (![_inodeRepresentation inodeChilds]) {
+            [self.listContentInteractor listRootContentWithInode:_inodeRepresentation withCompletion:^(id<InodeRepresentationProtocol> inode) {
+                self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+                [self setupNavigationBar];
+                [self.mainTableView reloadData];
+            }];
+        } else {
+            self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:self.inodeRepresentation];
             [self.mainTableView reloadData];
-        }];
+            [self setupNavigationBar];
+        }
     }
-    
-    [self setupTableView];
-    
-
+}
+- (void)setupNavigationBar {
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                            target:self action:@selector(editPressed:)];
+    self.navigationItem.rightBarButtonItem = editButton;
+    self.title = [self.inodeRepresentation inodeName];
+    if ([self.title isEqualToString:@"/"]) {
+        self.title = @"Dropbox";
+    }
 }
 - (void)setupTabbarItem {
     self.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Dropbox"
@@ -108,10 +125,7 @@ static NSInteger const gradientLength = 100;
     } else {
         cell.sizePercentage = 0;
     }
-
     cell.folderCell = [inode inodeType];
-
-
     return cell;
 }
 
@@ -122,6 +136,7 @@ static NSInteger const gradientLength = 100;
     
     if ([selectedNode inodeType] == InodeTypeFolder) {
         ViewController *nextVC = [[ViewController alloc]initWithInodeRepresentation:selectedNode];
+        nextVC.draftedInodes = self.draftedInodes;
         [self.navigationController pushViewController:nextVC animated:YES];
         
         MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -162,6 +177,9 @@ static NSInteger const gradientLength = 100;
     [cell resetTitleToNormalStateAnimated:YES];
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"To Minniebox";
+}
 
 
 
@@ -198,6 +216,11 @@ static NSInteger const gradientLength = 100;
                       self.tabBarController.tabBar.frame.origin.y,
                       CGRectGetWidth(self.view.frame) * 0.3,
                       CGRectGetHeight(self.tabBarController.tabBar.frame));
+}
+
+#pragma mark -  Navbar actions
+- (void)editPressed:(UIBarButtonItem *)sender {
+    
 }
 
 #pragma mark -  getters

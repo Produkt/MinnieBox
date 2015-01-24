@@ -64,7 +64,7 @@
     self.percentageLayer.bounds = bounds;
 }
 -(void)animateTitleToDeleteState {
-    self.leadingEdgeConstraint.constant = 100;
+    self.leadingEdgeConstraint.constant = 150;
     [UIView animateWithDuration:0.5 animations:^{
         [self layoutIfNeeded];
     }];
