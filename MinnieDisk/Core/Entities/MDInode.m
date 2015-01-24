@@ -33,9 +33,18 @@
 - (NSArray *)mdInodesFromInodeItemChilds:(NSArray *)childs{
     NSMutableArray *inodes = [NSMutableArray array];
     for (id<InodeRepresentationProtocol> inode in childs) {
-        [inodes addObject:[[MDInode alloc] initWithInodeItem:inode andDraftedInodes:self.draftedInodes]];
+        MDInode *childInode = [[MDInode alloc] initWithInodeItem:inode andDraftedInodes:self.draftedInodes];
+        childInode.parentInode = self;
+        [inodes addObject:childInode];
     }
     return inodes;
+}
+- (void)removeChildInode:(id<InodeRepresentationProtocol>)childInode{
+    if ([self.inodeItemChilds containsObject:childInode]) {
+        NSMutableArray *childs = [self.inodeItemChilds mutableCopy];
+        [childs removeObject:childInode];
+        self.inodeItemChilds = childs;
+    }
 }
 - (NSString *)inodeName{
     return [self.inodeItem inodeName];

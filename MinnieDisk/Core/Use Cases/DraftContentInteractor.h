@@ -11,6 +11,7 @@
 
 UIKIT_EXTERN NSString * const DraftInodesAddInodeNotification;
 UIKIT_EXTERN NSString * const DraftInodesRemoveInodeNotification;
+UIKIT_EXTERN NSString * const DraftInodesWillRemoveInodeNotification;
 
 @interface DraftContentInteractor : NSObject
 @property (strong,nonatomic,readonly) NSMutableSet *draftedInodes;

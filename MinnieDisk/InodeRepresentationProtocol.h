@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, InodeType) {
 - (InodeType)inodeType;
 - (NSString *)inodeHumanReadableSize;
 @optional
+- (id<InodeRepresentationProtocol>)parentInode;
 - (NSArray *)inodeChilds;
 - (NSArray *)inodeUndraftedChilds;
+- (void)removeChildInode:(id<InodeRepresentationProtocol>)childInode;
 @end
