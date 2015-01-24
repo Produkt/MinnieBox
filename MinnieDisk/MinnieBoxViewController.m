@@ -28,6 +28,7 @@ static NSUInteger const maxConfirmationIteratinos = 5;
 @property (assign,nonatomic) NSUInteger confirmationIterations;
 @property (weak,nonatomic) MinnieBoxCountdownTableViewCell *countdownCell;
 @property (weak, nonatomic) IBOutlet UILabel *noContentLabel;
+@property (weak, nonatomic) UILabel *subTitleLabel;
 @end
 
 @implementation MinnieBoxViewController
@@ -51,9 +52,13 @@ static NSUInteger const maxConfirmationIteratinos = 5;
 }
 - (void)inodeWasDrafted:(NSNotification *)notification{
     [self updateCache];
+    [self updateBadge];
+    [self updateSubtitle];
 }
 - (void)inodeWasUndrafted:(NSNotification *)notification{
     [self updateCache];
+    [self updateBadge];
+    [self updateSubtitle];
 }
 - (void)updateCache{
     self.draftedInodesCache = [[self.draftedInodes allObjects] mutableCopy];
@@ -69,6 +74,30 @@ static NSUInteger const maxConfirmationIteratinos = 5;
 //    }
 //    [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+- (void)updateSubtitle{
+    NSString *draftedBytesLenght = [NSByteCountFormatter stringFromByteCount:[self draftedBytes]
+                                                           countStyle:NSByteCountFormatterCountStyleMemory];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"%@ ready to be deleted",draftedBytesLenght];
+    [self.subTitleLabel sizeToFit];
+}
+- (void)updateBadge {
+    NSUInteger draftedBytes = [self draftedBytes];
+    NSString *badgeString = [NSByteCountFormatter stringFromByteCount:draftedBytes
+                                                           countStyle:NSByteCountFormatterCountStyleMemory];
+    
+    UITabBarItem *item = [self.tabBarController.tabBar.items lastObject];
+    
+    item.badgeValue = badgeString;
+}
+
+- (NSUInteger)draftedBytes{
+    __block NSUInteger totalBytes = 0;
+    [self.draftedInodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        totalBytes += [(id<InodeRepresentationProtocol>)obj inodeSize];
+        
+    }];
+    return totalBytes;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -79,6 +108,7 @@ static NSUInteger const maxConfirmationIteratinos = 5;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    [self updateSubtitle];
 }
 - (void)configureTableView{
     self.tableView.delegate = self;
@@ -104,16 +134,17 @@ static NSUInteger const maxConfirmationIteratinos = 5;
 - (void)setupNavigationTitle{
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.text = @"Minniebox";
     [titleLabel sizeToFit];
     
-    UILabel *subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 24, 0, 0)];
+    UILabel *subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 19, 0, 0)];
     subTitleLabel.backgroundColor = [UIColor clearColor];
     subTitleLabel.textColor = [UIColor grayColor];
-    subTitleLabel.font = [UIFont systemFontOfSize:10];
+    subTitleLabel.font = [UIFont systemFontOfSize:11];
     subTitleLabel.text = @"78 MB ready to be deleted";
     [subTitleLabel sizeToFit];
+    self.subTitleLabel = subTitleLabel;
     
     UIView *twoLineTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MAX(subTitleLabel.frame.size.width, titleLabel.frame.size.width), 30)];
     [twoLineTitleView addSubview:titleLabel];

@@ -89,6 +89,7 @@
 }
 - (void)enqueueLoadMetadataForInode:(id<InodeRepresentationProtocol>)inode withCompletion:(loadContentCallback)completion{
     LoadMetadataOperation *loadMetadataOperation = [[LoadMetadataOperation alloc] initWithInode:inode];
+    loadMetadataOperation.draftedInodes = self.draftedInodes;
     __weak typeof(loadMetadataOperation) weakMetadataOperation = loadMetadataOperation;
     [loadMetadataOperation setCompletionBlock:^{
         if (!self.requestedInode) {

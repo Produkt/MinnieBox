@@ -23,12 +23,22 @@
         _draftedInodes = draftedInodes;
         if ([[inodeItem inodeChilds] count]) {
             _inodeItemChilds = [self mdInodesFromInodeItemChilds:[inodeItem inodeChilds]];
+            [self updateChildsSort];
         }
     }
     return self;
 }
 - (void)setInodeRepresentationChilds:(NSArray *)inodeRepresentationChilds{
     self.inodeItemChilds = [self mdInodesFromInodeItemChilds:inodeRepresentationChilds];
+    [self updateChildsSort];
+}
+- (void)updateChildsSort{
+    NSArray *childs = self.inodeItemChilds;
+    NSArray *sortedChilds = [childs sortedArrayUsingComparator:^NSComparisonResult(id<InodeRepresentationProtocol> obj1, id<InodeRepresentationProtocol> obj2) {
+        return [@([obj2 inodeSize]) compare:@([obj1 inodeSize])];
+    }];
+    self.inodeItemChilds = sortedChilds;
+    [self.parentInode updateChildsSort];
 }
 - (NSArray *)mdInodesFromInodeItemChilds:(NSArray *)childs{
     NSMutableArray *inodes = [NSMutableArray array];

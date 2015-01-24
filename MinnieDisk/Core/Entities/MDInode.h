@@ -16,4 +16,5 @@
 - (instancetype)initWithInodeItem:(id<InodeRepresentationProtocol>)inodeItem andDraftedInodes:(NSSet *)draftedInodes;
 - (void)setInodeRepresentationChilds:(NSArray *)inodeRepresentationChilds;
 - (void)removeChildInode:(id<InodeRepresentationProtocol>)childInode;
+- (void)updateChildsSort;
 @end
