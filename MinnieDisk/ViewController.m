@@ -10,7 +10,6 @@
 #import "MainTableViewCell.h"
 #import "ListContentInteractor.h"
 #import "DraftContentInteractor.h"
-#import "GradientColorGenerator.h"
 #import <BCGenieEffect/UIView+Genie.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <DropboxSDK/DropboxSDK.h>
@@ -22,7 +21,6 @@ static NSInteger const gradientLength = 100;
 @property (nonatomic, strong) id<InodeRepresentationProtocol> inodeRepresentation;
 @property (nonatomic, strong) ListContentInteractor *listContentInteractor;
 @property (nonatomic, strong) DraftContentInteractor *draftContentInteractor;
-@property (nonatomic, strong) GradientColorGenerator *colorGenerator;
 @property (nonatomic, assign) NSUInteger maximumNodeSize;
 @end
 
@@ -133,8 +131,7 @@ static NSInteger const gradientLength = 100;
     id<InodeRepresentationProtocol> inode = [self.inodeRepresentation inodeUndraftedChilds][indexPath.row];
     cell.nameLabel.text = [inode inodeName];
     cell.sizeLabel.text = [inode inodeHumanReadableSize];
-    NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
-    cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
+    cell.percentageColor = [UIColor colorWithRed:0.09 green:0.49 blue:0.98 alpha:1.0];
     if (self.maximumNodeSize > 0) {
         CGFloat size = (CGFloat)[inode inodeSize]/self.maximumNodeSize;
         cell.sizePercentage = size;
@@ -186,8 +183,7 @@ static NSInteger const gradientLength = 100;
 
 - (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    NSInteger nCells = [[((id<InodeRepresentationProtocol>)self.inodeRepresentation) inodeUndraftedChilds] count];
-    cell.percentageColor = [self.colorGenerator colorAtPosition:indexPath.row * gradientLength * 2/nCells];
+    cell.percentageColor =  [UIColor colorWithRed:0.09 green:0.49 blue:0.98 alpha:1.0];
     [cell resetTitleToNormalStateAnimated:YES];
 }
 
@@ -223,14 +219,6 @@ static NSInteger const gradientLength = 100;
 }
 
 #pragma mark -  getters
-- (GradientColorGenerator *)colorGenerator {
-    if (!_colorGenerator) {
-        _colorGenerator = [[GradientColorGenerator alloc]initWithColors:@[[UIColor colorWithRed:0.00 green:0.47 blue:1.00 alpha:1.0], [UIColor colorWithRed:0.55 green:0.76 blue:1.00 alpha:1.0]]
-                                                                     length:gradientLength];
-    }
-    return _colorGenerator;
-}
-
 - (ListContentInteractor *)listContentInteractor{
     if (!_listContentInteractor) {
         _listContentInteractor = [[ListContentInteractor alloc] init];
