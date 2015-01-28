@@ -15,18 +15,16 @@
 #import "MinnieBoxCountdownTableViewCell.h"
 #import "MinnieBoxDisclaimerTableViewCell.h"
 
-static NSUInteger const maxConfirmationIteratinos = 5;
 
-@interface MinnieBoxViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MinnieBoxViewController ()<UITableViewDataSource,UITableViewDelegate, CountdownCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong,nonatomic,readwrite) NSSet *draftedInodes;
 @property (strong,nonatomic,readwrite) NSMutableArray *draftedInodesCache;
 @property (strong,nonatomic) DeleteContentInteractor *deleteContentInteractor;
 @property (strong,nonatomic) DraftContentInteractor *draftContentInteractor;
 @property (assign,nonatomic) BOOL isWaitingConfirmation;
-@property (strong,nonatomic) NSTimer *confirmationTimer;
+
 @property (assign,nonatomic) NSUInteger confirmationIterations;
-@property (weak,nonatomic) MinnieBoxCountdownTableViewCell *countdownCell;
 @property (weak, nonatomic) IBOutlet UILabel *noContentLabel;
 @property (weak, nonatomic) UILabel *subTitleLabel;
 @end
@@ -82,11 +80,13 @@ static NSUInteger const maxConfirmationIteratinos = 5;
 }
 - (void)updateBadge {
     NSUInteger draftedBytes = [self draftedBytes];
-    NSString *badgeString = [NSByteCountFormatter stringFromByteCount:draftedBytes
-                                                           countStyle:NSByteCountFormatterCountStyleMemory];
-    
+    NSString *badgeString = @"";
+    if (draftedBytes > 0) {
+        badgeString = [NSByteCountFormatter stringFromByteCount:draftedBytes
+                                                               countStyle:NSByteCountFormatterCountStyleMemory];
+
+    }
     UITabBarItem *item = [self.tabBarController.tabBar.items lastObject];
-    
     item.badgeValue = badgeString;
 }
 
@@ -202,7 +202,6 @@ static NSUInteger const maxConfirmationIteratinos = 5;
     }else if (indexPath.section == 2){
         if (indexPath.item == 0) {
             MinnieBoxCountdownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinnieBoxCountdownTableViewCell class]) forIndexPath:indexPath];
-            self.countdownCell = cell;
             return cell;
         }else{
             MinieBoxDeleteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MinieBoxDeleteTableViewCell class]) forIndexPath:indexPath];
@@ -219,16 +218,19 @@ static NSUInteger const maxConfirmationIteratinos = 5;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1 && indexPath.item == 0) {
         self.isWaitingConfirmation = YES;
-        self.confirmationIterations = 0;
-        [self updateCellCountdown];
-        self.confirmationTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(confirmationCountDown) userInfo:nil repeats:YES];
         [self.tableView reloadData];
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:2] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        NSIndexPath *cellIndexPath = [NSIndexPath indexPathForItem:0 inSection:2];
+        [self.tableView scrollToRowAtIndexPath:cellIndexPath
+                              atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        MinnieBoxCountdownTableViewCell *cell = (MinnieBoxCountdownTableViewCell *)[tableView cellForRowAtIndexPath:cellIndexPath];
+        cell.delegate = self;
+        [cell startCountDown];
         self.tableView.scrollEnabled = NO;
     }else if (indexPath.section == 2 && indexPath.item == 1){
         self.isWaitingConfirmation = NO;
-        [self.confirmationTimer invalidate];
-        self.confirmationTimer = nil;
+        MinnieBoxCountdownTableViewCell *cell = (MinnieBoxCountdownTableViewCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:2]];
+        [cell stopCountDown];
+
         self.tableView.scrollEnabled = YES;
         [self.tableView reloadData];
     }
@@ -253,20 +255,11 @@ static NSUInteger const maxConfirmationIteratinos = 5;
     return 0;
 }
 
-- (void)confirmationCountDown{
-    self.confirmationIterations ++;
-    NSLog(@"%lu",(unsigned long)self.confirmationIterations);
-    [self updateCellCountdown];
-    if (self.confirmationIterations >= maxConfirmationIteratinos) {
-        [self.confirmationTimer invalidate];
-        self.confirmationTimer = nil;
-        self.isWaitingConfirmation = NO;
-        [self deleteAllItems];
-    }
-}
 
-- (void)updateCellCountdown{
-    self.countdownCell.countdownLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxConfirmationIteratinos - self.confirmationIterations)];
+#pragma mark -  CountDownCellDelegate
+- (void)countDownFinished {
+    self.isWaitingConfirmation = NO;
+    [self deleteAllItems];
 }
 
 - (void)deleteAllItems{

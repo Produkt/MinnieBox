@@ -37,6 +37,7 @@
 		C731B5311A73B23400733D1E /* MinnieBoxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C731B52F1A73B23400733D1E /* MinnieBoxViewController.xib */; };
 		C731B5361A73FA8800733D1E /* LinkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C731B5341A73FA8800733D1E /* LinkerViewController.m */; };
 		C731B5371A73FA8800733D1E /* LinkerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C731B5351A73FA8800733D1E /* LinkerViewController.xib */; };
+		C7C288FE1A792D9C0038FB03 /* VBFCountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C288FD1A792D9C0038FB03 /* VBFCountDown.m */; };
 		C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */; };
 		C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */; };
 		C7EF808B1A73363700DC0CE7 /* GradientColorGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF808A1A73363700DC0CE7 /* GradientColorGenerator.m */; };
@@ -108,6 +109,8 @@
 		C731B5331A73FA8800733D1E /* LinkerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkerViewController.h; sourceTree = "<group>"; };
 		C731B5341A73FA8800733D1E /* LinkerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkerViewController.m; sourceTree = "<group>"; };
 		C731B5351A73FA8800733D1E /* LinkerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinkerViewController.xib; sourceTree = "<group>"; };
+		C7C288FC1A792D9C0038FB03 /* VBFCountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBFCountDown.h; sourceTree = "<group>"; };
+		C7C288FD1A792D9C0038FB03 /* VBFCountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBFCountDown.m; sourceTree = "<group>"; };
 		C7EF807C1A72FC0F00DC0CE7 /* InodeRepresentationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InodeRepresentationProtocol.h; sourceTree = "<group>"; };
 		C7EF80831A73097800DC0CE7 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
 		C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 				C7EF808A1A73363700DC0CE7 /* GradientColorGenerator.m */,
 				C7EF808C1A733E7000DC0CE7 /* UIImage+PixelColor.h */,
 				C7EF808D1A733E7000DC0CE7 /* UIImage+PixelColor.m */,
+				C7C288FC1A792D9C0038FB03 /* VBFCountDown.h */,
+				C7C288FD1A792D9C0038FB03 /* VBFCountDown.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -532,6 +537,7 @@
 				883076CE1A73E60400D28ED2 /* MinieBoxDeleteTableViewCell.m in Sources */,
 				C731B5361A73FA8800733D1E /* LinkerViewController.m in Sources */,
 				883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */,
+				C7C288FE1A792D9C0038FB03 /* VBFCountDown.m in Sources */,
 				883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */,
 				883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */,
 				88CD2EF31A72F1B10020B1E1 /* ViewController.m in Sources */,
