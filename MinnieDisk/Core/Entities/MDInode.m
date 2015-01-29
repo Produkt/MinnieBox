@@ -12,6 +12,11 @@
 static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
 
 @interface MDInode ()
+@property (copy,nonatomic,readwrite) NSString *inodeName;
+@property (copy,nonatomic,readwrite) NSString *inodePath;
+@property (strong,nonatomic,readwrite) NSDate *inodeCreationDate;
+@property (assign,nonatomic,readwrite) InodeType inodeType;
+@property (copy,nonatomic,readwrite) NSString *inodeHumanReadableSize;
 @property (strong,nonatomic,readwrite) id<InodeRepresentationProtocol> inodeItem;
 @property (strong,nonatomic,readwrite) NSSet *draftedInodes;
 @property (strong,nonatomic) NSArray *inodeItemChilds;
@@ -26,6 +31,7 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
         _draftedInodes = draftedInodes;
         _inodeItemChilds = @[];
         _inodeCachedSize = [inodeItem inodeType] == InodeTypeFile ? [inodeItem inodeSize] : 0;
+        _inodeType = [inodeItem inodeType];
     }
     return self;
 }
@@ -76,7 +82,9 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     if (childInodes.count) {
         [inodes removeObjectsInArray:childInodes];
         for (MDInode *childInode in childInodes) {
-            [inode addChildInode:childInode];
+            @autoreleasepool {
+                [inode addChildInode:childInode];
+            }
         }
     }
     self.inodeItemChilds = inodes;
@@ -96,26 +104,30 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
 }
 - (MDInode *)parentInodeForPath:(NSString *)path inInodes:(NSArray *)inodes{
     MDInode *parentInode;
-    for (MDInode *potencialParentInode in inodes) {
-        NSString *parentPath = potencialParentInode.inodePath;
-        if (![parentPath isEqualToString:@"/"]) {
-            parentPath = [NSString stringWithFormat:@"%@/",parentPath];
-        }
-        if ([[path lowercaseString] containsString:[parentPath lowercaseString]]) {
-            parentInode = potencialParentInode;
+    @autoreleasepool {
+        for (MDInode *potencialParentInode in inodes) {
+            NSString *parentPath = potencialParentInode.inodePath;
+            if (![parentPath isEqualToString:@"/"]) {
+                parentPath = [NSString stringWithFormat:@"%@/",parentPath];
+            }
+            if ([[path lowercaseString] containsString:[parentPath lowercaseString]]) {
+                parentInode = potencialParentInode;
+            }
         }
     }
     return parentInode;
 }
 - (NSArray *)childInodesForPath:(NSString *)path inInodes:(NSArray *)inodes{
     NSMutableArray *childInodes = [NSMutableArray array];
-    for (MDInode *potencialChildInode in inodes) {
-        NSString *parentPath = path;
-        if (![parentPath isEqualToString:@"/"]) {
-            parentPath = [NSString stringWithFormat:@"%@/",parentPath];
-        }
-        if ([[potencialChildInode.inodePath lowercaseString] containsString:[path lowercaseString]]) {
-            [childInodes addObject:potencialChildInode];
+    @autoreleasepool {
+        for (MDInode *potencialChildInode in inodes) {
+            NSString *parentPath = path;
+            if (![parentPath isEqualToString:@"/"]) {
+                parentPath = [NSString stringWithFormat:@"%@/",parentPath];
+            }
+            if ([[potencialChildInode.inodePath lowercaseString] containsString:[path lowercaseString]]) {
+                [childInodes addObject:potencialChildInode];
+            }
         }
     }
     return childInodes;
@@ -126,6 +138,10 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     if ([self.parentInode respondsToSelector:@selector(childInodeFileWasAddedToTree:)]) {
         [self.parentInode childInodeFileWasAddedToTree:childInode];
     }
+}
+- (void)setInodeCachedSize:(NSUInteger)inodeCachedSize{
+    _inodeCachedSize = inodeCachedSize;
+    self.inodeHumanReadableSize = nil;
 }
 - (void)updateChildsSort{
     NSArray *childs = self.inodeItemChilds;
@@ -143,13 +159,22 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     }
 }
 - (NSString *)inodeName{
-    return [self.inodeItem inodeName];
+    if (!_inodeName) {
+        _inodeName = [[self.inodeItem inodeName] copy];
+    }
+    return _inodeName;
 }
 - (NSString *)inodePath{
-    return [self.inodeItem inodePath];
+    if (!_inodePath) {
+        _inodePath = [[self.inodeItem inodePath] copy];
+    }
+    return _inodePath;
 }
 - (NSDate *)inodeCreationDate{
-    return [self.inodeItem inodeCreationDate];
+    if (!_inodeCreationDate) {
+        _inodeCreationDate = [self.inodeItem inodeCreationDate];
+    }
+    return _inodeCreationDate;
 }
 - (NSUInteger)inodeSize{
     if ([self.inodeItem inodeType] == InodeTypeFile) {
@@ -175,11 +200,11 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
 - (NSString *)description{
     return [NSString stringWithFormat:@"<MDInode> %@",[self inodePath]];
 }
-- (InodeType)inodeType{
-    return [self.inodeItem inodeType];
-}
 - (NSString *)inodeHumanReadableSize{
-    return [NSByteCountFormatter stringFromByteCount:[self inodeSize] countStyle:NSByteCountFormatterCountStyleBinary];
+    if (!_inodeHumanReadableSize) {
+        _inodeHumanReadableSize = [NSByteCountFormatter stringFromByteCount:self.inodeSize countStyle:NSByteCountFormatterCountStyleBinary];
+    }
+    return _inodeHumanReadableSize;
 }
 - (NSArray *)inodeChilds{
     return self.inodeItemChilds;
