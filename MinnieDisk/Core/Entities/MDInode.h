@@ -14,7 +14,9 @@
 @property (strong,nonatomic,readonly) NSSet *draftedInodes;
 @property (weak,nonatomic) id<InodeRepresentationProtocol> parentInode;
 - (instancetype)initWithInodeItem:(id<InodeRepresentationProtocol>)inodeItem andDraftedInodes:(NSSet *)draftedInodes;
-- (void)setInodeRepresentationChilds:(NSArray *)inodeRepresentationChilds;
+- (BOOL)addChildInodeRepresentation:(id<InodeRepresentationProtocol>)childInodeRepresentation;
+- (BOOL)addChildInode:(MDInode *)childInode;
 - (void)removeChildInode:(id<InodeRepresentationProtocol>)childInode;
 - (void)updateChildsSort;
+- (void)childInodeFileWasAddedToTree:(id<InodeRepresentationProtocol>)childInode;
 @end

@@ -18,18 +18,27 @@
 
 @implementation ListContentInteractorTests
 
-//- (void)setUp {
-//    [super setUp];
-//    self.dbRestClientMock = mock([DBRestClient class]);
-//    self.listContentInteractor = [[ListContentInteractor alloc] init];
+- (void)setUp {
+    [super setUp];
+    self.dbRestClientMock = mock([DBRestClient class]);
+    self.listContentInteractor = [[ListContentInteractor alloc] init];
 //    self.listContentInteractor.dbRestClient = self.dbRestClientMock;
-//}
-//
-//- (void)tearDown {
-//    // Put teardown code here. This method is called after the invocation of each test method in the class.
-//    [super tearDown];
-//}
-//
+}
+
+- (void)tearDown {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [super tearDown];
+}
+
+- (void)testDeltaRequest {
+    [self.listContentInteractor listDropboxTreeWithCompletion:^(id<InodeRepresentationProtocol> inode) {
+
+    }];
+    while (YES) {
+        [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
+}
+
 //- (void)testDBRestClientList {
 //    [self.listContentInteractor listRootContentWithCompletion:^(id<InodeRepresentationProtocol> inode) {
 //        

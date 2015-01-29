@@ -10,60 +10,73 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "MDInode.h"
 #import "DBMetadata+InodeRepresentation.h"
-#import "THOperation.h"
 
-@interface LoadMetadataOperation : THOperation<DBRestClientDelegate>
-@property (strong,nonatomic) DBRestClient *dbRestClient;
-@property (strong,nonatomic) id<InodeRepresentationProtocol> inode;
-@property (strong,nonatomic) MDInode *requestedInode;
-@property (strong,nonatomic) NSSet *draftedInodes;
-@property (assign,nonatomic) NSUInteger retries;
+@interface ListContentInteractor ()<DBRestClientDelegate>
+@property (strong,nonatomic) MDInode *rootInode;
+@property (copy,nonatomic) loadContentCallback completion;
+@property (assign,nonatomic) NSUInteger nodesCount;
+@property (strong,nonatomic) NSMutableArray *dbMetadata;
 @end
-
-@implementation LoadMetadataOperation
-- (instancetype)initWithInode:(id<InodeRepresentationProtocol>)inode
-{
-    self = [super init];
-    if (self) {
-        _inode = inode;
-        _requestedInode = [inode isKindOfClass:[MDInode class]] ? inode : nil;
+@implementation ListContentInteractor
+- (void)listDropboxTreeWithCompletion:(loadContentCallback)completion{
+    self.nodesCount = 1;
+    self.completion = completion;
+    [self.dbRestClient loadMetadata:@"/"];
+}
+- (void)requestDeltaWithCursor:(NSString *)cursor{
+    NSLog(@"---");
+    [self.dbRestClient loadDelta:cursor];
+}
+- (void)finishedReadingDropboxContent{
+    NSArray *sortedMetadata = [self.dbMetadata sortedArrayUsingComparator:^NSComparisonResult(id<InodeRepresentationProtocol> obj1, id<InodeRepresentationProtocol> obj2) {
+        return [[obj1 inodePath] compare:[obj2 inodePath]];
+    }];
+    self.dbMetadata = nil;
+    for (id<InodeRepresentationProtocol> inodeRepresentation in sortedMetadata) {
+        [self.rootInode addChildInodeRepresentation:inodeRepresentation];
     }
-    return self;
+    NSLog(@"Finish processing %lu nodes",(unsigned long)self.nodesCount);
+    self.completion(self.rootInode);
+    self.completion = nil;
+    self.rootInode = nil;
 }
-- (void)start{
-    [super start];
-    [self requestMetadata];
-}
-- (void)requestMetadata{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *path = self.inode?[self.inode inodePath]:@"/";
-        NSLog(@"+ Load metadata for path %@",path);
-        [self.dbRestClient loadMetadata:path];
-    });
-}
+
+#pragma mark - DBRestClientDelegate
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata{
     NSLog(@"- Loaded metadata for path %@",metadata.path);
-    MDInode *mdInode = self.requestedInode;
-    if (!mdInode) {
-        mdInode = [[MDInode alloc] initWithInodeItem:metadata andDraftedInodes:self.draftedInodes];
-    }else{
-        [mdInode setInodeRepresentationChilds:metadata.contents];
-    }
-    self.requestedInode = mdInode;
-    [self finish];
+    self.rootInode = [[MDInode alloc] initWithInodeItem:metadata andDraftedInodes:self.draftedInodes];
+    [self requestDeltaWithCursor:@""];
 }
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path{
-//    NSLog(@"- Loaded metadata for path %@",path);
-    [self finish];
+    
 }
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error{
-//    NSLog(@"- Error loading metadata");
-    if (self.retries < 3) {
-        self.retries++;
-        [self requestMetadata];
-    }else{
-        [self finish];
+    //    if (self.retries < 3) {
+    //        self.retries++;
+    //        [self requestMetadata];
+    //    }
+}
+
+- (void)restClient:(DBRestClient*)client loadedDeltaEntries:(NSArray *)entries reset:(BOOL)shouldReset cursor:(NSString *)cursor hasMore:(BOOL)hasMore{
+    for (DBDeltaEntry *deltaEntry in entries) {
+        DBMetadata *inodeMetadata = deltaEntry.metadata;
+        [self.dbMetadata addObject:inodeMetadata];
+        _nodesCount ++;
     }
+    if (hasMore) {
+        [self requestDeltaWithCursor:cursor];
+    }else{
+        [self finishedReadingDropboxContent];
+    }
+}
+- (void)restClient:(DBRestClient*)client loadDeltaFailedWithError:(NSError *)error{
+    
+}
+- (NSMutableArray *)dbMetadata{
+    if (!_dbMetadata) {
+        _dbMetadata = [NSMutableArray array];
+    }
+    return _dbMetadata;
 }
 - (DBRestClient *)dbRestClient{
     if (!_dbRestClient) {
@@ -71,50 +84,5 @@
         _dbRestClient.delegate = self;
     }
     return _dbRestClient;
-}
-@end
-
-@interface ListContentInteractor ()<DBRestClientDelegate>
-@property (strong,nonatomic) NSOperationQueue *loadMetadataQueue;
-@property (strong,nonatomic) MDInode *requestedInode;
-@end
-@implementation ListContentInteractor
-- (void)listRootContentWithCompletion:(loadContentCallback)completion{
-    [self listRootContentWithInode:nil withCompletion:completion];
-}
-- (void)listRootContentWithInode:(id<InodeRepresentationProtocol>)inode withCompletion:(loadContentCallback)completion{
-    [self enqueueLoadMetadataForInode:inode withCompletion:^(id<InodeRepresentationProtocol> inode) {
-        completion(inode);
-    }];
-}
-- (void)enqueueLoadMetadataForInode:(id<InodeRepresentationProtocol>)inode withCompletion:(loadContentCallback)completion{
-    LoadMetadataOperation *loadMetadataOperation = [[LoadMetadataOperation alloc] initWithInode:inode];
-    loadMetadataOperation.draftedInodes = self.draftedInodes;
-    __weak typeof(loadMetadataOperation) weakMetadataOperation = loadMetadataOperation;
-    [loadMetadataOperation setCompletionBlock:^{
-        if (!self.requestedInode) {
-            self.requestedInode = weakMetadataOperation.requestedInode;
-        }
-        dispatch_group_t loadMetadataGroup = dispatch_group_create();
-        for (id<InodeRepresentationProtocol> inodeChild in [weakMetadataOperation.requestedInode inodeChilds]) {
-            if ([inodeChild inodeType] == InodeTypeFolder) {
-                dispatch_group_enter(loadMetadataGroup);
-                [self enqueueLoadMetadataForInode:inodeChild withCompletion:^(id<InodeRepresentationProtocol> inode) {
-                    dispatch_group_leave(loadMetadataGroup);
-                }];
-            }
-        }
-        dispatch_group_notify(loadMetadataGroup, dispatch_get_main_queue(), ^{
-            completion(self.requestedInode);
-        });
-    }];
-    [self.loadMetadataQueue addOperation:loadMetadataOperation];
-}
-#pragma mark - DBRestClientDelegate
-- (NSOperationQueue *)loadMetadataQueue{
-    if (!_loadMetadataQueue) {
-        _loadMetadataQueue = [[NSOperationQueue alloc] init];
-    }
-    return _loadMetadataQueue;
 }
 @end

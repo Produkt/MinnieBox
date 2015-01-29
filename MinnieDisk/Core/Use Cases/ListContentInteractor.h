@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "InodeRepresentationProtocol.h"
+@class DBRestClient;
 
 typedef void (^loadContentCallback)(id<InodeRepresentationProtocol> inode);
 
 @interface ListContentInteractor : NSObject
+@property (strong,nonatomic) DBRestClient *dbRestClient;
 @property (strong,nonatomic) NSSet *draftedInodes;
-- (void)listRootContentWithCompletion:(loadContentCallback)completion;
-- (void)listRootContentWithInode:(id<InodeRepresentationProtocol>)inode withCompletion:(loadContentCallback)completion;
+- (void)listDropboxTreeWithCompletion:(loadContentCallback)completion;
 @end

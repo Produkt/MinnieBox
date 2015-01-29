@@ -25,4 +25,5 @@ typedef NS_ENUM(NSUInteger, InodeType) {
 - (NSArray *)inodeChilds;
 - (NSArray *)inodeUndraftedChilds;
 - (void)removeChildInode:(id<InodeRepresentationProtocol>)childInode;
+- (void)childInodeFileWasAddedToTree:(id<InodeRepresentationProtocol>)childInode;
 @end

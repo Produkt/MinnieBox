@@ -30,4 +30,7 @@
 - (NSArray *)inodeChilds{
     return self.contents;
 }
+- (NSString *)description{
+    return [NSString stringWithFormat:@"<DBMetadata> %@",self.path];
+}
 @end

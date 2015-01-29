@@ -58,36 +58,17 @@ static NSInteger const gradientLength = 100;
     [self.mainTableView reloadData];
 }
 - (void)getInodeRepresentation {
-
-    if (!_inodeRepresentation) {
+    if (!self.inodeRepresentation) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.labelText = @"Loading kittens...";
-        [self.listContentInteractor listRootContentWithCompletion:^(id<InodeRepresentationProtocol> inode) {
-            _inodeRepresentation = inode;
+        [self.listContentInteractor listDropboxTreeWithCompletion:^(id<InodeRepresentationProtocol> inode) {
+            self.inodeRepresentation = inode;
             self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
             [self setupNavigationBar];
             [self.mainTableView reloadData];
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-
         }];
-    } else {
-        if (![_inodeRepresentation inodeChilds]) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeAnnularDeterminate;
-            hud.labelText = @"Loading kittens...";
-            [self.listContentInteractor listRootContentWithInode:_inodeRepresentation withCompletion:^(id<InodeRepresentationProtocol> inode) {
-                self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
-                [self setupNavigationBar];
-                [self.mainTableView reloadData];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-            }];
-        } else {
-            self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:self.inodeRepresentation];
-            [self.mainTableView reloadData];
-            [self setupNavigationBar];
-        }
     }
 }
 - (void)setupNavigationBar {
