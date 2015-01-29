@@ -11,6 +11,29 @@
 
 static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
 
+@interface MDIntermediateFolder:NSObject<InodeRepresentationProtocol>
+@property (copy,nonatomic) NSString *inodeName;
+@property (copy,nonatomic) NSString *inodePath;
+@property (strong,nonatomic) NSDate *inodeCreationDate;
+@property (assign,nonatomic) NSUInteger inodeSize;
+@property (assign,nonatomic) InodeType inodeType;
+@property (copy,nonatomic) NSString *inodeHumanReadableSize;
+@end
+@implementation MDIntermediateFolder
+- (instancetype)initWithPath:(NSString *)path
+{
+    self = [super init];
+    if (self) {
+        _inodeName = [path lastPathComponent];
+        _inodePath = [path copy];
+        _inodeCreationDate = [NSDate date];
+        _inodeType = InodeTypeFolder;
+        _inodeHumanReadableSize = [NSByteCountFormatter stringFromByteCount:0 countStyle:NSByteCountFormatterCountStyleBinary];
+    }
+    return self;
+}
+@end
+
 @interface MDInode ()
 @property (copy,nonatomic,readwrite) NSString *inodeName;
 @property (copy,nonatomic,readwrite) NSString *inodePath;
@@ -45,7 +68,25 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     if ([self moveChildsToNewInodeAndAddItAsFirstChilddWithChildInodeRepresentation:childInodeRepresentation]) {
         return YES;
     }
+    if ([self buildIntermediateNodesAndAddChildInodeRepresentation:childInodeRepresentation]) {
+        return YES;
+    }
     return [self addChildInode:[[MDInode alloc] initWithInodeItem:childInodeRepresentation andDraftedInodes:self.draftedInodes]];
+}
+- (BOOL)buildIntermediateNodesAndAddChildInodeRepresentation:(id<InodeRepresentationProtocol>)childInodeRepresentation{
+    if ([[[self previousPathOfPath:[childInodeRepresentation inodePath]] lowercaseString] isEqualToString:[[self inodePath] lowercaseString]]) {
+        return NO;
+    }
+    NSString *basePath = [[self inodePath] lowercaseString];
+    NSRange basePathRange;
+    basePathRange.location = 0;
+    basePathRange.length = basePath.length > 1 ? basePath.length : 0;
+    NSString *intermediatePaths = [[[childInodeRepresentation inodePath] lowercaseString] stringByReplacingCharactersInRange:basePathRange withString:@""];
+    NSArray *pathComponents = [intermediatePaths componentsSeparatedByString:@"/"];
+    NSString *firstIntermediatePath = [[[self inodePath] lowercaseString] stringByAppendingPathComponent:[pathComponents objectAtIndex:1]];
+    MDInode *firstIntermediateNode = [[MDInode alloc] initWithInodeItem:[[MDIntermediateFolder alloc] initWithPath:firstIntermediatePath] andDraftedInodes:self.draftedInodes];
+    [firstIntermediateNode addChildInodeRepresentation:childInodeRepresentation];
+    return [self addChildInode:firstIntermediateNode];
 }
 - (BOOL)addInodeToChildInodeFromChildInodeRepresentation:(id<InodeRepresentationProtocol>)childInodeRepresentation{
     MDInode *parentInode = [self parentInodeForPath:[childInodeRepresentation inodePath] inInodes:self.inodeItemChilds];
@@ -59,7 +100,34 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     if (![self.inodePath isEqualToString:parentPath]) {
         return NO;
     }
+    if ([self replaceIntermediateNodesWithInodeRepresentation:childInodeRepresentation]) {
+        return YES;
+    }
     return [self addChildInode:[[MDInode alloc] initWithInodeItem:childInodeRepresentation andDraftedInodes:self.draftedInodes]];
+}
+- (BOOL)replaceIntermediateNodesWithInodeRepresentation:(id<InodeRepresentationProtocol>)childInodeRepresentation{
+    if ([childInodeRepresentation inodeType] != InodeTypeFolder) {
+        return NO;
+    }
+    MDInode *intermediateInode = [self existingIntermediateInodeWithPath:[childInodeRepresentation inodePath]];
+    if (!intermediateInode) {
+        return NO;
+    }
+    MDInode *inode = [[MDInode alloc] initWithInodeItem:childInodeRepresentation andDraftedInodes:self.draftedInodes];
+    for (MDInode *childInode in intermediateInode.inodeChilds) {
+        [inode addChildInode:childInode];
+    }
+    [self removeChildInode:intermediateInode];
+    return [self addChildInode:inode];
+}
+- (MDInode *)existingIntermediateInodeWithPath:(NSString *)path{
+    MDInode *intermediateInode;
+    for (MDInode *childInode in self.inodeItemChilds) {
+        if ([[childInode.inodePath lowercaseString] isEqualToString:[path lowercaseString]]) {
+            intermediateInode = childInode;
+        }
+    }
+    return intermediateInode;
 }
 - (NSString *)previousPathOfPath:(NSString *)path{
     NSString *lastComponent = [path lastPathComponent];
@@ -88,8 +156,7 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
         }
     }
     self.inodeItemChilds = inodes;
-    [self addChildInode:inode];
-    return YES;
+    return [self addChildInode:inode];
 }
 - (BOOL)addChildInode:(MDInode *)childInode{
     NSMutableArray *childs = [self.inodeItemChilds mutableCopy];
@@ -110,7 +177,7 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
             if (![parentPath isEqualToString:@"/"]) {
                 parentPath = [NSString stringWithFormat:@"%@/",parentPath];
             }
-            if ([[path lowercaseString] containsString:[parentPath lowercaseString]]) {
+            if ([[path lowercaseString] hasPrefix:[parentPath lowercaseString]]) {
                 parentInode = potencialParentInode;
             }
         }
@@ -125,7 +192,7 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
             if (![parentPath isEqualToString:@"/"]) {
                 parentPath = [NSString stringWithFormat:@"%@/",parentPath];
             }
-            if ([[potencialChildInode.inodePath lowercaseString] containsString:[path lowercaseString]]) {
+            if ([[potencialChildInode.inodePath lowercaseString] hasPrefix:[path lowercaseString]]) {
                 [childInodes addObject:potencialChildInode];
             }
         }

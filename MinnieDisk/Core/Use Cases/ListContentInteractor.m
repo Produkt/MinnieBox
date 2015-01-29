@@ -29,35 +29,34 @@
     [self.dbRestClient loadDelta:cursor];
 }
 - (void)finishedReadingDropboxContent{
-    NSArray *sortedMetadata = [self.dbMetadata sortedArrayUsingComparator:^NSComparisonResult(DBDeltaEntry *obj1, DBDeltaEntry *obj2) {
-        return [obj1.lowercasePath compare:obj2.lowercasePath];
-    }];
-    self.dbMetadata = nil;
     NSUInteger index = 0;
-    NSUInteger total = sortedMetadata.count;
+    NSUInteger total = self.dbMetadata.count;
     dispatch_group_t proccessNodesGroup = dispatch_group_create();
-    for (DBDeltaEntry *deltaEntry in sortedMetadata) {
-        dispatch_group_enter(proccessNodesGroup);
-        NSBlockOperation *proccessNodeOperation = [NSBlockOperation blockOperationWithBlock:^{
-            @autoreleasepool {
-                [self.rootInode addChildInodeRepresentation:deltaEntry.metadata];
-            }
-        }];
-        [proccessNodeOperation setCompletionBlock:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.progress(index+1,total,MDLoadProgressStateProccess);
-                dispatch_group_leave(proccessNodesGroup);
-            });
-        }];
-        [self.nodeProccessOperationQueue addOperation:proccessNodeOperation];
+    for (DBDeltaEntry *deltaEntry in self.dbMetadata) {
+        if (deltaEntry.metadata) {
+            dispatch_group_enter(proccessNodesGroup);
+            NSBlockOperation *proccessNodeOperation = [NSBlockOperation blockOperationWithBlock:^{
+                @autoreleasepool {
+                    [self.rootInode addChildInodeRepresentation:deltaEntry.metadata];
+                }
+            }];
+            [proccessNodeOperation setCompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.progress(index+1,total,MDLoadProgressStateProccess);
+                    dispatch_group_leave(proccessNodesGroup);
+                });
+            }];
+            [self.nodeProccessOperationQueue addOperation:proccessNodeOperation];
+        }
         index++;
     }
     dispatch_group_notify(proccessNodesGroup, dispatch_get_main_queue(), ^{
-        NSLog(@"Finish processing %lu nodes",(unsigned long)sortedMetadata.count);
+        NSLog(@"Finish processing %lu nodes",(unsigned long)self.dbMetadata.count);
         self.completion(self.rootInode);
         self.completion = nil;
         self.progress = nil;
         self.rootInode = nil;
+        self.dbMetadata = nil;
     });
 }
 
@@ -78,6 +77,11 @@
 }
 
 - (void)restClient:(DBRestClient*)client loadedDeltaEntries:(NSArray *)entries reset:(BOOL)shouldReset cursor:(NSString *)cursor hasMore:(BOOL)hasMore{
+    if (shouldReset && self.dbMetadata.count) {
+        NSLog(@"******* Reset requiered *******");
+        [self.dbRestClient loadMetadata:@"/"];
+        return;
+    }
     NSLog(@"--- %lu",(unsigned long)entries.count);
     [self.dbMetadata addObjectsFromArray:entries];
     self.progress(0,self.dbMetadata.count,MDLoadProgressStateRequest);
