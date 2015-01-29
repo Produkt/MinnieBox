@@ -57,7 +57,7 @@
     for (id<InodeRepresentationProtocol> inode in inodes) {
         dispatch_group_enter(deletionGroup);
         [self deleteInode:inode withCompletion:^{
-            [self.draftContentInteractor removeInode:inode];
+            [self.draftContentInteractor removeInode:inode completion:nil];
             dispatch_group_leave(deletionGroup);
         }];
     }
