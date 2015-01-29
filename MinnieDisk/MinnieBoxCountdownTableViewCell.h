@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MinnieBoxCountdownTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *countdownLabel;
+@protocol CountdownCellDelegate <NSObject>
+- (void)countDownFinished;
+@end
 
+@interface MinnieBoxCountdownTableViewCell : UITableViewCell
+@property (nonatomic, weak) id<CountdownCellDelegate> delegate;
+- (void)startCountDown;
+- (void)stopCountDown;
 @end
