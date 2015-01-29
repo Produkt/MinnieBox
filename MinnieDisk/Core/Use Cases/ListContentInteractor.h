@@ -10,10 +10,16 @@
 #import "InodeRepresentationProtocol.h"
 @class DBRestClient;
 
+typedef NS_ENUM(NSUInteger, MDLoadProgressState) {
+    MDLoadProgressStateRequest,
+    MDLoadProgressStateProccess
+};
+
 typedef void (^loadContentCallback)(id<InodeRepresentationProtocol> inode);
+typedef void (^loadContentProgress)(NSUInteger processedItems, NSUInteger total, MDLoadProgressState progressState);
 
 @interface ListContentInteractor : NSObject
 @property (strong,nonatomic) DBRestClient *dbRestClient;
 @property (strong,nonatomic) NSSet *draftedInodes;
-- (void)listDropboxTreeWithCompletion:(loadContentCallback)completion;
+- (void)listDropboxTreeWithCompletion:(loadContentCallback)completion progress:(loadContentProgress)progress;
 @end

@@ -33,6 +33,8 @@
 - (void)testDeltaRequest {
     [self.listContentInteractor listDropboxTreeWithCompletion:^(id<InodeRepresentationProtocol> inode) {
 
+    }progress:^(NSUInteger processedItems, NSUInteger total, MDLoadProgressState progressState) {
+        
     }];
     while (YES) {
         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];

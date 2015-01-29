@@ -14,13 +14,14 @@
 @interface ListContentInteractor ()<DBRestClientDelegate>
 @property (strong,nonatomic) MDInode *rootInode;
 @property (copy,nonatomic) loadContentCallback completion;
-@property (assign,nonatomic) NSUInteger nodesCount;
+@property (copy,nonatomic) loadContentProgress progress;
 @property (strong,nonatomic) NSMutableArray *dbMetadata;
+@property (strong,nonatomic) NSOperationQueue *nodeProccessOperationQueue;
 @end
 @implementation ListContentInteractor
-- (void)listDropboxTreeWithCompletion:(loadContentCallback)completion{
-    self.nodesCount = 1;
+- (void)listDropboxTreeWithCompletion:(loadContentCallback)completion progress:(loadContentProgress)progress{
     self.completion = completion;
+    self.progress = progress;
     [self.dbRestClient loadMetadata:@"/"];
 }
 - (void)requestDeltaWithCursor:(NSString *)cursor{
@@ -28,17 +29,36 @@
     [self.dbRestClient loadDelta:cursor];
 }
 - (void)finishedReadingDropboxContent{
-    NSArray *sortedMetadata = [self.dbMetadata sortedArrayUsingComparator:^NSComparisonResult(id<InodeRepresentationProtocol> obj1, id<InodeRepresentationProtocol> obj2) {
-        return [[obj1 inodePath] compare:[obj2 inodePath]];
+    NSArray *sortedMetadata = [self.dbMetadata sortedArrayUsingComparator:^NSComparisonResult(DBDeltaEntry *obj1, DBDeltaEntry *obj2) {
+        return [obj1.lowercasePath compare:obj2.lowercasePath];
     }];
     self.dbMetadata = nil;
-    for (id<InodeRepresentationProtocol> inodeRepresentation in sortedMetadata) {
-        [self.rootInode addChildInodeRepresentation:inodeRepresentation];
+    NSUInteger index = 0;
+    NSUInteger total = sortedMetadata.count;
+    dispatch_group_t proccessNodesGroup = dispatch_group_create();
+    for (DBDeltaEntry *deltaEntry in sortedMetadata) {
+        dispatch_group_enter(proccessNodesGroup);
+        NSBlockOperation *proccessNodeOperation = [NSBlockOperation blockOperationWithBlock:^{
+            @autoreleasepool {
+                [self.rootInode addChildInodeRepresentation:deltaEntry.metadata];
+            }
+        }];
+        [proccessNodeOperation setCompletionBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.progress(index+1,total,MDLoadProgressStateProccess);
+                dispatch_group_leave(proccessNodesGroup);
+            });
+        }];
+        [self.nodeProccessOperationQueue addOperation:proccessNodeOperation];
+        index++;
     }
-    NSLog(@"Finish processing %lu nodes",(unsigned long)self.nodesCount);
-    self.completion(self.rootInode);
-    self.completion = nil;
-    self.rootInode = nil;
+    dispatch_group_notify(proccessNodesGroup, dispatch_get_main_queue(), ^{
+        NSLog(@"Finish processing %lu nodes",(unsigned long)sortedMetadata.count);
+        self.completion(self.rootInode);
+        self.completion = nil;
+        self.progress = nil;
+        self.rootInode = nil;
+    });
 }
 
 #pragma mark - DBRestClientDelegate
@@ -58,11 +78,9 @@
 }
 
 - (void)restClient:(DBRestClient*)client loadedDeltaEntries:(NSArray *)entries reset:(BOOL)shouldReset cursor:(NSString *)cursor hasMore:(BOOL)hasMore{
-    for (DBDeltaEntry *deltaEntry in entries) {
-        DBMetadata *inodeMetadata = deltaEntry.metadata;
-        [self.dbMetadata addObject:inodeMetadata];
-        _nodesCount ++;
-    }
+    NSLog(@"--- %lu",(unsigned long)entries.count);
+    [self.dbMetadata addObjectsFromArray:entries];
+    self.progress(0,self.dbMetadata.count,MDLoadProgressStateRequest);
     if (hasMore) {
         [self requestDeltaWithCursor:cursor];
     }else{
@@ -84,5 +102,12 @@
         _dbRestClient.delegate = self;
     }
     return _dbRestClient;
+}
+- (NSOperationQueue *)nodeProccessOperationQueue{
+    if (!_nodeProccessOperationQueue) {
+        _nodeProccessOperationQueue = [[NSOperationQueue alloc] init];
+        _nodeProccessOperationQueue.maxConcurrentOperationCount = 1;
+    }
+    return _nodeProccessOperationQueue;
 }
 @end

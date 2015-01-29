@@ -68,6 +68,12 @@ static NSInteger const gradientLength = 100;
             [self setupNavigationBar];
             [self.mainTableView reloadData];
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } progress:^(NSUInteger processedItems, NSUInteger total, MDLoadProgressState progressState) {
+            if (progressState == MDLoadProgressStateRequest) {
+                hud.detailsLabelText = [NSString stringWithFormat:@"Received %lu nodes",(unsigned long)total];
+            }else if (progressState == MDLoadProgressStateProccess){
+                hud.detailsLabelText = [NSString stringWithFormat:@"Processing node %lu/%lu",(unsigned long)processedItems,(unsigned long)total];
+            }
         }];
     }
 }
