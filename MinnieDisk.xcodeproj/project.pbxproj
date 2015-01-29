@@ -40,8 +40,6 @@
 		C7C288FE1A792D9C0038FB03 /* VBFCountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C288FD1A792D9C0038FB03 /* VBFCountDown.m */; };
 		C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */; };
 		C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */; };
-		C7EF808B1A73363700DC0CE7 /* GradientColorGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF808A1A73363700DC0CE7 /* GradientColorGenerator.m */; };
-		C7EF808E1A733E7000DC0CE7 /* UIImage+PixelColor.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF808D1A733E7000DC0CE7 /* UIImage+PixelColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,10 +113,6 @@
 		C7EF80831A73097800DC0CE7 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
 		C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
 		C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
-		C7EF80891A73363700DC0CE7 /* GradientColorGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientColorGenerator.h; sourceTree = "<group>"; };
-		C7EF808A1A73363700DC0CE7 /* GradientColorGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientColorGenerator.m; sourceTree = "<group>"; };
-		C7EF808C1A733E7000DC0CE7 /* UIImage+PixelColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+PixelColor.h"; sourceTree = "<group>"; };
-		C7EF808D1A733E7000DC0CE7 /* UIImage+PixelColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+PixelColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,10 +288,6 @@
 		C731B5291A73B19500733D1E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C7EF80891A73363700DC0CE7 /* GradientColorGenerator.h */,
-				C7EF808A1A73363700DC0CE7 /* GradientColorGenerator.m */,
-				C7EF808C1A733E7000DC0CE7 /* UIImage+PixelColor.h */,
-				C7EF808D1A733E7000DC0CE7 /* UIImage+PixelColor.m */,
 				C7C288FC1A792D9C0038FB03 /* VBFCountDown.h */,
 				C7C288FD1A792D9C0038FB03 /* VBFCountDown.m */,
 			);
@@ -529,8 +519,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7EF808E1A733E7000DC0CE7 /* UIImage+PixelColor.m in Sources */,
-				C7EF808B1A73363700DC0CE7 /* GradientColorGenerator.m in Sources */,
 				C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */,
 				88CD2EC81A72EBD00020B1E1 /* AppDelegate.m in Sources */,
 				88CD2ECB1A72EBD00020B1E1 /* MinnieDisk.xcdatamodeld in Sources */,

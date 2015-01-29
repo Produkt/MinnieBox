@@ -16,15 +16,13 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background6" translatesAutoresizingMaskIntoConstraints="NO" id="GDN-eB-JaX">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y34-Sz-Rgc">
                     <rect key="frame" x="0.0" y="260" width="600" height="80"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80" id="eCA-H1-X46"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="Connect with your Dropbox">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -35,27 +33,20 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minniebox needs access to your dropbox... Captain Obvious innit?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuZ-Ue-C0Z">
                     <rect key="frame" x="51" y="211" width="498" height="41"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="y34-Sz-Rgc" firstAttribute="top" secondItem="wuZ-Ue-C0Z" secondAttribute="bottom" constant="8" id="6qO-33-VTU"/>
-                <constraint firstAttribute="bottom" secondItem="GDN-eB-JaX" secondAttribute="bottom" id="8Cu-0l-9Jt"/>
                 <constraint firstAttribute="trailing" secondItem="y34-Sz-Rgc" secondAttribute="trailing" id="9zf-x1-BcM"/>
                 <constraint firstAttribute="centerX" secondItem="wuZ-Ue-C0Z" secondAttribute="centerX" id="DoT-1X-1rA"/>
-                <constraint firstAttribute="trailing" secondItem="GDN-eB-JaX" secondAttribute="trailing" id="GvG-a2-g2z"/>
                 <constraint firstItem="y34-Sz-Rgc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pmg-2e-JqG"/>
-                <constraint firstItem="GDN-eB-JaX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="VMa-O5-QOw"/>
                 <constraint firstItem="wuZ-Ue-C0Z" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="51" id="X9r-qx-5Wn"/>
-                <constraint firstItem="GDN-eB-JaX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="esM-aF-lgT"/>
                 <constraint firstAttribute="centerY" secondItem="y34-Sz-Rgc" secondAttribute="centerY" id="sEH-dx-cKI"/>
                 <constraint firstAttribute="trailing" secondItem="wuZ-Ue-C0Z" secondAttribute="trailing" constant="51" id="tKw-nV-9xP"/>
             </constraints>
         </view>
     </objects>
-    <resources>
-        <image name="Background6" width="375" height="667"/>
-    </resources>
 </document>
