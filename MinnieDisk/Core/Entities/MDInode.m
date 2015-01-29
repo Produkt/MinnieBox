@@ -8,31 +8,9 @@
 
 #import "MDInode.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import "MDIntermediateFolder.h"
 
 static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
-
-@interface MDIntermediateFolder:NSObject<InodeRepresentationProtocol>
-@property (copy,nonatomic) NSString *inodeName;
-@property (copy,nonatomic) NSString *inodePath;
-@property (strong,nonatomic) NSDate *inodeCreationDate;
-@property (assign,nonatomic) NSUInteger inodeSize;
-@property (assign,nonatomic) InodeType inodeType;
-@property (copy,nonatomic) NSString *inodeHumanReadableSize;
-@end
-@implementation MDIntermediateFolder
-- (instancetype)initWithPath:(NSString *)path
-{
-    self = [super init];
-    if (self) {
-        _inodeName = [path lastPathComponent];
-        _inodePath = [path copy];
-        _inodeCreationDate = [NSDate date];
-        _inodeType = InodeTypeFolder;
-        _inodeHumanReadableSize = [NSByteCountFormatter stringFromByteCount:0 countStyle:NSByteCountFormatterCountStyleBinary];
-    }
-    return self;
-}
-@end
 
 @interface MDInode ()
 @property (copy,nonatomic,readwrite) NSString *inodeName;
@@ -77,6 +55,12 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     if ([[[self previousPathOfPath:[childInodeRepresentation inodePath]] lowercaseString] isEqualToString:[[self inodePath] lowercaseString]]) {
         return NO;
     }
+    MDIntermediateFolder *intermediateFolder = [self intermediateFolderForChildInodeRepresentation:childInodeRepresentation];
+    MDInode *firstIntermediateNode = [[MDInode alloc] initWithInodeItem:intermediateFolder andDraftedInodes:self.draftedInodes];
+    [firstIntermediateNode addChildInodeRepresentation:childInodeRepresentation];
+    return [self addChildInode:firstIntermediateNode];
+}
+- (MDIntermediateFolder *)intermediateFolderForChildInodeRepresentation:(id<InodeRepresentationProtocol>)childInodeRepresentation{
     NSString *basePath = [[self inodePath] lowercaseString];
     NSRange basePathRange;
     basePathRange.location = 0;
@@ -84,9 +68,7 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     NSString *intermediatePaths = [[[childInodeRepresentation inodePath] lowercaseString] stringByReplacingCharactersInRange:basePathRange withString:@""];
     NSArray *pathComponents = [intermediatePaths componentsSeparatedByString:@"/"];
     NSString *firstIntermediatePath = [[[self inodePath] lowercaseString] stringByAppendingPathComponent:[pathComponents objectAtIndex:1]];
-    MDInode *firstIntermediateNode = [[MDInode alloc] initWithInodeItem:[[MDIntermediateFolder alloc] initWithPath:firstIntermediatePath] andDraftedInodes:self.draftedInodes];
-    [firstIntermediateNode addChildInodeRepresentation:childInodeRepresentation];
-    return [self addChildInode:firstIntermediateNode];
+    return [[MDIntermediateFolder alloc] initWithPath:firstIntermediatePath];
 }
 - (BOOL)addInodeToChildInodeFromChildInodeRepresentation:(id<InodeRepresentationProtocol>)childInodeRepresentation{
     MDInode *parentInode = [self parentInodeForPath:[childInodeRepresentation inodePath] inInodes:self.inodeItemChilds];
@@ -158,17 +140,6 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
     self.inodeItemChilds = inodes;
     return [self addChildInode:inode];
 }
-- (BOOL)addChildInode:(MDInode *)childInode{
-    NSMutableArray *childs = [self.inodeItemChilds mutableCopy];
-    [childs addObject:childInode];
-    childInode.parentInode = self;
-    self.inodeItemChilds = childs;
-    if ([childInode inodeType] == InodeTypeFile) {
-        [self childInodeFileWasAddedToTree:childInode];
-    }
-    [self updateChildsSort];
-    return YES;
-}
 - (MDInode *)parentInodeForPath:(NSString *)path inInodes:(NSArray *)inodes{
     MDInode *parentInode;
     @autoreleasepool {
@@ -198,6 +169,18 @@ static NSUInteger const pathComponentsPositionsToIncludeSeparator = 1;
         }
     }
     return childInodes;
+}
+
+- (BOOL)addChildInode:(MDInode *)childInode{
+    NSMutableArray *childs = [self.inodeItemChilds mutableCopy];
+    [childs addObject:childInode];
+    childInode.parentInode = self;
+    self.inodeItemChilds = childs;
+    if ([childInode inodeType] == InodeTypeFile) {
+        [self childInodeFileWasAddedToTree:childInode];
+    }
+    [self updateChildsSort];
+    return YES;
 }
 
 - (void)childInodeFileWasAddedToTree:(id<InodeRepresentationProtocol>)childInode{
