@@ -22,6 +22,8 @@ static NSInteger const gradientLength = 100;
 @property (nonatomic, strong) ListContentInteractor *listContentInteractor;
 @property (nonatomic, strong) DraftContentInteractor *draftContentInteractor;
 @property (nonatomic, assign) NSUInteger maximumNodeSize;
+@property (nonatomic, strong) UIToolbar *bottomToolbar;
+@property (nonatomic, assign) BOOL allSelected;
 @end
 
 @implementation ViewController
@@ -54,6 +56,11 @@ static NSInteger const gradientLength = 100;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.mainTableView reloadData];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    if (self.bottomToolbar) {
+        [self dismissToolbarAnimated:YES];
+    }
 }
 - (void)getInodeRepresentation {
 
@@ -89,8 +96,10 @@ static NSInteger const gradientLength = 100;
     }
 }
 - (void)setupNavigationBar {
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                                            target:self action:@selector(editPressed:)];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(editPressed:)];
     self.navigationItem.rightBarButtonItem = editButton;
     self.title = [self.inodeRepresentation inodeName];
     if ([self.title isEqualToString:@"/"]) {
@@ -107,7 +116,8 @@ static NSInteger const gradientLength = 100;
 - (void)setupTableView {
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
-
+    self.mainTableView.allowsMultipleSelectionDuringEditing = YES;
+    
     
     self.mainTableView.separatorColor = [UIColor clearColor];
     [self.mainTableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainTableViewCell class]) bundle:nil]
@@ -145,15 +155,15 @@ static NSInteger const gradientLength = 100;
 
 #pragma mark -  TableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
-    
-    if ([selectedNode inodeType] == InodeTypeFolder) {
-        ViewController *nextVC = [[ViewController alloc]initWithInodeRepresentation:selectedNode];
-        nextVC.draftedInodes = self.draftedInodes;
-        [self.navigationController pushViewController:nextVC animated:YES];
-        
-        MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        cell.selected = NO;
+    if (!tableView.isEditing) {
+        id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
+        if ([selectedNode inodeType] == InodeTypeFolder) {
+            ViewController *nextVC = [[ViewController alloc]initWithInodeRepresentation:selectedNode];
+            nextVC.draftedInodes = self.draftedInodes;
+            [self.navigationController pushViewController:nextVC animated:YES];
+            MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            cell.selected = NO;
+        }
     }
 }
 
@@ -167,10 +177,11 @@ static NSInteger const gradientLength = 100;
 
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
-        [self.draftContentInteractor addInode:selectedNode];
+        [self.draftContentInteractor addInode:selectedNode completion:nil];
         
         MainTableViewCell *cell = (MainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         [cell resetTitleToNormalStateAnimated:NO];
+        
         [cell genieInTransitionWithDuration:1.0
                             destinationRect:[self destinationGennieRect]
                             destinationEdge:BCRectEdgeTop
@@ -215,7 +226,107 @@ static NSInteger const gradientLength = 100;
 
 #pragma mark -  Navbar actions
 - (void)editPressed:(UIBarButtonItem *)sender {
+    if ([self.mainTableView isEditing]) {
+        [self dismissToolbarAnimated:YES];
+        [self.mainTableView setEditing:NO animated:YES];
+        [sender setTitle:@"Edit"];
+    }
+    else {
+        [self presentToolbarAnimated:YES];
+        [sender setTitle:@"Done"];
+        [self.mainTableView setEditing:YES animated:YES];
+        self.allSelected = NO;
+    }
+}
+
+#pragma mark -  bottomToolbar
+- (void)presentToolbarAnimated:(BOOL)animated {
+    CGFloat height = 50;
     
+    if (!self.bottomToolbar) {
+        CGRect toolbarFrame = CGRectMake(0, CGRectGetHeight(self.view.frame), CGRectGetWidth(self.view.frame), height);
+        self.bottomToolbar = [[UIToolbar alloc]initWithFrame:toolbarFrame];
+        self.bottomToolbar.translucent = NO;
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"Mark all"
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:self
+                                                                   action:@selector(markAllButtonPressed:)];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"Send to MinnieBox"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(sendToMinnieBoxButtonPressed:)];
+        rightItem.tintColor = [UIColor redColor];
+        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        self.bottomToolbar.items = @[leftItem, flexibleItem,rightItem];
+    }
+    [self.tabBarController.view addSubview:self.bottomToolbar];
+    
+    if (animated) {
+        [UIView animateWithDuration:0.3
+                              delay:0.0
+             usingSpringWithDamping:0.9
+              initialSpringVelocity:3.0
+                            options:0
+                         animations:^{
+                             self.bottomToolbar.center = CGPointMake(self.bottomToolbar.center.x,
+                                                                     self.bottomToolbar.center.y - height);
+                         } completion:nil];
+    } else {
+        self.bottomToolbar.center = CGPointMake(self.bottomToolbar.center.x,
+                                                self.bottomToolbar.center.y - height);
+    }
+    
+}
+- (void)dismissToolbarAnimated:(BOOL)animated {
+    CGFloat height = CGRectGetHeight(self.bottomToolbar.frame);
+
+    if (animated) {
+        [UIView animateWithDuration:0.3
+                              delay:0.0
+             usingSpringWithDamping:0.9
+              initialSpringVelocity:3.0
+                            options:0
+                         animations:^{
+                             self.bottomToolbar.center = CGPointMake(self.bottomToolbar.center.x,
+                                                                     self.bottomToolbar.center.y + height);
+                         } completion:^(BOOL finished) {
+                             [self.bottomToolbar removeFromSuperview];
+                         }];
+    } else {
+        [self.bottomToolbar removeFromSuperview];
+    }
+}
+
+- (void)markAllButtonPressed:(UIBarButtonItem *)sender {
+    if (self.allSelected) {
+        [sender setTitle:@"Mark all"];
+        self.allSelected = NO;
+        for (NSInteger i = 0; i < [self.mainTableView numberOfRowsInSection:0]; i++) {
+            [self.mainTableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]
+                                            animated:NO];
+        }
+        
+    } else {
+        [sender setTitle:@"Unmark all"];
+        self.allSelected = YES;
+        for (NSInteger i = 0; i < [self.mainTableView numberOfRowsInSection:0]; i++) {
+            [self.mainTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]
+                                            animated:NO
+                                      scrollPosition:UITableViewScrollPositionNone];
+        }
+    }
+
+}
+- (void)sendToMinnieBoxButtonPressed:(UIBarButtonItem *)sender {
+    NSArray *indexPaths = [self.mainTableView indexPathsForSelectedRows];
+    __weak typeof(self) weakSelf = self;
+    for (NSIndexPath *indexPath in indexPaths) {
+        id<InodeRepresentationProtocol> selectedNode = (id<InodeRepresentationProtocol>)([self.inodeRepresentation inodeUndraftedChilds][indexPath.row]);
+        [self.draftContentInteractor addInode:selectedNode completion:^{
+            [weakSelf.mainTableView deleteRowsAtIndexPaths:@[indexPath]
+                                      withRowAnimation:UITableViewRowAnimationAutomatic];
+        }];
+    }
 }
 
 #pragma mark -  getters

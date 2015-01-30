@@ -16,6 +16,6 @@ UIKIT_EXTERN NSString * const DraftInodesWillRemoveInodeNotification;
 @interface DraftContentInteractor : NSObject
 @property (strong,nonatomic,readonly) NSMutableSet *draftedInodes;
 - (instancetype)initWithDraftedInodes:(NSMutableSet *)draftedInodes;
-- (void)addInode:(id<InodeRepresentationProtocol>)inode;
-- (void)removeInode:(id<InodeRepresentationProtocol>)inode;
+- (void)addInode:(id<InodeRepresentationProtocol>)inode completion:(void(^)(void))completion;
+- (void)removeInode:(id<InodeRepresentationProtocol>)inode completion:(void(^)(void))completion;
 @end

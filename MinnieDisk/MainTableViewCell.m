@@ -28,12 +28,12 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    if (self.folderCell) {
+    if (self.folderCell || self.isEditing) {
         [super setSelected:selected animated:animated];
     }
 }
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    if (self.folderCell) {
+    if (self.folderCell || self.isEditing) {
         [super setHighlighted:highlighted animated:animated];
     }
 }
