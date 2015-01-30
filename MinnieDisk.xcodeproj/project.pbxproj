@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		261A8DB382C3ECD7185E12FA /* libPods-MinnieDisk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDFE4590B844655360F18128 /* libPods-MinnieDisk.a */; };
+		881FAA0C1A7ACAA0001304C9 /* MDIntermediateFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 881FAA0B1A7ACAA0001304C9 /* MDIntermediateFolder.m */; };
 		883076B21A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076B11A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m */; };
 		883076B61A739F1C00D28ED2 /* MDInode.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076B51A739F1C00D28ED2 /* MDInode.m */; };
 		883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 883076B81A73ACC600D28ED2 /* DraftContentInteractor.m */; };
@@ -55,6 +56,8 @@
 /* Begin PBXFileReference section */
 		03010011929F7D83061B20D6 /* Pods-MinnieDiskTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinnieDiskTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MinnieDiskTests/Pods-MinnieDiskTests.release.xcconfig"; sourceTree = "<group>"; };
 		72C3F3D5375024CB97D32B2F /* Pods-MinnieDiskTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinnieDiskTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MinnieDiskTests/Pods-MinnieDiskTests.debug.xcconfig"; sourceTree = "<group>"; };
+		881FAA0A1A7ACAA0001304C9 /* MDIntermediateFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDIntermediateFolder.h; sourceTree = "<group>"; };
+		881FAA0B1A7ACAA0001304C9 /* MDIntermediateFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDIntermediateFolder.m; sourceTree = "<group>"; };
 		883076AF1A73040D00D28ED2 /* MinnieDiskTests-prefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MinnieDiskTests-prefix.h"; sourceTree = "<group>"; };
 		883076B01A730AE800D28ED2 /* DBMetadata+InodeRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBMetadata+InodeRepresentation.h"; sourceTree = "<group>"; };
 		883076B11A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBMetadata+InodeRepresentation.m"; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 			children = (
 				883076B41A739F1C00D28ED2 /* MDInode.h */,
 				883076B51A739F1C00D28ED2 /* MDInode.m */,
+				881FAA0A1A7ACAA0001304C9 /* MDIntermediateFolder.h */,
+				881FAA0B1A7ACAA0001304C9 /* MDIntermediateFolder.m */,
 				883076B01A730AE800D28ED2 /* DBMetadata+InodeRepresentation.h */,
 				883076B11A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m */,
 			);
@@ -537,6 +542,7 @@
 				88CD2EFE1A72FA400020B1E1 /* ListContentInteractor.m in Sources */,
 				883076B21A730AE800D28ED2 /* DBMetadata+InodeRepresentation.m in Sources */,
 				883076C81A73C77B00D28ED2 /* MinnieBoxTableViewCell.m in Sources */,
+				881FAA0C1A7ACAA0001304C9 /* MDIntermediateFolder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
