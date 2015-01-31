@@ -42,6 +42,7 @@ static NSInteger const gradientLength = 100;
     if (self) {
         [self setupTabbarItem];
         _inodeRepresentation = inode;
+        self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
     }
     return self;
 }
