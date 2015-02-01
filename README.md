@@ -3,9 +3,10 @@
 
 **MinnieBox** scans all your dropbox files and presents them to you in a visual way, so you can easily free up some Dropbox space.
 
-You can visit [this post](http://medium.com) to know a bit more about the project.
+You can visit [this post](https://medium.com/produkt-blog/dropbox-hackathon-ceae4fc5d1db) to know a bit more about the project.
 
-Finally, visit [this dribbble site](http://dribbble.com) to grab the designs for free.
+Finally, visit [this dribbble site](https://dribbble.com/shots/1910092-Minniebox) to grab the designs for free.
+![alt tag](https://d13yacurqjgara.cloudfront.net/users/20171/screenshots/1910092/minniebox.png)
 
 ## Still To do
 - Sign out (allow user to sign out and sign in again with a different dropbox account)
