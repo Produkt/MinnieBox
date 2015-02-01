@@ -9,6 +9,7 @@ Finally, visit [this dribbble site](http://dribbble.com) to grab the designs for
 
 ## Still To do
 - Sign out (allow user to sign out and sign in again with a different dropbox account)
+- Handle shared content scenarios (if you remove something shared, it should be stop sharing it instead of deleting)
 - Allow multiple selection in MinnieBox View Controller (as shown in design files)
 - Change to red color on multiple selection Dropbox View Controller
 - Add subtitle to Dropbbox View Controller showing % used (as shown in design files)
