@@ -14,3 +14,6 @@ Finally, visit [this dribbble site](http://dribbble.com) to grab the designs for
 - Change to red color on multiple selection Dropbox View Controller
 - Add subtitle to Dropbbox View Controller showing % used (as shown in design files)
 - Dropbox VC should have a tableview manager and toolbar manager objects
+
+## Disclaimer
+MinnieBox is still a work in progress project. It is not meant to be used in production environments. We are not responsible for any data you may damage or loose. Use the app at your discretion. 
