@@ -1,5 +1,5 @@
 # MinnieBox
-**MinnieBox** is an iPhone app developed during the Dropbox London Hackathon by @fillito and @victorbaro, and designed by @hugocornejo.
+**MinnieBox** is an iPhone app developed during the Dropbox London Hackathon by [@fillito](http://twitter.com/fillito) and [@victorbaro](http://twitter.com/victorbaro), and designed by [@hugocornejo](http://twitter.com/hugocornejo).
 
 **MinnieBox** scans all your dropbox files and presents them to you in a visual way, so you can easily free up some Dropbox space.
 
