@@ -18,6 +18,12 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
+// TTTAttributedLabel
+#define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
+#define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
+#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 13
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 1
+
 // pop
 #define COCOAPODS_POD_AVAILABLE_pop
 #define COCOAPODS_VERSION_MAJOR_pop 1

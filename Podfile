@@ -7,6 +7,7 @@ target 'MinnieDisk' do
 pod 'BCGenieEffect', '~> 1.1'
 pod 'MBProgressHUD'
 pod 'pop' , '~>1.0.7'
+pod 'TTTAttributedLabel' , '~>1.13.1'
 end
 
 target 'MinnieDiskTests' do

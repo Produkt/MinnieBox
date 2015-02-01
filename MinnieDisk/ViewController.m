@@ -237,25 +237,18 @@
     }
 }
 - (void)settingsButtonPressed:(UIButton *)sender {
-    [UIView animateWithDuration:0.2
+    [UIView animateWithDuration:0.3
                           delay:0.0
-                        options:UIViewAnimationOptionCurveEaseInOut
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:3.0
+                        options:0
                      animations:^{
-                         self.settingsButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                         self.settingsButton.transform = CGAffineTransformRotate(self.settingsButton.transform, M_PI_2);
                      } completion:^(BOOL finished) {
-                         [UIView animateWithDuration:0.25
-                                               delay:0.0
-                              usingSpringWithDamping:0.9
-                               initialSpringVelocity:0.5
-                                             options:0
-                                          animations:^{
-                                              self.settingsButton.transform = CGAffineTransformRotate(self.settingsButton.transform, M_PI_2);
-                                          } completion:^(BOOL finished) {
-                                              SettingsViewController *settingsVC = [[SettingsViewController alloc]init];
-                                              [self presentViewController:settingsVC animated:YES completion:^{
-                                                  self.settingsButton.transform = CGAffineTransformIdentity;
-                                              }];
-                                          }];
+                         SettingsViewController *settingsVC = [[SettingsViewController alloc]init];
+                         [self presentViewController:settingsVC animated:YES completion:^{
+                             self.settingsButton.transform = CGAffineTransformIdentity;
+                         }];
                      }];
 }
 #pragma mark -  bottomToolbar
