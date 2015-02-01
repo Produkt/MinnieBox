@@ -33,7 +33,9 @@ NSString * const DraftInodesWillRemoveInodeNotification = @"DraftInodesWillRemov
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.draftedInodes addObject:inode];
         [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesAddInodeNotification object:inode];
-        completion();
+        if (completion) {
+            completion();
+        }
     });
 }
 - (void)removeInode:(id<InodeRepresentationProtocol>)inode completion:(void(^)(void))completion{
@@ -41,7 +43,9 @@ NSString * const DraftInodesWillRemoveInodeNotification = @"DraftInodesWillRemov
         [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesWillRemoveInodeNotification object:inode];
         [self.draftedInodes removeObject:inode];
         [[NSNotificationCenter defaultCenter] postNotificationName:DraftInodesRemoveInodeNotification object:inode];
-        completion();
+        if (completion){
+            completion();
+        }
     });
 }
 @end
