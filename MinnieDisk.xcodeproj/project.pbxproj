@@ -38,7 +38,11 @@
 		C731B5311A73B23400733D1E /* MinnieBoxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C731B52F1A73B23400733D1E /* MinnieBoxViewController.xib */; };
 		C731B5361A73FA8800733D1E /* LinkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C731B5341A73FA8800733D1E /* LinkerViewController.m */; };
 		C731B5371A73FA8800733D1E /* LinkerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C731B5351A73FA8800733D1E /* LinkerViewController.xib */; };
+		C7C1D1AF1A7D071E00797FB6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C1D1AD1A7D071E00797FB6 /* SettingsViewController.m */; };
+		C7C1D1B01A7D071E00797FB6 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7C1D1AE1A7D071E00797FB6 /* SettingsViewController.xib */; };
 		C7C288FE1A792D9C0038FB03 /* VBFCountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C288FD1A792D9C0038FB03 /* VBFCountDown.m */; };
+		C7E993F91A7D805300D1B5EC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E993F71A7D805300D1B5EC /* Crashlytics.framework */; };
+		C7E993FA1A7D805300D1B5EC /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E993F81A7D805300D1B5EC /* Fabric.framework */; };
 		C7EF80861A73097800DC0CE7 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */; };
 		C7EF80871A73097800DC0CE7 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7EF80851A73097800DC0CE7 /* MainTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -110,8 +114,13 @@
 		C731B5331A73FA8800733D1E /* LinkerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkerViewController.h; sourceTree = "<group>"; };
 		C731B5341A73FA8800733D1E /* LinkerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkerViewController.m; sourceTree = "<group>"; };
 		C731B5351A73FA8800733D1E /* LinkerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinkerViewController.xib; sourceTree = "<group>"; };
+		C7C1D1AC1A7D071E00797FB6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		C7C1D1AD1A7D071E00797FB6 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		C7C1D1AE1A7D071E00797FB6 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		C7C288FC1A792D9C0038FB03 /* VBFCountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBFCountDown.h; sourceTree = "<group>"; };
 		C7C288FD1A792D9C0038FB03 /* VBFCountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBFCountDown.m; sourceTree = "<group>"; };
+		C7E993F71A7D805300D1B5EC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		C7E993F81A7D805300D1B5EC /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		C7EF807C1A72FC0F00DC0CE7 /* InodeRepresentationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InodeRepresentationProtocol.h; sourceTree = "<group>"; };
 		C7EF80831A73097800DC0CE7 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
 		C7EF80841A73097800DC0CE7 /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
@@ -124,7 +133,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				88CD2EF81A72F9810020B1E1 /* DropboxSDK.framework in Frameworks */,
+				C7E993F91A7D805300D1B5EC /* Crashlytics.framework in Frameworks */,
 				261A8DB382C3ECD7185E12FA /* libPods-MinnieDisk.a in Frameworks */,
+				C7E993FA1A7D805300D1B5EC /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +295,8 @@
 		9E73600FD9309D56F4FCC354 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C7E993F71A7D805300D1B5EC /* Crashlytics.framework */,
+				C7E993F81A7D805300D1B5EC /* Fabric.framework */,
 				BBCE7DA4CBAB3FA94C8F15F2 /* libPods-MinnieDiskTests.a */,
 				BDFE4590B844655360F18128 /* libPods-MinnieDisk.a */,
 			);
@@ -302,6 +315,7 @@
 		C731B52A1A73B1AB00733D1E /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				C7C1D1AB1A7D070A00797FB6 /* SettingsVC */,
 				C731B5321A73FA6A00733D1E /* StartScreen */,
 				C731B52B1A73B1BC00733D1E /* DropboxVC */,
 				C731B52C1A73B1CC00733D1E /* MinnieBoxVC */,
@@ -341,6 +355,16 @@
 			name = StartScreen;
 			sourceTree = "<group>";
 		};
+		C7C1D1AB1A7D070A00797FB6 /* SettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				C7C1D1AC1A7D071E00797FB6 /* SettingsViewController.h */,
+				C7C1D1AD1A7D071E00797FB6 /* SettingsViewController.m */,
+				C7C1D1AE1A7D071E00797FB6 /* SettingsViewController.xib */,
+			);
+			name = SettingsVC;
+			sourceTree = "<group>";
+		};
 		C7EF80881A73097C00DC0CE7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -363,6 +387,7 @@
 				88CD2EBC1A72EBD00020B1E1 /* Frameworks */,
 				88CD2EBD1A72EBD00020B1E1 /* Resources */,
 				0600FF761803288F409E7571 /* Copy Pods Resources */,
+				C7E993F61A7D801100D1B5EC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -444,6 +469,7 @@
 				883076D41A73F21000D28ED2 /* MinnieBoxDisclaimerTableViewCell.xib in Resources */,
 				88CD2ED31A72EBD00020B1E1 /* Images.xcassets in Resources */,
 				883076DC1A73F54100D28ED2 /* MinnieBoxCountdownTableViewCell.xib in Resources */,
+				C7C1D1B01A7D071E00797FB6 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +543,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		C7E993F61A7D801100D1B5EC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 35e88112feb8ee6b0b620c34809265bb1c6d8b64 907f567389974900139ba418dce3c46329c50ab714bf4f78d19cbb10d61293fb";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -531,6 +570,7 @@
 				C731B5361A73FA8800733D1E /* LinkerViewController.m in Sources */,
 				883076B91A73ACC600D28ED2 /* DraftContentInteractor.m in Sources */,
 				C7C288FE1A792D9C0038FB03 /* VBFCountDown.m in Sources */,
+				C7C1D1AF1A7D071E00797FB6 /* SettingsViewController.m in Sources */,
 				883076BF1A73B29E00D28ED2 /* THOperation.m in Sources */,
 				883076BC1A73AFC900D28ED2 /* DeleteContentInteractor.m in Sources */,
 				88CD2EF31A72F1B10020B1E1 /* ViewController.m in Sources */,
@@ -654,6 +694,7 @@
 					"/Users/fillito/Downloads/dropbox-ios-sync-sdk-3.1.2",
 					"$(PROJECT_DIR)/MinnieDisk/Frameworks",
 					"/Users/fillito/Downloads/dropbox-ios-sdk-1.3.13",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MinnieDisk/MinnieDisk-prefix.h";
@@ -674,6 +715,7 @@
 					"/Users/fillito/Downloads/dropbox-ios-sync-sdk-3.1.2",
 					"$(PROJECT_DIR)/MinnieDisk/Frameworks",
 					"/Users/fillito/Downloads/dropbox-ios-sdk-1.3.13",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MinnieDisk/MinnieDisk-prefix.h";

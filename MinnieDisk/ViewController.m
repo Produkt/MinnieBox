@@ -13,8 +13,8 @@
 #import <BCGenieEffect/UIView+Genie.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <DropboxSDK/DropboxSDK.h>
+#import "SettingsViewController.h"
 
-static NSInteger const gradientLength = 100;
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
@@ -24,6 +24,7 @@ static NSInteger const gradientLength = 100;
 @property (nonatomic, assign) NSUInteger maximumNodeSize;
 @property (nonatomic, strong) UIToolbar *bottomToolbar;
 @property (nonatomic, assign) BOOL allSelected;
+@property (nonatomic, strong) UIButton *settingsButton;
 @end
 
 @implementation ViewController
@@ -43,6 +44,7 @@ static NSInteger const gradientLength = 100;
         [self setupTabbarItem];
         _inodeRepresentation = inode;
         self.maximumNodeSize = [self maximumNodeSizeForNodeRepresentation:inode];
+        self.settingsButton.hidden = YES;
     }
     return self;
 }
@@ -89,6 +91,15 @@ static NSInteger const gradientLength = 100;
                                                                   target:self
                                                                   action:@selector(editPressed:)];
     self.navigationItem.rightBarButtonItem = editButton;
+    
+    self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.settingsButton.frame = CGRectMake(0, 0, 20, 20);
+    [self.settingsButton setImage:[UIImage imageNamed:@"settingsButton"] forState:UIControlStateNormal];
+    [self.settingsButton addTarget:self action:@selector(settingsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *settingsBarButton = [[UIBarButtonItem alloc]initWithCustomView:self.settingsButton];
+    self.navigationItem.leftBarButtonItem = settingsBarButton;
+    
+    
     self.title = [self.inodeRepresentation inodeName];
     if ([self.title isEqualToString:@"/"]) {
         self.title = @"Dropbox";
@@ -193,7 +204,6 @@ static NSInteger const gradientLength = 100;
 
 
 #pragma mark -  helpers
-
 - (NSUInteger)maximumNodeSizeForNodeRepresentation:(id<InodeRepresentationProtocol>)inode {
     NSArray *array = [[NSArray alloc]initWithArray:[inode inodeUndraftedChilds]];
     NSUInteger maximum = 0;
@@ -226,7 +236,28 @@ static NSInteger const gradientLength = 100;
         self.allSelected = NO;
     }
 }
-
+- (void)settingsButtonPressed:(UIButton *)sender {
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.settingsButton.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.25
+                                               delay:0.0
+                              usingSpringWithDamping:0.9
+                               initialSpringVelocity:0.5
+                                             options:0
+                                          animations:^{
+                                              self.settingsButton.transform = CGAffineTransformRotate(self.settingsButton.transform, M_PI_2);
+                                          } completion:^(BOOL finished) {
+                                              SettingsViewController *settingsVC = [[SettingsViewController alloc]init];
+                                              [self presentViewController:settingsVC animated:YES completion:^{
+                                                  self.settingsButton.transform = CGAffineTransformIdentity;
+                                              }];
+                                          }];
+                     }];
+}
 #pragma mark -  bottomToolbar
 - (void)presentToolbarAnimated:(BOOL)animated {
     CGFloat height = 50;
