@@ -1,5 +1,0 @@
-#include "Pods-MinnieDisk-TTTAttributedLabel.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/TTTAttributedLabel" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BCGenieEffect" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/OCHamcrest" "${PODS_ROOT}/Headers/Public/OCMockito" "${PODS_ROOT}/Headers/Public/TTTAttributedLabel" "${PODS_ROOT}/Headers/Public/pop"
-OTHER_LDFLAGS = ${PODS_MINNIEDISK_TTTATTRIBUTEDLABEL_OTHER_LDFLAGS} -ObjC
-PODS_ROOT = ${SRCROOT}
