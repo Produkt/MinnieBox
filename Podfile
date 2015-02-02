@@ -3,14 +3,14 @@
 
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'MinnieDisk' do
+target 'MinnieBox' do
 pod 'BCGenieEffect', '~> 1.1'
 pod 'MBProgressHUD'
 pod 'pop' , '~>1.0.7'
 pod 'TTTAttributedLabel' , '~>1.13.1'
 end
 
-target 'MinnieDiskTests' do
+target 'MinnieBoxTests' do
     
     pod 'OCMockito', '~> 1.0'
 

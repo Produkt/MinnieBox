@@ -12,7 +12,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - OCMockito (~> 1.0)
   - pop (~> 1.0.7)
-  - TTTAttributedLabel
+  - TTTAttributedLabel (~> 1.13.1)
 
 SPEC CHECKSUMS:
   BCGenieEffect: 4981aaefcb859010f3793ed8a3e3b0a66b68c00e
@@ -22,4 +22,4 @@ SPEC CHECKSUMS:
   pop: 2f14a1ea61339767af9e66741b418c831b3844df
   TTTAttributedLabel: 71843ac4178e1ebd6b0950b54325146726a124ae
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.34.2
