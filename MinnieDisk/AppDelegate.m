@@ -11,6 +11,9 @@
 #import "MinnieBoxViewController.h"
 #import "LinkerViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 
 @interface AppDelegate ()
 @property (strong,nonatomic) NSMutableSet *draftedInodes;
@@ -43,7 +46,9 @@
     if (![[DBSession sharedSession] isLinked]) {
         self.linkerVC = [[LinkerViewController alloc]init];
         [tabbarController presentViewController:self.linkerVC animated:YES completion:nil];
-    } 
+    }
+    [Fabric with:@[CrashlyticsKit]];
+
 
     return YES;
 }
